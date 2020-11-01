@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 16:54:48 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/01 16:13:56 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/01 16:39:44 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int			system_funk(char *path, char *line, t_vars *vars)//вызов системных функций
 {
+	//test comment
+	//test comment
 	//test comment
 	char **argv;
 	int count;

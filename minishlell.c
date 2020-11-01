@@ -6,12 +6,13 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/01 19:41:21 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/01 20:09:07 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishel.h"
 
+///sdfgshdfgblsdfghsdfgub
 void    ft_pipe(char *path, char **comand, t_vars *vars)
 {
     pid_t pid;

@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/10/31 20:57:09 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/01 19:41:21 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ void	ft_pars_argument(char *line, t_vars *vars)
 		char **comand_line;
 		char **line_pipe;
 		char *comand_path;
+		int mas[2];
 		int	i = 0;
 		int t = 0;
 
@@ -194,6 +195,7 @@ void	ft_pars_argument(char *line, t_vars *vars)
 			{
 				if (vars->count_pipe - i > 0)
 				{
+					
 					comand_path = check_system_funk(vars, ft_split(line_pipe[i], ' '));
 					comand_line = ft_split(line_pipe[i], ' ');
 					comand_path = ft_strjoin(comand_path, "/");

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishlell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/01 20:09:07 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/01 20:18:49 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,11 @@ char 			*check_system_funk(t_vars *vars, char **str) // проверяет на�
 	char **argv = str;
 	while(path[i] != NULL)
 	{
-		dir = opendir(path[i]);
+		if ((dir = opendir(path[i])) == NULL)
+		{
+			i++;
+			continue;
+		}
 		while((st = readdir(dir)) != NULL)
 		{
 			if (ft_strlen(st->d_name) == ft_strlen(argv[0]))

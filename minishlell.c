@@ -3,16 +3,305 @@
 /*                                                        :::      ::::::::   */
 /*   minishlell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/01 20:18:49 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/01 20:46:29 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishel.h"
 
 ///sdfgshdfgblsdfghsdfgub
+
+int			ft_env(t_vars *vars)//вывод env команда env
+{
+	int i = 0;
+	char **argv;
+	while(vars->envp_copy[i] != NULL)
+	{
+		argv=ft_split(vars->envp_copy[i], '=');
+		if(argv[1] != NULL)
+		{
+			ft_putstr_fd(argv[0], 1);
+			ft_putchar_fd('=',1);
+			ft_putendl_fd(argv[1], 1);			
+		}
+		i++;
+		free_two_dimensional_array(argv);
+	}
+	return 1;
+}
+
+
+int			ft_echo_n(char **line, t_vars *vars)//вывод без переноса строки
+{
+	int i;
+
+	i = 2;
+	while(line[i] != NULL)
+	{
+		if (line[i][0] == '$')
+		{
+			ft_putstr_fd(init_patch(vars, &line[i][1]), 1);
+			i++;
+			if(line[i] != NULL)
+				write(1, " ", 1);			
+		}
+		else
+		{
+			ft_putstr_fd(line[i], 1);
+			i++;
+			if(line[i] != NULL)
+				write(1, " ", 1);			
+		}
+	}
+	return (i);
+}
+
+
+char		**check_duplicate(char **argv) // проверка на наличие добавляемой переменной в переменных среды
+{
+	int i = 0;
+	int j = 1;
+	int count = 0;
+	int count_2 = 0;
+	int count_3 = 0;
+	char **new_argv;
+	while(argv[count_3] != NULL)
+	{
+		count_3++;
+	}
+	if (count_2 == 1)
+		return argv;
+	i = 0;
+	count_2 = 0;
+	while(argv[i] != NULL)
+	{
+		while(j < count_3)
+		{
+			if(argv[i] != NULL && argv[j] != NULL &&ft_strlen(argv[i]) == ft_strlen(argv[j]))
+			{
+				if(ft_strncmp(argv[i], argv[j], ft_strlen(argv[i])) == 0)
+				{
+					count++;
+				}
+			}
+			j++;
+		}
+		if(count > 1)
+		{
+			argv[i] = NULL;
+			count_2++;
+		}
+		count=0;
+		i++;
+		j = 0;
+	}
+	new_argv = malloc(sizeof(char*) *(i - count_2 + 1));
+	count = 0;
+	j = 0;
+	while(count < i)
+	{
+		if(argv[count] != NULL)
+		{
+			new_argv[j] = ft_strdup(argv[count]);
+			free(argv[count]);
+			j++;
+		}
+		count++;
+	}
+	new_argv[j] = NULL;
+	return new_argv;
+}
+
+int		ft_unset(t_vars *vars, char *str)//удаление переменной из переменных окружения команда unset 
+{
+	int count = 0;
+	int count_env = 0;
+	char **env_new;
+	char **argv;
+	int	 i = 0;
+	int j = 0;
+	int	 flag= 0;
+	while(vars->envp_copy[count_env] != NULL)
+		count_env++;
+	while (vars->envp_copy[count] != NULL)
+	{
+		argv = ft_split(vars->envp_copy[count], '=');
+		if(ft_strlen(argv[0]) == ft_strlen(str))
+		{
+			if(ft_strncmp(argv[0], str, ft_strlen(argv[0])) == 0)
+			{
+				free(vars->envp_copy[count]);
+				vars->envp_copy[count]=NULL;
+				flag++;
+			}
+		}
+		count++;
+	}
+	count = 0;
+	i = 0;
+	if(flag > 0)
+	{
+		env_new = malloc(sizeof(char**) * count_env);
+		while(i < count_env)
+		{
+			if(vars->envp_copy[i] != NULL)
+			{
+				env_new[j] = ft_strdup(vars->envp_copy[i]);
+				j++;
+			}
+			i++;
+		}
+		vars->envp_copy = env_new;
+	}
+	return ft_strlen(str);
+}
+
+void	update_envp(char **str, t_vars *vars)//добаавление новой переменной в переменные окружения
+{
+	int i = 0;
+	int j = 0;
+	char **new_envp;
+	char **ar_1;
+	char **ar_2;
+	int count = 0;
+	int flag = 0;
+	char *ptr;
+	while(str[i] != NULL)
+	{
+		i++;
+	}
+	while(j < i)
+	{
+		ar_2 = ft_split(str[j], '=');
+		while (vars->envp_copy[count] != NULL)
+		{
+			ar_1 = ft_split(vars->envp_copy[count], '=');
+			if(ft_strlen(ar_1[0])  == ft_strlen(ar_2[0]))
+			{
+				if(ft_strncmp(ar_1[0],ar_2[0], ft_strlen(ar_1[0])) == 0)
+				{
+					if(ar_2[1] != NULL)
+					{
+						free(vars->envp_copy[count]);
+						vars->envp_copy[count]=ft_strjoin(ar_2[0], "=");
+						ptr = vars->envp_copy[count];
+						vars->envp_copy[count]=ft_strjoin(vars->envp_copy[count], ar_2[1]);
+						free(ptr);
+					}
+					free(str[j]);
+					str[j] = NULL;
+				}
+			}
+			free_two_dimensional_array(ar_1);
+			count++;
+		}
+		free_two_dimensional_array(ar_2);
+		count = 0;
+		j++;
+	}
+	count = i;
+	i = 0;
+	while (flag < count)
+	{
+		if(str[flag] != NULL)
+			i++;
+		flag++;
+	}
+	j = 0;
+	while(vars->envp_copy[j] != NULL)
+	{
+		j++;
+	}
+	new_envp = malloc(sizeof(char *) *(j + i + 1));
+	j = 0;
+	i = 0;
+	while(vars->envp_copy[i] != NULL)
+	{
+		new_envp[i] = vars->envp_copy[i];
+		i++;
+	}
+	while(j < count)
+	{
+		if(str[j] != NULL)
+		{
+			new_envp[i] = str[j];
+			i++;
+		}
+		j++;
+	}
+	new_envp[i] = NULL;
+	free(vars->envp_copy);
+	envp_copy(new_envp, vars);
+	free_two_dimensional_array(new_envp);
+}
+
+int		export_out(t_vars *vars, char **line)//команда export добавление + вывод
+{
+	int i;
+	int count = 0;
+	char **argv;
+
+	i = 1;
+	if(line[i] != '\0')
+	{
+		argv = &line[i];
+		argv = check_duplicate(argv);
+		update_envp(argv, vars);
+		while(line[i] != NULL)
+			i++;
+		return(i);	
+	}
+	else
+	{
+		i = 0;
+		while(vars->envp_copy[i] != NULL)
+		{
+			ft_putstr_fd("declare -x ", 1);
+			argv = ft_split(vars->envp_copy[i], '=');
+			ft_putstr_fd(argv[0], 1);
+			if(argv[1] != NULL)
+			{
+				ft_putchar_fd('=', 1);
+				ft_putchar_fd('"', 1);
+				ft_putstr_fd(argv[1], 1);
+				ft_putchar_fd('"', 1);				
+			}
+			ft_putchar_fd('\n', 1);
+			free_two_dimensional_array(argv);
+			i++;
+		}
+		return 1;	
+	}
+}
+
+int			ft_echo(char **line, t_vars *vars)//команда echo 
+{
+	int i;
+	i = 1;
+	while(line[i] != NULL)
+	{
+		if (line[i][0] == '$')
+		{
+			ft_putstr_fd(init_patch(vars, &line[i][1]), 1);
+			i++;
+			if(line[i] != NULL)
+				write(1, " ", 1);				
+		}
+		else
+		{
+			ft_putstr_fd(line[i], 1);
+			i++;
+			if(line[i] != NULL)
+				write(1, " ", 1);			
+		}
+	}
+	write(1, "\n", 1);
+	return (i);
+}
+
 void    ft_pipe(char *path, char **comand, t_vars *vars)
 {
     pid_t pid;
@@ -26,7 +315,12 @@ void    ft_pipe(char *path, char **comand, t_vars *vars)
         close(mas[0]);
         dup2(mas[1], 1);
         close(mas[1]);
-		if ((status = execve(path, comand, vars->envp_copy)) == -1)
+		if (ft_strncmp(comand[0], "echo", 4) == 0)
+		{
+			ft_echo(&comand[0], vars);
+			exit(0);
+		}			
+		else if ((status = execve(path, comand, vars->envp_copy)) == -1)
 			exit(WEXITSTATUS(status));
     }
 	else if (pid < 0)
@@ -180,7 +474,10 @@ void	ft_pars_argument(char *line, t_vars *vars)
 		char **comand_line;
 		char **line_pipe;
 		char *comand_path;
+		char **argv;
+		char *ptr;
 		int mas[2];
+		int count = 0;
 		int	i = 0;
 		int t = 0;
 
@@ -188,10 +485,65 @@ void	ft_pars_argument(char *line, t_vars *vars)
 		check_pipe(comand_line, vars);
 		if (vars->count_pipe == 0)
 		{
-			comand_path = check_system_funk(vars, comand_line);
-			comand_path = ft_strjoin(comand_path, "/");
-			comand_path = ft_strjoin(comand_path, comand_line[0]);			
-			system_funk(comand_path, comand_line, vars);
+			if (ft_strncmp(comand_line[0], "cd", 2) == 0)
+			{				
+				if(comand_line[0 + 1] != NULL)
+				{
+					chdir(comand_line[0 + 1]);
+					i += 2;
+				}
+				else
+				{
+					chdir(init_patch(vars, "HOME"));
+					i++;
+				}
+			}
+			else if (ft_strncmp(comand_line[0], "pwd", 3) == 0)
+			{
+				ft_putstr_fd((ptr = getcwd(NULL,0)), 1);
+				write(1, "\n",1);
+				i++;
+				free(ptr);
+				ptr = NULL;
+			}
+			else if ((ft_strncmp(comand_line[0], "echo", 4) == 0) && (comand_line[1] != NULL) && (ft_strncmp(comand_line[1], "-n", 2)) == 0)
+			{
+				i+= ft_echo_n(&comand_line[0], vars);
+			}
+			else if (ft_strncmp(comand_line[0], "echo", 4) == 0)
+			{
+				i+= ft_echo(&comand_line[0], vars);
+			}	
+			else if (ft_strncmp(comand_line[0], "env", 3) == 0)
+			{
+				i += ft_env(vars);
+			}
+			else if (ft_strncmp(comand_line[0], "export", 6) == 0)
+			{
+				i += export_out(vars, &comand_line[0]);
+			}
+			else if (ft_strncmp(comand_line[0], "exit", 5) == 0)
+			{
+				exit(0);
+			}
+			else if (ft_strncmp(comand_line[0], "unset", 5) == 0)
+			{
+				argv = &comand_line[0];
+				while(argv[count] != NULL)
+				{
+					i += ft_unset(vars, argv[count]);
+					count++;
+				}
+				count = 1;
+				free_two_dimensional_array(argv);
+			}
+			else
+			{
+				comand_path = check_system_funk(vars, comand_line);
+				comand_path = ft_strjoin(comand_path, "/");
+				comand_path = ft_strjoin(comand_path, comand_line[0]);			
+				system_funk(comand_path, comand_line, vars);
+			}
 		}
 		else
 		{

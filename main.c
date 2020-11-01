@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 16:54:48 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/01 17:00:38 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/01 20:31:02 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -587,7 +587,7 @@ void		ft_pars_argument(char *line,  t_vars *vars) // здесь должен п�
 			}
 			count = 1;
 			free_two_dimensional_array(argv);
-		}	
+		}
 		else
 		{
 			if(check_system_funk(vars, &line[i]) == 0)

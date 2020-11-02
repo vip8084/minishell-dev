@@ -1,38 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_echo_n.c                                        :+:      :+:    :+:   */
+/*   ft_sexit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/02 11:38:12 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/02 18:23:49 by hmiso            ###   ########.fr       */
+/*   Created: 2020/11/02 16:13:45 by hmiso             #+#    #+#             */
+/*   Updated: 2020/11/02 18:22:29 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
-void		ft_echo_n(char **line, t_vars *vars)//вывод без переноса строки
+void		ft_exit(char **comand_line)
 {
 	int i;
 
-	i = 2;
-	while(line[i] != NULL)
+	if (comand_line[1] != NULL)
 	{
-		if (line[i][0] == '$')
+		if (ft_isdigit(comand_line[1][0]))
 		{
-			ft_putstr_fd(init_patch(vars, &line[i][1]), 1);
-			i++;
-			if(line[i] != NULL)
-				write(1, " ", 1);			
+			i = ft_atoi(comand_line[1]);
+			exit(i);
 		}
 		else
 		{
-			ft_putstr_fd(line[i], 1);
-			i++;
-			if(line[i] != NULL)
-				write(1, " ", 1);			
+			ft_putstr_fd("exit\n", 2);
+			ft_putstr_fd("minishell> exit: ", 2);
+			ft_putstr_fd(comand_line[1], 2);
+			ft_putstr_fd(": numeric argument required\n", 2);
+			exit(255);
 		}
 	}
+	else
+	{
+		exit(0);
+	}
 }
-// такая же хрень что и с эхо
+// менеджмент ошибок в дочерних процесссах хотя по идеее должно быть норм

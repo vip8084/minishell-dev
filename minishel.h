@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 16:55:07 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/02 13:34:53 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/02 18:38:16 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,12 @@ void		ft_cd(char **comand_line, t_vars *vars);
 void		ft_pwd(void);
 char		**check_duplicate(char **argv);
 char		*init_patch(t_vars *vars, char *arg);
+void		ft_exit(char **comand_line);
+void		system_funk(char *path, char **argv, t_vars *vars);
+char 		*check_system_funk(t_vars *vars, char **str);
+void		ft_pipe(char *path, char **comand, t_vars *vars);
+void		check_pipe(char **comand_mas, t_vars *vars);
+int			checking_recoded_functions(char **comand_line, t_vars *vars);
+void		ft_conveyor(char *line, char **comand_line, t_vars *vars);
 
 #endif

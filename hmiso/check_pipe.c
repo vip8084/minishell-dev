@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   check_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/02 11:19:32 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/02 18:22:40 by hmiso            ###   ########.fr       */
+/*   Created: 2020/11/02 16:39:42 by hmiso             #+#    #+#             */
+/*   Updated: 2020/11/02 16:40:14 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
-void	ft_pwd(void)
+void	check_pipe(char **comand_mas, t_vars *vars)
 {
-	char *ptr;
+	int i = 0;
+	vars->count_pipe = 0;
 	
-	ft_putstr_fd((ptr = getcwd(NULL,0)), 1);
-	write(1, "\n",1);
-	free(ptr);
-	ptr = NULL;
+	while(comand_mas[i] != NULL)
+	{
+		if(ft_strncmp(comand_mas[i], "|", 1) == 0)
+		{
+			vars->count_pipe++;
+		}
+		i++;
+	}
 }
-
-//проверить работоспособность на разных кейсах (хз каких)
-//по идее все должно быть ок
-// на всякий случай почитай спецификации к pwd вдруг я что упустил

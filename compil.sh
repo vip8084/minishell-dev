@@ -1,1 +1,1 @@
-gcc -g minishlell.c libft/libft.a get_next_line/get_next_line.c
+gcc -g minishlell.c libft/libft.a get_next_line/get_next_line.c curreg/*.c

@@ -5,14 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/14 12:38:30 by hmiso             #+#    #+#             */
-/*   Updated: 2020/10/14 12:38:52 by hmiso            ###   ########.fr       */
+/*   Created: 2020/11/02 13:14:43 by hmiso             #+#    #+#             */
+/*   Updated: 2020/11/02 13:17:32 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishel.h"
+#include "../minishel.h"
 
-void	update_envp(char **str, t_vars *vars)
+void	update_envp(char **str, t_vars *vars)//добаавление новой переменной в переменные окружения
 {
 	int i = 0;
 	int j = 0;
@@ -90,3 +90,7 @@ void	update_envp(char **str, t_vars *vars)
 	envp_copy(new_envp, vars);
 	free_two_dimensional_array(new_envp);
 }
+// скорее всего течет
+// неокрректно рабботает с кейсе export a=b a a a
+// должна вернуть ошибку export a =c
+// проверить коды ошибок в баше

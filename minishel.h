@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 16:55:07 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/02 18:38:16 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/03 12:14:08 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int			count_pipe;
 int			count_comand;
 int			index_pipe;
 int 		g_exit_code;
+int			count_redirect;
 }				t_vars;
 
 void		free_two_dimensional_array(char **arr);
@@ -63,5 +64,7 @@ void		ft_pipe(char *path, char **comand, t_vars *vars);
 void		check_pipe(char **comand_mas, t_vars *vars);
 int			checking_recoded_functions(char **comand_line, t_vars *vars);
 void		ft_conveyor(char *line, char **comand_line, t_vars *vars);
+void		check_redirect(char **comand_mas, t_vars *vars);
+void		ft_conveyor_test(char *line, char **comand_line, t_vars *vars);
 
 #endif

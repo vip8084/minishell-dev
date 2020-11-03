@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 18:27:08 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/02 18:38:58 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/03 12:24:24 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,12 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 	line_pipe = ft_split(line, '|');
 	while (line_pipe[i] != NULL)
 	{
-		if (vars->count_pipe - i > 0)
+		if(vars->count_redirect > 0)
+		{
+			ft_conveyor_test(line, comand_line, vars);
+			i++;
+		}		
+		else if (vars->count_pipe - i > 0)
 		{
 			comand_path = check_system_funk(vars, ft_split(line_pipe[i], ' '));
 			comand_line = ft_split(line_pipe[i], ' ');

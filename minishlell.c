@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/02 18:38:38 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/03 12:19:43 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void	ft_pars_argument(char *line, t_vars *vars)
 
 		comand_line = ft_split(line, ' ');
 		check_pipe(comand_line, vars);
-		if (vars->count_pipe == 0)
+		check_redirect(comand_line, vars);
+		if (vars->count_pipe == 0 && vars->count_redirect == 0)
 		{
 			if(!(checking_recoded_functions(comand_line, vars)))
 			{

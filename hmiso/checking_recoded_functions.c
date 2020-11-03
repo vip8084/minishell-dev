@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 17:31:40 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/02 17:31:59 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/03 15:08:42 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		checking_recoded_functions(char **comand_line, t_vars *vars)
 	if (ft_strncmp(comand_line[0], "cd", 2) == 0)
 	{
 		ft_cd(comand_line, vars);
-		return (1);		
+		return (1);
 	}
 	else if (ft_strncmp(comand_line[0], "pwd", 3) == 0)
 	{

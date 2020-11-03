@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 16:56:20 by hmiso             #+#    #+#             */
-/*   Updated: 2020/10/30 19:28:27 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/03 14:30:06 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void    ft_pipe(char *path, char **comand, t_vars *vars)
         dup2(mas[0], 0);
         close(mas[0]);
         waitpid(pid, &status, WUNTRACED);
-		g_exit_code = WEXITSTATUS(status);
+		vars->g_exit_code = WEXITSTATUS(status);
     }
 }
 
@@ -148,7 +148,7 @@ int			system_funk(char *path, char **argv, t_vars *vars)//вызов систе�
 	else
 	{
 		waitpid(pid, &status, WUNTRACED);
-		g_exit_code = WEXITSTATUS(status);
+		vars->g_exit_code = WEXITSTATUS(status);
 	}
 	count = ft_strlen(argv[0]);
 	if(argv[1] != NULL)

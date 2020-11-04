@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_patch.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 13:33:34 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/02 13:40:17 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/04 17:05:13 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ char		*init_patch(t_vars *vars, char *arg) // возвращает значен�
 			free(value);
 			value = ft_strdup(ptr[1]);
 		}
-		free(ptr[0]);
-		free(ptr[1]);
-		free(ptr);
+		free_two_dimensional_array(ptr);
 		ptr = NULL;
 		i++;
 	}

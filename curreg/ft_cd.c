@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 11:07:05 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/02 11:18:06 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/04 17:17:03 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,23 @@
 
 void		ft_cd(char **comand_line, t_vars *vars)
 {
+	char *path;
+	
+	path = NULL;
 	if(comand_line[0 + 1] != NULL)
 	{
-		chdir(comand_line[1]);
+		path = comand_line[1];    ////////
+		chdir(path);
+		//free_two_dimensional_array(comand_line);
+		free(path);       /////////
+		path = NULL;      //////////
 	}
 	else
 	{
-		chdir(init_patch(vars, "HOME"));
+		path = init_patch(vars, "HOME");
+		chdir(path);
+		free(path);
+		path = NULL;
 	}
 }
 

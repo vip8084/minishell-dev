@@ -6,34 +6,61 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 11:07:05 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/04 19:47:41 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/04 21:30:08 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
-static void show_dir_err(char *cmd, char* arg)
+static void show_cd_err(char *cmd, char* arg, char *type)
 {
-	ft_putstr_fd("minishell>", 1);
-	ft_putstr_fd(cmd, 1);
-	ft_putstr_fd(": ", 1);
-	ft_putstr_fd(arg, 1);
-	ft_putstr_fd(": No such file or directory\n", 1);
+	if ((ft_strcmp(type, "dir")) == 0)
+	{
+		ft_putstr_fd("minishell>", 1);
+		ft_putstr_fd(cmd, 1);
+		ft_putstr_fd(": ", 1);
+		ft_putstr_fd(arg, 1);
+		ft_putstr_fd(": No such file or directory\n", 1);
+	}
+	else if ((ft_strcmp(type, "file")) == 0)
+	{
+		ft_putstr_fd("minishell>", 1);
+		ft_putstr_fd(cmd, 1);
+		ft_putstr_fd(": ", 1);
+		ft_putstr_fd(arg, 1);
+		ft_putstr_fd(": Not a directory\n", 1);
+	}
+
+	// ft_putstr_fd("minishell>", 1);
+	// ft_putstr_fd(cmd, 1);
+	// ft_putstr_fd(": ", 1);
+	// ft_putstr_fd(arg, 1);
+	// if (ft_strcmp(type, "dir"))
+	// 	ft_putstr_fd(": No such file or directory\n", 1);
+	// else if (ft_strcmp(type, "file"))
+	// 	ft_putstr_fd(": Not a directory\n", 1);
 }
 
 void		ft_cd(char **comand_line, t_vars *vars)
 {
-	char	*path;
 	int		status;
+	char	*path;
+	DIR 	*is_dir;
 	
-	path = NULL;
 	status = 0;
+	path = NULL;
+	is_dir = NULL;
 	if(comand_line[0 + 1] != NULL)
 	{
-		path = comand_line[1];  
-		status = chdir(path);
-		if(status == -1)
-			show_dir_err(comand_line[0], comand_line[1]);
+		path = comand_line[1];
+		is_dir = opendir(comand_line[1]); //////
+		status = chdir(path);  /////////////////
+		////////////////////////////////////////
+		if (is_dir == NULL)
+			show_cd_err(comand_line[0], comand_line[1], "file");
+		else if (status == -1)
+			show_cd_err(comand_line[0], comand_line[1], "dir");
+		///////////////////////////////////////
 		free_two_dimensional_array(comand_line);
 		path = NULL;      
 	}

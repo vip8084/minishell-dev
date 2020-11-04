@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 16:55:07 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/03 12:14:08 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/04 16:40:34 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,5 @@ int			checking_recoded_functions(char **comand_line, t_vars *vars);
 void		ft_conveyor(char *line, char **comand_line, t_vars *vars);
 void		check_redirect(char **comand_mas, t_vars *vars);
 void		ft_conveyor_test(char *line, char **comand_line, t_vars *vars);
-
+void		ft_redirects(char *path, char **comand, char **mas_redirektion, t_vars *vars);
 #endif

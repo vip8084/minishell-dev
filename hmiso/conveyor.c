@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 18:27:08 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/06 16:26:09 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/06 18:20:27 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -361,21 +361,18 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 		// 	comand_path = ft_join_path(vars, com_whis_flags);
 		// 	system_funk(comand_path, com_whis_flags, vars);
 		// }
-		if (ft_strncmp(comand_line[i], "|", 1) == 0)
+		if (i != 0 && ((ft_strncmp(comand_line[i - 1], "|", 1) == 0) && vars->flag_redirect == 1))
 		{
-			if (vars->flag_redirect == 0)
-			{
-				com_whis_flags = make_comand_mas_start(comand_line, i, (j - 1));
-				comand_path = ft_join_path(vars, com_whis_flags);
-				ft_pipe(comand_path, com_whis_flags, vars);	
-				j = 0;
-				vars->flag_redirect = 0;
-			}
-			else
-			{
-				ft_pipe_eof();
-				vars->flag_redirect = 0;
-			}
+			ft_pipe_eof();
+			vars->flag_redirect = 0;
+		}		
+		if ((ft_strncmp(comand_line[i], "|", 1) == 0) && vars->flag_redirect == 0)
+		{
+			com_whis_flags = make_comand_mas_start(comand_line, i, (j - 1));
+			comand_path = ft_join_path(vars, com_whis_flags);
+			ft_pipe(comand_path, com_whis_flags, vars);	
+			j = 0;
+			vars->flag_redirect = 0;
 		}
 		else if (ft_strncmp(comand_line[i], ">", 1) == 0)
 		{
@@ -384,7 +381,9 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 			while(comand_line[i + 1] != NULL)
 			{
 				if (ft_strncmp(comand_line[i], "|", 1) == 0)
+				{
 					break;
+				}
 				i++;
 				k++;
 			}
@@ -407,6 +406,7 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 	}
 	vars->count_pipe = 0;
 	vars->count_redirect = 0;
+	vars->flag_redirect = 0;
 	dup2(vars->save_std_in, 0);
 	dup2(vars->save_std_out, 1);	
 }

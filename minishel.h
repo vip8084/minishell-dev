@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 16:55:07 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/04 16:40:34 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/06 16:22:52 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int			count_comand;
 int			index_pipe;
 int 		g_exit_code;
 int			count_redirect;
+int			count_call_pipe;
+int         flag_redirect;
 }				t_vars;
 
 void		free_two_dimensional_array(char **arr);

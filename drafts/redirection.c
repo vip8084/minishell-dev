@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 19:07:14 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/04 19:12:17 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/06 14:59:47 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,28 @@ void		ft_redirects(char *path, char **comand, char **mas_redirektion, t_vars *va
 	// 	i++;
 	// 	vars->count_redirect--;
 	// }
-
+	int count_redirects = 0;
+	
+	while(mas_redirektion[count_redirects] != NULL)
+	{
+		count_redirects++;
+	}
 	while(mas_redirektion[i] != NULL)
 	{
 		fd = open(mas_redirektion[i], O_WRONLY | O_CREAT, 0666);
-		if(vars->count_redirect > 1)
+		if(count_redirects > 1)
 			close(fd);
 		i++;
-		if (vars->count_redirect > 0)
-			vars->count_redirect--;
+		if (count_redirects > 0)
+			count_redirects--;
 	}
-    pipe(mas);
+    // pipe(mas);
     pid = fork();
     if (pid == 0)
     {
-        close(mas[0]);
+        // close(mas[0]);
         dup2(fd, 1);
-        close(mas[1]);
+        // close(mas[1]);
 		if(checking_recoded_functions(comand, vars))
 		{
 			exit (0);// забирать значение эрно из внутренних функций и передавать сюда
@@ -60,9 +65,9 @@ void		ft_redirects(char *path, char **comand, char **mas_redirektion, t_vars *va
 		ft_putendl_fd("error", 2);
 	else
     {
-        close(mas[1]);
-        dup2(fd, 0);
-        close(mas[0]);
+        // close(mas[1]);
+        // dup2(fd, 0);
+        // close(mas[0]);
         waitpid(pid, &status, WUNTRACED);
 		vars->g_exit_code = WEXITSTATUS(status);
 		close(fd);

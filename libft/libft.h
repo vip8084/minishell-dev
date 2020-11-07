@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 14:25:25 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/04 20:11:31 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/07 16:29:09 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 # include <stdlib.h>
 # include <unistd.h>
+# include <errno.h>
 
 typedef struct	s_list
 {

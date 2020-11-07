@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishel.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 16:55:07 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/03 12:14:08 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/07 17:04:56 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 #define PIPE_READ 0
 #define PIPE_WRITE 1
 
+int g_error;
 
 typedef struct s_vars{
 
@@ -40,6 +41,11 @@ int			index_pipe;
 int 		g_exit_code;
 int			count_redirect;
 }				t_vars;
+
+
+void        set_g_error(int err);
+void        show_g_error();
+
 
 void		free_two_dimensional_array(char **arr);
 void		envp_copy(char **envp, t_vars *vars);

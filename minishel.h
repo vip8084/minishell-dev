@@ -6,11 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 16:55:07 by hmiso             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2020/11/06 16:22:52 by hmiso            ###   ########.fr       */
-=======
-/*   Updated: 2020/11/07 18:50:25 by curreg           ###   ########.fr       */
->>>>>>> test
+/*   Updated: 2020/11/07 19:43:36 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +40,9 @@ int			count_comand;
 int			index_pipe;
 int 		g_exit_code;
 int			count_redirect;
-<<<<<<< HEAD
 int			count_call_pipe;
 int         flag_redirect;
-=======
 int         err_flag;
->>>>>>> test
 }				t_vars;
 
 

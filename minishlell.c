@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/03 12:19:43 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/06 16:23:14 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int main(int argc, char **argv, char **envp)
 	char *line = NULL;
 	int i = 0;
 	struct dirent *dir;
+	vars.count_call_pipe = 0;
+	vars.flag_redirect = 0;
 	vars.save_std_in = dup(0);
 	vars.save_std_out = dup(1);
 	envp_copy(envp, &vars);
@@ -63,6 +65,7 @@ int main(int argc, char **argv, char **envp)
 		free(line);
 		line = NULL;
 		ft_putstr_fd("minishell>", 1);
+		vars.count_call_pipe = 0;
 	}
 	return 0;
 }

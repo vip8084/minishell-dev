@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 19:07:14 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/06 14:59:47 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/07 17:55:39 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,12 @@ void		ft_redirects(char *path, char **comand, char **mas_redirektion, t_vars *va
 	}
 	while(mas_redirektion[i] != NULL)
 	{
-		fd = open(mas_redirektion[i], O_WRONLY | O_CREAT, 0666);
-		if(count_redirects > 1)
-			close(fd);
-		i++;
-		if (count_redirects > 0)
-			count_redirects--;
+		fd = open(mas_redirektion[count_redirects], O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		// if(count_redirects > 1)
+		// 	close(fd);
+		// i++;
+		// if (count_redirects > 0)
+		// 	count_redirects--;
 	}
     // pipe(mas);
     pid = fork();

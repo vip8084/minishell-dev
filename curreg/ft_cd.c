@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 11:07:05 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/04 18:53:24 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/07 18:49:54 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,19 @@
 
 void		ft_cd(char **comand_line, t_vars *vars)
 {
-	char *path;
+	int		status;
+	char	*path;
 	
 	path = NULL;
+	errno = 0;
 	if(comand_line[0 + 1] != NULL)
 	{
-		path = comand_line[1];  
-		chdir(path);
+		path = comand_line[1];
+		if (chdir(path) == -1)
+		{
+			set_g_error(errno);
+			cd_error(comand_line[0], comand_line[1], errno);
+		}
 		free_two_dimensional_array(comand_line);
 		path = NULL;      
 	}
@@ -34,8 +40,4 @@ void		ft_cd(char **comand_line, t_vars *vars)
 	}
 }
 
-//настроить возврат сообщения о не правильной директории
-//корректно установить код ошибки
 //проверить возрат баша на папку к которой нет прав в том числе код ошибки
-//проверка кода возврата в баше echo $?
-// течь может init_patch и нужно зафришить возрат этой функции

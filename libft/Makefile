@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hmiso <hmiso@student.21-school.ru>         +#+  +:+       +#+         #
+#    By: curreg <curreg@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/18 20:15:21 by hmiso             #+#    #+#              #
-#    Updated: 2020/05/21 19:40:49 by hmiso            ###   ########.fr        #
+#    Updated: 2020/11/04 20:14:25 by curreg           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,8 @@ OBJ_FILES = ft_memset.o \
 			ft_putchar_fd.o \
 			ft_putstr_fd.o \
 			ft_putendl_fd.o \
-			ft_putnbr_fd.o 
+			ft_putnbr_fd.o \
+			ft_strcmp.o
 
 BONUSO =	ft_lstnew.o \
 			ft_lstadd_front.o \

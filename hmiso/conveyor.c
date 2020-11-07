@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 18:27:08 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/07 17:13:52 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/07 19:51:51 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	**make_list_rederection(char **comand_line, int i, int j)
 	k = i - j;
 	while(k <= i)
 	{
-		if ((ft_strncmp(comand_line[k], ">", 1) == 0 ) || (ft_strncmp(comand_line[k - 1], ">", 1) != 0 ) || (ft_strncmp(comand_line[k], ">>", 2) == 0 ) || (ft_strncmp(comand_line[k - 1], ">>", 2) != 0 ))
+		if((ft_strncmp(comand_line[k], ">", 1) == 0 )|| (ft_strncmp(comand_line[k - 1], ">", 1) != 0 ))
 		{
 			k++;
 			continue;
@@ -53,7 +53,7 @@ char	**make_list_rederection(char **comand_line, int i, int j)
 	count = 0;
 	while(k <= i)
 	{
-		if((ft_strncmp(comand_line[k], ">", 1) == 0 )|| (ft_strncmp(comand_line[k - 1], ">", 1) != 0 ) || (ft_strncmp(comand_line[k], ">>", 2) == 0 ) || (ft_strncmp(comand_line[k - 1], ">>", 2) != 0 ))
+		if((ft_strncmp(comand_line[k], ">", 1) == 0 )|| (ft_strncmp(comand_line[k - 1], ">", 1) != 0 ))
 		{
 			k++;
 			continue;
@@ -227,16 +227,11 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 	int flag = 0;
 	while (comand_line[i] != NULL)
 	{
-		if ((ft_strncmp(comand_line[i], ">", 1) == 0) && comand_line[i + 1] != NULL)
-		{
-			fd = open(comand_line[i + 1], O_WRONLY | O_CREAT | O_TRUNC , 0666);
-			close(fd);
-		}
-		else if ((ft_strncmp(comand_line[i], ">>", 2) == 0) && comand_line[i + 1] != NULL)
+		if (ft_strncmp(comand_line[i], ">", 1) == 0 && comand_line[i + 1] != NULL)
 		{
 			fd = open(comand_line[i + 1], O_WRONLY | O_CREAT, 0666);
 			close(fd);
-		}		
+		}
 		i++;
 	}
 	i = 0;
@@ -268,7 +263,7 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 			j = 0;
 			vars->flag_redirect = 0;
 		}
-		else if ((ft_strncmp(comand_line[i], ">", 1) == 0) || (ft_strncmp(comand_line[i], ">>", 2) == 0))
+		else if (ft_strncmp(comand_line[i], ">", 1) == 0)
 		{
 			com_whis_flags = make_comand_mas_start(comand_line, i, (j - 1));
 			comand_path = ft_join_path(vars, com_whis_flags);

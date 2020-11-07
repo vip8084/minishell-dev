@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 18:27:08 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/07 12:30:32 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/07 14:47:46 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,16 +225,16 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 	k = 0;
 	int t = 0;
 	int flag = 0;
-	// while (comand_line[i] != NULL)
-	// {
-	// 	if (ft_strncmp(comand_line[i], ">", 1) == 0 && comand_line[i + 1] != NULL)
-	// 	{
-	// 		fd = open(comand_line[i + 1], O_WRONLY | O_CREAT, 0666);
-	// 		close(fd);
-	// 	}
-	// 	i++;
-	// }
-	// i = 0;
+	while (comand_line[i] != NULL)
+	{
+		if (ft_strncmp(comand_line[i], ">", 1) == 0 && comand_line[i + 1] != NULL)
+		{
+			fd = open(comand_line[i + 1], O_WRONLY | O_CREAT, 0666);
+			close(fd);
+		}
+		i++;
+	}
+	i = 0;
 	while(comand_line[i] != NULL)
 	{
 		if (i != 0 && ((ft_strncmp(comand_line[i - 1], "|", 1) == 0) && vars->flag_redirect == 1))
@@ -244,19 +244,19 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 		}
 		if ((ft_strncmp(comand_line[i], "|", 1) == 0) && vars->flag_redirect == 0)
 		{
-			while(comand_line[i + t] != NULL)
-			{
-				if ((ft_strncmp(comand_line[i + t], ">", 1) == 0) && (comand_line[i + t] != NULL ))
-				{
-					fd = open(comand_line[i + t + 1], O_WRONLY | O_CREAT, 0666);
-					close(fd);
-					flag = 1;
-				}
-				if ((ft_strncmp(comand_line[i + t], "|", 1) == 0) && flag == 1)
-					break;
-				t++;
-			}
-			t = 0;
+			// while(comand_line[i + t] != NULL)
+			// {
+			// 	if ((ft_strncmp(comand_line[i + t], ">", 1) == 0) && (comand_line[i + t] != NULL ))
+			// 	{
+			// 		fd = open(comand_line[i + t + 1], O_WRONLY | O_CREAT, 0666);
+			// 		close(fd);
+			// 		flag = 1;
+			// 	}
+			// 	if ((ft_strncmp(comand_line[i + t], "|", 1) == 0) && flag == 1)
+			// 		break;
+			// 	t++;
+			// }
+			// t = 0;
 			com_whis_flags = make_comand_mas_start(comand_line, i, (j - 1));
 			comand_path = ft_join_path(vars, com_whis_flags);
 			ft_pipe(comand_path, com_whis_flags, vars);	

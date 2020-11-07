@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 16:52:29 by curreg            #+#    #+#             */
-/*   Updated: 2020/11/07 17:11:58 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/07 18:17:03 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void set_g_error(int err)
 {
     if (err == 2 || err == 20)
         g_error = 1;
+    else if (err == 14)
+        g_error = 127;
 }
 
 void show_g_error()

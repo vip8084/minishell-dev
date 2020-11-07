@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 16:55:07 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/07 17:04:56 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/07 18:50:25 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,14 @@ int			count_comand;
 int			index_pipe;
 int 		g_exit_code;
 int			count_redirect;
+int         err_flag;
 }				t_vars;
 
 
 void        set_g_error(int err);
 void        show_g_error();
+void        command_error(char *cmd, t_vars *vars);
+void        cd_error(char *cmd, char* arg, int err);
 
 
 void		free_two_dimensional_array(char **arr);

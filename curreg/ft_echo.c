@@ -6,14 +6,14 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 11:46:29 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/07 17:01:55 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/07 18:47:42 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
 #include "../minishel.h"
 
-void			ft_echo(char **line, t_vars *vars)//команда echo 
+void			ft_echo(char **line, t_vars *vars)
 {
 	int i;
 	char *path;
@@ -25,7 +25,10 @@ void			ft_echo(char **line, t_vars *vars)//команда echo
 		if (line[i][0] == '$')
 		{
 			if(line[i][1] == '?')
+			{
 				show_g_error();
+				vars->err_flag = 0;
+			}
 			path = init_patch(vars, &line[i][1]);
 			ft_putstr_fd(path, 1);
 			free(path);

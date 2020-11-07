@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 18:27:08 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/06 18:20:27 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/07 12:30:32 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,6 @@ char	**make_comand_mas_end_red(char **comand_line, int i, t_vars *vars)
 			count++;
 		}		
 	}
-	
 	vars->count_call_pipe++;
 	comand_whis_flags[count] = NULL;	
 	return comand_whis_flags;
@@ -199,118 +198,15 @@ char	*ft_join_path(t_vars *vars, char **com_whis_flags)
 	comand_path = ft_strjoin(comand_path, com_whis_flags[0]);
 	return (comand_path);
 }
-// void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
-// {
-// 	char **line_pipe;
-// 	char *comand_path;
-// 	char **com_whis_flags;
-// 	char **mas_redirektion;
-// 	int i;
-// 	int j;
-// 	int k;
-
-// 	j = 0;
-// 	i = 0;
-// 	k = 0;
-
-// 	while (comand_line[i] != NULL)
-// 	{
-// 		if ((ft_strncmp(comand_line[i], "|", 1) == 0) || (ft_strncmp(comand_line[i], ">", 1) == 0) || comand_line[i + 1] == NULL)
-// 		{
-// 			k = i - 1;
-// 			if (ft_strncmp(comand_line[i], "|", 1) == 0)
-// 			{
-// 				while((i - j) != 0)
-// 				{
-// 					if ((ft_strncmp(comand_line[k - j], "|", 1) == 0) || (ft_strncmp(comand_line[k - j], ">", 1) == 0))
-// 						break; 
-// 					j++;
-// 				}
-// 				com_whis_flags = make_comand_mas_end(comand_line, k, j);
-				// comand_path = check_system_funk(vars, &com_whis_flags[0]);
-				// comand_path = ft_strjoin(comand_path, "/");
-				// comand_path = ft_strjoin(comand_path, com_whis_flags[0]);
-// 				ft_pipe(comand_path, com_whis_flags, vars);
-// 				j = 0;
-// 			}
-// 			else if(ft_strncmp(comand_line[i], ">", 1) == 0)
-// 			{
-// 				while((i - j) != 0)
-// 				{
-// 					if ((ft_strncmp(comand_line[k - j], "|", 1) == 0) || (ft_strncmp(comand_line[k - j], ">", 1) == 0))
-// 						break;
-// 					j++;
-// 				}
-// 				com_whis_flags = make_comand_mas_end(comand_line, k, j);
-// 				j = 0;
-// 				while(comand_line[i + 1] != NULL || (ft_strncmp(comand_line[i], "|", 1) == 0))
-// 				{
-// 					i++;
-// 					j++;
-// 				}
-// 				mas_redirektion = make_list_rederection(comand_line, i, j);
-// 				comand_path = check_system_funk(vars, &com_whis_flags[0]);
-// 				comand_path = ft_strjoin(comand_path, "/");
-// 				comand_path = ft_strjoin(comand_path, com_whis_flags[0]);
-// 				ft_redirects(comand_path, com_whis_flags, mas_redirektion, vars);
-// 			}
-// 			else
-// 			{
-// 				while(i - j != 0)
-// 				{
-// 					if ((ft_strncmp(comand_line[i - j], "|", 1) == 0) || (ft_strncmp(comand_line[i - j], ">", 1) == 0))
-// 						break;
-// 					j++;
-// 				}				
-// 				com_whis_flags = make_comand_mas_end(comand_line, i, j);
-// 				if(!(checking_recoded_functions(&com_whis_flags[0], vars)))			
-// 				{
-// 					comand_path = check_system_funk(vars,  &com_whis_flags[0]);
-// 					comand_path = ft_strjoin(comand_path, "/");
-// 					comand_path = ft_strjoin(comand_path, com_whis_flags[0]);
-// 					system_funk(comand_path, com_whis_flags, vars);
-// 				}
-// 				j = 0;
-// 			}
-// 		}
-// 		i++;
-// 	}
-// 	dup2(vars->save_std_in, 0);
-// 	dup2(vars->save_std_out, 1);	
-// }
 
 void		ft_pipe_eof(void)
 {
-	// write(0, "", 1);
-    // pid_t pid;
     int mas[2];
-    // int status;
-    // int i;
-    pipe(mas);
-    // pid = fork();
-    // if (pid == 0)
-    // {
-		write(mas[1], "", 0);
-		dup2(mas[0], 0);
-        // dup2(mas[1], 1);
-        close(mas[1]);
 
-	// 	if(checking_recoded_functions(comand, vars))
-	// 	{
-	// 		exit (0);// забирать значение эрно из внутренних функций и передавать сюда
-	// 	}
-	// 	else if ((status = execve(path, comand, vars->envp_copy)) == -1)
-	// 		exit(WEXITSTATUS(status));
-    // }
-	// else if (pid < 0)
-	// 	ft_putendl_fd("error", 2);
-	// else
-        // close(mas[1]);
-        // dup2(mas[0], 0);
-        // close(mas[0]);
-        // waitpid(pid, &status, WUNTRACED);
-		// vars->g_exit_code = WEXITSTATUS(status);
-    
+    pipe(mas);
+	write(mas[1], "", 0);
+	dup2(mas[0], 0);
+	close(mas[1]);    
 }
 
 void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
@@ -322,52 +218,45 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 	int i;
 	int j;
 	int k;
+	int fd;
 
 	j = 1;
 	i = 0;
 	k = 0;
-	// char *mas[]={"ls", NULL};
-	// char *mas2[]={"a", NULL};
-	// char *mas3[]={"pwd", NULL};
-	// char *mas4[]={"pwd", NULL};
-	// char *mas5[]={"a1", NULL};
-	// char *mas6[]={"cat", "-e", NULL};
-	// // ft_redirects("/bin/ls", mas, mas2, vars);
-	// // ft_pipe_test();
-	// // system_funk("/bin/pwd", mas3, vars);
-	// // ft_redirects("/bin/pwd", mas4, mas5, vars);
-	// // ft_pipe_test();
-	// // system_funk("/bin/cat", mas6, vars);
-
-	// ft_redirects("/bin/pwd", mas3, mas5, vars);
-
+	int t = 0;
+	int flag = 0;
+	// while (comand_line[i] != NULL)
+	// {
+	// 	if (ft_strncmp(comand_line[i], ">", 1) == 0 && comand_line[i + 1] != NULL)
+	// 	{
+	// 		fd = open(comand_line[i + 1], O_WRONLY | O_CREAT, 0666);
+	// 		close(fd);
+	// 	}
+	// 	i++;
+	// }
+	// i = 0;
 	while(comand_line[i] != NULL)
 	{
-		// if (ft_strncmp(comand_line[i], "|", 1) == 0)
-		// {
-		// 	com_whis_flags = make_comand_mas_end(comand_line, i, vars);
-		// 	comand_path = ft_join_path(vars, com_whis_flags);
-		// 	ft_pipe(comand_path, com_whis_flags, vars);
-		// }
-		// if (ft_strncmp(comand_line[i], ">", 1) == 0)
-		// {
-		// 	com_whis_flags = make_comand_mas_end_red(comand_line, i, vars);
-		// 	comand_path = ft_join_path(vars, com_whis_flags);
-		// 	ft_redirects(comand_path, com_whis_flags, mas_redirektion, vars);
-		// }
-		// else if (comand_line[i + 1] == NULL)
-		// {
-		// 	com_whis_flags = make_comand_mas_end(comand_line, i, vars);
-		// 	comand_path = ft_join_path(vars, com_whis_flags);
-		// 	system_funk(comand_path, com_whis_flags, vars);
-		// }
 		if (i != 0 && ((ft_strncmp(comand_line[i - 1], "|", 1) == 0) && vars->flag_redirect == 1))
-		{
+		{		
 			ft_pipe_eof();
 			vars->flag_redirect = 0;
-		}		
+		}
 		if ((ft_strncmp(comand_line[i], "|", 1) == 0) && vars->flag_redirect == 0)
 		{
+			while(comand_line[i + t] != NULL)
+			{
+				if ((ft_strncmp(comand_line[i + t], ">", 1) == 0) && (comand_line[i + t] != NULL ))
+				{
+					fd = open(comand_line[i + t + 1], O_WRONLY | O_CREAT, 0666);
+					close(fd);
+					flag = 1;
+				}
+				if ((ft_strncmp(comand_line[i + t], "|", 1) == 0) && flag == 1)
+					break;
+				t++;
+			}
+			t = 0;
 			com_whis_flags = make_comand_mas_start(comand_line, i, (j - 1));
 			comand_path = ft_join_path(vars, com_whis_flags);
 			ft_pipe(comand_path, com_whis_flags, vars);	
@@ -392,6 +281,7 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 			j = 0;
 			k = 0;
 			vars->flag_redirect = 1;
+			flag = 0;
 		}
 		else if (comand_line[i + 1] == NULL)
 		{

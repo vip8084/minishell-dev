@@ -6,11 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2020/11/06 16:23:14 by hmiso            ###   ########.fr       */
-=======
-/*   Updated: 2020/11/07 18:31:41 by curreg           ###   ########.fr       */
->>>>>>> test
+/*   Updated: 2020/11/07 19:45:43 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +52,12 @@ int main(int argc, char **argv, char **envp)
 	char *line = NULL;
 	int i = 0;
 	struct dirent *dir;
-<<<<<<< HEAD
 	vars.count_call_pipe = 0;
 	vars.flag_redirect = 0;
-=======
 
 	errno = 0;
 	g_error = 0;
 	vars.err_flag = 0;
->>>>>>> test
 	vars.save_std_in = dup(0);
 	vars.save_std_out = dup(1);
 	envp_copy(envp, &vars);

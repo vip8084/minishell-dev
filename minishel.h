@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 16:55:07 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/06 16:22:52 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/08 16:18:32 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,5 @@ void		ft_conveyor(char *line, char **comand_line, t_vars *vars);
 void		check_redirect(char **comand_mas, t_vars *vars);
 void		ft_conveyor_test(char *line, char **comand_line, t_vars *vars);
 void		ft_redirects(char *path, char **comand, char **mas_redirektion, t_vars *vars);
+void		ft_redirects_revers(char *path, char **comand, char **mas_redirektion, t_vars *vars);
 #endif

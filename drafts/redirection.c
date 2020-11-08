@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 19:07:14 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/08 12:33:05 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/08 16:23:20 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,69 @@ void		ft_redirects(char *path, char **comand, char **mas_redirektion, t_vars *va
 		close(fd);
     }
 }
+
+void		ft_redirects_revers(char *path, char **comand, char **mas_redirektion, t_vars *vars)
+{
+    pid_t pid;
+    int mas[2];
+    int status;
+    int i;
+	int fd;
+	char **comand_s;
+	char *name_file;
+
+	i = 0;
+	// while(vars->count_redirect > 0)
+	// {
+	// 	name_file = ft_strtrim(comand[i], " ");
+	// 	fd = open(name_file, O_WRONLY | O_CREAT, 0666);
+	// 	if(vars->count_redirect > 1)
+	// 		close(fd);
+	// 	i++;
+	// 	vars->count_redirect--;
+	// }
+	int count_redirects = 0;
+	
+	while(mas_redirektion[count_redirects] != NULL)
+	{
+		count_redirects++;
+	}
+	// while(mas_redirektion[i] != NULL)
+	// {
+		fd = open(mas_redirektion[count_redirects - 1], O_RDONLY);
+		// if(count_redirects > 1)
+		// 	close(fd);
+		// i++;
+		// if (count_redirects > 0)
+		// 	count_redirects--;
+	// }
+    // pipe(mas);
+    pid = fork();
+    if (pid == 0)
+    {
+        // close(mas[0]);
+        dup2(fd, 0);
+        // close(mas[1]);
+		if(checking_recoded_functions(comand, vars))
+		{
+			exit (0);// забирать значение эрно из внутренних функций и передавать сюда
+		}
+		if ((status = execve(path, comand, vars->envp_copy)) == -1)
+			exit(WEXITSTATUS(status));
+    }
+	else if (pid < 0)
+		ft_putendl_fd("error", 2);
+	else
+    {
+        // close(mas[1]);
+        // dup2(fd, 0);
+        // close(mas[0]);
+        waitpid(pid, &status, WUNTRACED);
+		vars->g_exit_code = WEXITSTATUS(status);
+		close(fd);
+    }
+}
+
 // менеджмент ошибок
 
 // void	ft_conveyor_test(char *line, char **comand_line, t_vars *vars)

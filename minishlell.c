@@ -6,11 +6,41 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/06 16:23:14 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/09 10:37:46 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishel.h"
+
+char	**move_arguments(char **comand_line)
+{
+	int i;
+	int poz;
+	char *ptr;
+	int flag;
+
+	flag = 0;
+	i = 0;
+	poz = 0;
+	while (comand_line[i] != NULL)
+	{
+		if (ft_strncmp(comand_line[i], ">", 2) == 0  || ft_strncmp(comand_line[i], ">>", 3) == 0 || ft_strncmp(comand_line[i], "<", 2) == 0)
+		{
+			if ((comand_line[i + 2] != NULL) && (ft_strncmp(comand_line[i + 2], "|", 2) != 0))
+			{
+				if ((ft_strncmp(comand_line[i + 2], ">", 2) != 0  && ft_strncmp(comand_line[i + 2], ">>", 3) != 0 && ft_strncmp(comand_line[i + 2], "<", 2) != 0))
+				{
+					ptr = comand_line[i]; // копируем символ редиректа в ячейку
+					comand_line[i] = comand_line[i + 2]; // меняем редирект на флаг
+					comand_line[i + 2] = comand_line[i + 1]; // меняем флаг на название файла
+					comand_line[i + 1] = ptr; // заменяем название файла на флаг
+				}
+			}
+		}
+		i++;
+	}
+	return comand_line;
+}
 
 void	ft_pars_argument(char *line, t_vars *vars)
 {
@@ -25,6 +55,7 @@ void	ft_pars_argument(char *line, t_vars *vars)
 		int t = 0;
 
 		comand_line = ft_split(line, ' ');
+		comand_line = move_arguments(comand_line);
 		check_pipe(comand_line, vars);
 		check_redirect(comand_line, vars);
 		if (vars->count_pipe == 0 && vars->count_redirect == 0)

@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 16:42:45 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/09 18:22:04 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/09 18:38:15 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void			system_funk(char *path, char **argv, t_vars *vars)//вызов систе
 		if ((status = execve(path, argv, vars->envp_copy)) == -1)
 		{
 			set_g_error(errno);
+			vars->err_flag = 1;
 			command_error(argv[0], vars);
 		}
 			

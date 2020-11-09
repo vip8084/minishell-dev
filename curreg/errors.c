@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 17:51:37 by curreg            #+#    #+#             */
-/*   Updated: 2020/11/07 18:49:44 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/09 17:57:25 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,12 @@ void command_error(char *cmd, t_vars *vars)
     ft_putstr_fd("minishell>", 1);
     if(ft_strcmp("$?", cmd) == 0)
     {
-        if(vars->err_flag == 0)
+        if(vars->cd_flag == 1 && vars->err_flag == 0)
+        {
+            ft_putstr_fd("1", 1);
+            vars->err_flag = 1;
+        }
+        else if(vars->err_flag == 0)
         {
             ft_putstr_fd("0", 1);
             vars->err_flag = 1;

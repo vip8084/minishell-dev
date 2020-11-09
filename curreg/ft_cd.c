@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 11:07:05 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/07 18:49:54 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/09 18:10:25 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void		ft_cd(char **comand_line, t_vars *vars)
 		if (chdir(path) == -1)
 		{
 			set_g_error(errno);
+			vars->cd_flag = 1;
+			vars->err_flag = 0;
 			cd_error(comand_line[0], comand_line[1], errno);
 		}
 		free_two_dimensional_array(comand_line);

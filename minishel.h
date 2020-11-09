@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 16:55:07 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/09 17:55:45 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/09 20:25:12 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #include <signal.h>
 #include <stdio.h>
 #include <dirent.h>
+#include <string.h>
 #include "get_next_line/get_next_line.h"
 #include "libft/libft.h"
 #define PIPE_READ 0

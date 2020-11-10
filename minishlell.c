@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/09 10:37:46 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/10 18:44:57 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,68 @@ char	**move_arguments(char **comand_line)
 	int i;
 	int poz;
 	char *ptr;
+	char *ptr2;
 	int flag;
 
 	flag = 0;
 	i = 0;
 	poz = 0;
-	while (comand_line[i] != NULL)
+	while (comand_line[poz] != NULL)	
 	{
-		if (ft_strncmp(comand_line[i], ">", 2) == 0  || ft_strncmp(comand_line[i], ">>", 3) == 0 || ft_strncmp(comand_line[i], "<", 2) == 0)
+		while (comand_line[i] != NULL)
 		{
-			if ((comand_line[i + 2] != NULL) && (ft_strncmp(comand_line[i + 2], "|", 2) != 0))
+			if (ft_strncmp(comand_line[i], ">", 2) == 0  || ft_strncmp(comand_line[i], ">>", 3) == 0 || ft_strncmp(comand_line[i], "<", 2) == 0)
 			{
-				if ((ft_strncmp(comand_line[i + 2], ">", 2) != 0  && ft_strncmp(comand_line[i + 2], ">>", 3) != 0 && ft_strncmp(comand_line[i + 2], "<", 2) != 0))
+				if ((comand_line[i + 2] != NULL) && (ft_strncmp(comand_line[i + 2], "|", 2) != 0))
 				{
-					ptr = comand_line[i]; // копируем символ редиректа в ячейку
-					comand_line[i] = comand_line[i + 2]; // меняем редирект на флаг
-					comand_line[i + 2] = comand_line[i + 1]; // меняем флаг на название файла
-					comand_line[i + 1] = ptr; // заменяем название файла на флаг
+					if ((ft_strncmp(comand_line[i + 2], ">", 2) != 0  && ft_strncmp(comand_line[i + 2], ">>", 3) != 0 && ft_strncmp(comand_line[i + 2], "<", 2) != 0))
+					{
+						ptr = comand_line[i]; // копируем символ редиректа в ячейку
+						comand_line[i] = comand_line[i + 2]; // меняем редирект на флаг
+						comand_line[i + 2] = comand_line[i + 1]; // меняем флаг на название файла
+						comand_line[i + 1] = ptr; // заменяем название файла на флаг
+					}
 				}
 			}
+			i++;
 		}
-		i++;
+		i = 0;
+		poz++;
 	}
+	i = 0;
+	poz = 0;
+	while (comand_line[poz] != NULL)	
+	{
+		while (comand_line[i] != NULL)
+		{
+			if (ft_strncmp(comand_line[i], ">", 2) == 0  || ft_strncmp(comand_line[i], ">>", 3) == 0)
+			{
+				if ((comand_line[i + 2] != NULL) && (ft_strncmp(comand_line[i + 2], "|", 2) != 0))
+				{
+					if (ft_strncmp(comand_line[i + 2], "<", 2) == 0)
+					{
+						ptr = comand_line[i]; // копируем редирект 
+						ptr2 = comand_line[i + 1]; // копируем название файла
+						comand_line[i] = comand_line[i + 2]; // меняем редиректы
+						comand_line[i + 1] = comand_line[i + 3]; //меняем названия файлов
+						comand_line[i + 2] = ptr;
+						comand_line[i + 3] = ptr2;
+					}
+				}
+			}
+			i++;
+		}
+		i = 0;
+		poz++;
+	}
+	i = 0;
+	poz = 0;
+	// while(comand_line[i] != NULL)
+	// {
+	// 	printf("%s ", comand_line[i]);
+	// 	i++;
+	// }
+	// exit(0);
 	return comand_line;
 }
 

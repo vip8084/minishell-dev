@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 18:27:08 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/08 16:17:38 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/10 16:22:22 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	**make_list_rederection_revers(char **comand_line, int i, int j)
 
 	count = 0;
 	k = i - j;
-	while(k <= i && (ft_strncmp(comand_line[k], "|", 2) != 0))
+	while(k <= i && (ft_strncmp(comand_line[k], "|", 2) != 0) && (ft_strncmp(comand_line[k], ">", 2) != 0) && (ft_strncmp(comand_line[k], ">>", 3) != 0))
 	{
 		if ((ft_strncmp(comand_line[k], "<", 2) == 0 ))
 		{
@@ -96,7 +96,7 @@ char	**make_list_rederection_revers(char **comand_line, int i, int j)
 	mas = malloc(sizeof(char *) * (count + 1));
 	k = i - j;
 	count = 0;
-	while(k <= i && (ft_strncmp(comand_line[k], "|", 2) != 0))
+	while(k <= i && (ft_strncmp(comand_line[k], "|", 2) != 0) && (ft_strncmp(comand_line[k], ">", 2) != 0) && (ft_strncmp(comand_line[k], ">>", 3) != 0))
 	{
 		if ((ft_strncmp(comand_line[k], "<", 2) == 0 ))
 		{
@@ -263,6 +263,7 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 	char *comand_path;
 	char **com_whis_flags;
 	char **mas_redirektion;
+	char **mas_redirektion2;
 	int i;
 	int j;
 	int k;
@@ -290,10 +291,11 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 	i = 0;
 	while(comand_line[i] != NULL)
 	{
-		if (i != 0 && ((ft_strncmp(comand_line[i - 1], "|", 1) == 0) && vars->flag_redirect == 1))
+		if (i != 0 && ((ft_strncmp(comand_line[i], "|", 1) == 0) && vars->flag_redirect == 1))
 		{		
 			ft_pipe_eof();
 			vars->flag_redirect = 0;
+			i++;
 		}
 		if ((ft_strncmp(comand_line[i], "|", 1) == 0) && vars->flag_redirect == 0)
 		{
@@ -321,7 +323,7 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 			j = 0;
 			k = 0;
 			vars->flag_redirect = 1;
-			flag = 0;
+			i--;
 		}
 		else if ((ft_strncmp(comand_line[i], "<", 2) == 0))
 		{
@@ -329,20 +331,44 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 			comand_path = ft_join_path(vars, com_whis_flags);
 			while(comand_line[i + 1] != NULL)
 			{
-				if (ft_strncmp(comand_line[i], "|", 1) == 0)
+				if (ft_strncmp(comand_line[i], "|", 2) == 0 || ft_strncmp(comand_line[i], ">", 2) == 0 || ft_strncmp(comand_line[i], ">>", 3) == 0)
 				{
+					if (ft_strncmp(comand_line[i], ">", 2) == 0 || ft_strncmp(comand_line[i], ">>", 3) == 0)
+						flag = 2;
+					else 
+						flag = 1;	
 					break;
 				}
 				i++;
 				k++;
 			}
 			mas_redirektion = make_list_rederection_revers(comand_line, i, k);
-			ft_redirects_revers(comand_path, com_whis_flags, mas_redirektion, vars);
+			if (flag == 0)
+				ft_redirects_revers(comand_path, com_whis_flags, mas_redirektion, vars);
+			if (flag == 1)
+				ft_redirects_pipe(comand_path, com_whis_flags, mas_redirektion, vars);
+			if (flag == 2)
+			{
+				j = 0;
+				k = 0;
+				while(comand_line[i + 1] != NULL)
+				{
+					if (ft_strncmp(comand_line[i], "|", 1) == 0)
+					{
+						break;
+					}
+					i++;
+					k++;
+				}
+				mas_redirektion2 = make_list_rederection(comand_line, i, j);
+				ft_redirects_redirect(comand_path, com_whis_flags, mas_redirektion, mas_redirektion2, vars);
+				//i++;
+			}	
 			j = 0;
 			k = 0;
-			vars->flag_redirect = 1;
-			flag = 0;
-		}		
+			// vars->flag_redirect = 1;
+			// i--;
+		}
 		else if (comand_line[i + 1] == NULL)
 		{
 			com_whis_flags = make_comand_mas_start(comand_line, i + 1, j);

@@ -6,90 +6,90 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/12 19:26:05 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/12 20:06:15 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishel.h"
 
-// char *ft_pars(char *line)
-// {
-// 	int i;
-// 	int flag;
+char *delete_quotes(char *line)
+{
+	int i;
+	int flag;
 	
-// 	i = 0;
-// 	int count = 0;
-// 	flag = 0;
-// 	while(line[i] != '\0')
-// 	{
-// 		if (line[i] == '"' && flag == 0)
-// 		{
-// 			line[i] = 10;
-// 			flag = 1;
-// 			i++;
-// 		}
-// 		else if(line[i] == '\'' && flag == 0)
-// 		{
-// 			line[i] = 10;
-// 			flag = 2;
-// 			i++;
-// 		}
-// 		else if(line[i] == '\'' && flag == 2)
-// 		{
-// 			line[i] = 10;
-// 			flag = 0;
-// 			i++;
-// 		}		
-// 		else if(line[i] == ' ' && flag == 0)
-// 		{
-// 			line[i] = 12;
-// 			i++;
-// 		}
-// 		else if(line[i] == '"' && flag == 1)
-// 		{
-// 			line[i] = 10;
-// 			flag = 0;
-// 			i++;
-// 		}
-// 		else
-// 			i++;
-// 	}
-// 	char *line_dubl;
-// 	line_dubl = ft_calloc((i + 1), sizeof(char));
-// 	i = 0;
-// 	flag = 0;
-// 	count = 0;
-// 	while(line[i] != '\0')
-// 	{
-// 		if ((line[i] == '\'' || line[i] == '"' ) && flag == 0)
-// 		{
-// 			flag = 1;
-// 			line_dubl[count] = line[i];
-// 			count++;
-// 			i++;
-// 		}
-// 		else if ((line[i] == '\'' || line[i] == '"') && flag == 1)
-// 		{
-// 			flag = 0;
-// 			line_dubl[count] = line[i];
-// 			count++;
-// 			i++;			
-// 		}
-// 		else
-// 		{	
-// 			if(flag != 1 || line[i] != 12)
-// 			{
-// 				if (line[i] != 10)
-// 				{				
-// 					line_dubl[count] = line[i];
-// 					count++;
-// 				}
-// 			}
-// 			i++;
-// 		}
-// 	}
-// 	return line_dubl;
-// }
+	i = 0;
+	int count = 0;
+	flag = 0;
+	while(line[i] != '\0')
+	{
+		if (line[i] == '"' && flag == 0)
+		{
+			line[i] = 10;
+			flag = 1;
+			i++;
+		}
+		else if(line[i] == '\'' && flag == 0)
+		{
+			line[i] = 10;
+			flag = 2;
+			i++;
+		}
+		else if(line[i] == '\'' && flag == 2)
+		{
+			line[i] = 10;
+			flag = 0;
+			i++;
+		}		
+		else if(line[i] == ' ' && flag == 0)
+		{
+			line[i] = 12;
+			i++;
+		}
+		else if(line[i] == '"' && flag == 1)
+		{
+			line[i] = 10;
+			flag = 0;
+			i++;
+		}
+		else
+			i++;
+	}
+	char *line_dubl;
+	line_dubl = ft_calloc((i + 1), sizeof(char));
+	i = 0;
+	flag = 0;
+	count = 0;
+	while(line[i] != '\0')
+	{
+		if ((line[i] == '\'' || line[i] == '"' ) && flag == 0)
+		{
+			flag = 1;
+			line_dubl[count] = line[i];
+			count++;
+			i++;
+		}
+		else if ((line[i] == '\'' || line[i] == '"') && flag == 1)
+		{
+			flag = 0;
+			line_dubl[count] = line[i];
+			count++;
+			i++;			
+		}
+		else
+		{	
+			if(flag != 1 || line[i] != 12)
+			{
+				if (line[i] != 10)
+				{				
+					line_dubl[count] = line[i];
+					count++;
+				}
+			}
+			i++;
+		}
+	}
+	return line_dubl;
+}
 
 char **environment_variable_substitution(char **comand_line, t_vars *vars)
 {
@@ -126,7 +126,7 @@ char **environment_variable_substitution(char **comand_line, t_vars *vars)
 			if (comand_line[i][j] == '$' && flag != 1)
 			{
 				k = j;
-				while((comand_line[i][j + 1] != ' ') && comand_line[i][j] != '\0' && (comand_line[i][j + 1] != '"' && comand_line[i][j + 1] != '\''))
+				while((comand_line[i][j + 1] != ' ') && comand_line[i][j] != '\0' && (comand_line[i][j + 1] != '"' && comand_line[i][j + 1] != '\'' && comand_line[i][j + 1] != '$'))
 				{
 					j++;
 				}
@@ -147,10 +147,7 @@ char **environment_variable_substitution(char **comand_line, t_vars *vars)
 	i = 0;
 	while (comand_line[i] != NULL)
 	{
-		if (comand_line[i][0] == '"')
-			comand_line[i] = ft_strtrim(comand_line[i], "\"");
-		if (comand_line[i][0] == '\'')
-			comand_line[i] = ft_strtrim(comand_line[i], "'");		
+		comand_line[i] = delete_quotes(comand_line[i]);	
 		i++;
 	}
 	return comand_line;

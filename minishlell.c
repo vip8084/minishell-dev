@@ -6,11 +6,241 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/10 18:44:57 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/12 19:26:05 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishel.h"
+
+// char *ft_pars(char *line)
+// {
+// 	int i;
+// 	int flag;
+	
+// 	i = 0;
+// 	int count = 0;
+// 	flag = 0;
+// 	while(line[i] != '\0')
+// 	{
+// 		if (line[i] == '"' && flag == 0)
+// 		{
+// 			line[i] = 10;
+// 			flag = 1;
+// 			i++;
+// 		}
+// 		else if(line[i] == '\'' && flag == 0)
+// 		{
+// 			line[i] = 10;
+// 			flag = 2;
+// 			i++;
+// 		}
+// 		else if(line[i] == '\'' && flag == 2)
+// 		{
+// 			line[i] = 10;
+// 			flag = 0;
+// 			i++;
+// 		}		
+// 		else if(line[i] == ' ' && flag == 0)
+// 		{
+// 			line[i] = 12;
+// 			i++;
+// 		}
+// 		else if(line[i] == '"' && flag == 1)
+// 		{
+// 			line[i] = 10;
+// 			flag = 0;
+// 			i++;
+// 		}
+// 		else
+// 			i++;
+// 	}
+// 	char *line_dubl;
+// 	line_dubl = ft_calloc((i + 1), sizeof(char));
+// 	i = 0;
+// 	flag = 0;
+// 	count = 0;
+// 	while(line[i] != '\0')
+// 	{
+// 		if ((line[i] == '\'' || line[i] == '"' ) && flag == 0)
+// 		{
+// 			flag = 1;
+// 			line_dubl[count] = line[i];
+// 			count++;
+// 			i++;
+// 		}
+// 		else if ((line[i] == '\'' || line[i] == '"') && flag == 1)
+// 		{
+// 			flag = 0;
+// 			line_dubl[count] = line[i];
+// 			count++;
+// 			i++;			
+// 		}
+// 		else
+// 		{	
+// 			if(flag != 1 || line[i] != 12)
+// 			{
+// 				if (line[i] != 10)
+// 				{				
+// 					line_dubl[count] = line[i];
+// 					count++;
+// 				}
+// 			}
+// 			i++;
+// 		}
+// 	}
+// 	return line_dubl;
+// }
+
+char **environment_variable_substitution(char **comand_line, t_vars *vars)
+{
+	char *ptr;
+	char *env_var;
+	char *ptr2;
+	int i;
+	int j;
+	int flag;
+	int k;
+
+	i = 0;
+	j = 0;
+	k = 0;
+	flag = 0;
+	while(comand_line[i] != NULL)
+	{
+		while (comand_line[i][j] != '\0')
+		{
+			if (comand_line[i][j] == '"')
+			{
+				if (flag == 0 && comand_line[i][j] == '"')
+					flag = 2;
+				else if (flag == 2 && comand_line[i][j] == '"')
+					flag = 0;
+			}
+			if (comand_line[i][j] == '\'' && flag != 2)
+			{
+				if (flag == 0 && comand_line[i][j] == '\'')
+					flag = 1;
+				else if (flag == 1 && comand_line[i][j] == '\'')
+					flag = 0;
+			}
+			if (comand_line[i][j] == '$' && flag != 1)
+			{
+				k = j;
+				while((comand_line[i][j + 1] != ' ') && comand_line[i][j] != '\0' && (comand_line[i][j + 1] != '"' && comand_line[i][j + 1] != '\''))
+				{
+					j++;
+				}
+				ptr = ft_substr(comand_line[i], 0, k);
+				env_var = ft_substr(comand_line[i], k + 1, j - k);
+				ptr2 = ft_substr(comand_line[i], j, 100);
+				ptr = ft_strjoin(ptr, (init_patch(vars, env_var)));
+				ptr = ft_strjoin(ptr, &ptr2[1]);
+				// printf("%s\n", ptr);
+				comand_line[i] = ptr;
+			}
+			else
+				j++;	
+		}
+		i++;
+		j = 0;
+	}
+	i = 0;
+	while (comand_line[i] != NULL)
+	{
+		if (comand_line[i][0] == '"')
+			comand_line[i] = ft_strtrim(comand_line[i], "\"");
+		if (comand_line[i][0] == '\'')
+			comand_line[i] = ft_strtrim(comand_line[i], "'");		
+		i++;
+	}
+	return comand_line;
+}
+
+char **count_comands(char *line)
+{
+	int i;
+	int count;
+	char **comand_line;
+	int flag = 0;
+
+	comand_line = NULL;
+	count = 0;
+	i = 0;
+	while (line[i] != '\0')
+	{
+		if (line[i] != ' ')
+		{
+			count++;
+			while((line[i] != ' ' || flag == 1 || flag == 2) && line[i] != '\0')
+			{
+				if(line[i] == '"' || line[i] == '\'')
+				{
+					if (flag == 0 && line[i] == '"')
+						flag = 1;
+					else if (flag == 1 && line[i] == '"')
+						flag = 0;
+					else if (flag == 0 && line[i] == '\'')
+						flag = 2;
+					else if (flag == 2 && line[i] == '\'')
+						flag = 0;		
+				}
+				i++;
+			}
+		}
+		else
+		{
+			i++;
+		}	
+	}
+	comand_line = malloc(sizeof(char *) * (count + 1));
+	return (comand_line);
+}
+
+char	**ft_pars(char *line, t_vars *vars)
+{
+	int i;
+	int j;
+	int count;
+	char **comand_line;
+	int flag = 0;
+
+	count = 0;
+	i = 0;
+	j = 0;
+	comand_line = count_comands(line);
+	while (line[i] != '\0')
+	{
+		if (line[i] != ' ')
+		{
+			j = i;
+			while((line[i] != ' ' || flag == 1 || flag == 2) && line[i] != '\0')
+			{
+				if(line[i] == '"' || line[i] == '\'')
+				{
+					if (flag == 0 && line[i] == '"')
+						flag = 1;
+					else if (flag == 1 && line[i] == '"')
+						flag = 0;
+					else if (flag == 0 && line[i] == '\'')
+						flag = 2;
+					else if (flag == 2 && line[i] == '\'')
+						flag = 0;		
+				}
+				i++;
+			}
+			comand_line[count] = ft_substr(line, j, i - j);
+			// printf("%s\n", comand_line[count]);
+			count++;
+		}
+		else
+			i++;
+	}
+	
+	comand_line[count] = NULL;
+	// exit(0);
+	environment_variable_substitution(comand_line, vars);
+	return (comand_line);
+}
 
 char	**move_arguments(char **comand_line)
 {
@@ -93,8 +323,10 @@ void	ft_pars_argument(char *line, t_vars *vars)
 		int count = 0;
 		int	i = 0;
 		int t = 0;
-
-		comand_line = ft_split(line, ' ');
+		
+		// line=ft_pars(line);
+		// comand_line = ft_split(line, ' ');
+		comand_line = ft_pars(line, vars);
 		comand_line = move_arguments(comand_line);
 		check_pipe(comand_line, vars);
 		check_redirect(comand_line, vars);

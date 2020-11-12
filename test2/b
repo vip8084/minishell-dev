@@ -1,6 +1,2 @@
-total 0
-drwxr-xr-x   5 hmiso  student  170 10 ноя 18:50 .
-drwxr-xr-x@ 21 hmiso  student  714 10 ноя 18:45 ..
--rw-r--r--   1 hmiso  student    0 10 ноя 18:50 a
--rw-r--r--   1 hmiso  student    0 10 ноя 18:50 b
--rw-r--r--   1 hmiso  student    0 10 ноя 18:50 c
+declare -x __CF_USER_TEXT_ENCODING="0x2D5C:0x0:0x0"$
+declare -x USER="hmiso"$

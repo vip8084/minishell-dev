@@ -1,0 +1,10 @@
+a
+a.out
+a.out.dSYM
+main.c
+make.sh
+parser.c
+redirection.c
+test.c
+test3.c
+test_dir.c

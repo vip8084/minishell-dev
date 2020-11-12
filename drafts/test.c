@@ -269,3 +269,17 @@ int main(int argc, char **argv, char **envp)
 	dup2(vars.save_std_out, 1);	
 	return 0;
 }
+
+			// while(comand_line[i + t] != NULL)
+			// {
+			// 	if ((ft_strncmp(comand_line[i + t], ">", 1) == 0) && (comand_line[i + t] != NULL ))
+			// 	{
+			// 		fd = open(comand_line[i + t + 1], O_WRONLY | O_CREAT, 0666);
+			// 		close(fd);
+			// 		flag = 1;
+			// 	}
+			// 	if ((ft_strncmp(comand_line[i + t], "|", 1) == 0) && flag == 1)
+			// 		break;
+			// 	t++;
+			// }
+			// t = 0;

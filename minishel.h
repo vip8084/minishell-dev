@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishel.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 16:55:07 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/07 19:43:36 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/12 20:55:31 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,4 +78,9 @@ void		ft_conveyor(char *line, char **comand_line, t_vars *vars);
 void		check_redirect(char **comand_mas, t_vars *vars);
 void		ft_conveyor_test(char *line, char **comand_line, t_vars *vars);
 void		ft_redirects(char *path, char **comand, char **mas_redirektion, t_vars *vars);
+void		ft_redirects_revers(char *path, char **comand, char **mas_redirektion, t_vars *vars);
+char	    **move_arguments(char **comand_line);
+void		ft_redirects_pipe(char *path, char **comand, char **mas_redirektion, t_vars *vars);
+void		ft_redirects_redirect(char *path, char **comand, char **mas_redirektion, char **mas_redirektion2, t_vars *vars);
+
 #endif

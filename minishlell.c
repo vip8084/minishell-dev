@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/07 19:45:43 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/16 20:59:52 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_pars_argument(char *line, t_vars *vars)
 		int count = 0;
 		int	i = 0;
 		int t = 0;
-
+		//
 		comand_line = ft_split(line, ' ');
 		check_pipe(comand_line, vars);
 		check_redirect(comand_line, vars);

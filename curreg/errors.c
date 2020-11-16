@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 17:51:37 by curreg            #+#    #+#             */
-/*   Updated: 2020/11/12 19:45:36 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/16 16:30:22 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ void command_error(char *cmd, t_vars *vars)
 {
     
 
-    if(ft_strcmp("clear", cmd) == 0)
-    {
-        vars->err_flag = 0;
-        g_error = 0;
-    }
-    else
-    {
+    // if(ft_strcmp("clear", cmd) == 0)
+    // {
+    //     vars->err_flag = 0;
+    //     g_error = 0;
+    // }
+    // else
+    // {
         ft_putstr_fd("minishell>", 1);
         if (ft_strcmp("$?", cmd) == 0)
         {
@@ -58,7 +58,7 @@ void command_error(char *cmd, t_vars *vars)
             ft_putstr_fd(cmd, 1);
         }
 	    ft_putstr_fd(": command not found\n", 1);
-    }
+    // }
 }
 
 void cd_error(char *cmd, char* arg, int err)

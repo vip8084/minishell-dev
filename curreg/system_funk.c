@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 16:42:45 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/12 19:56:17 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/16 17:24:12 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,19 @@ void			system_funk(char *path, char **argv, t_vars *vars)//вызов систе
 	{
 		waitpid(pid, &status, WUNTRACED);
 		if (WIFEXITED(status))
-			set_g_error(WEXITSTATUS(status));
-		command_error(argv[0], vars);
+		{
+			if(WEXITSTATUS(status))
+			{
+				set_g_error(WEXITSTATUS(status));
+				command_error(argv[0], vars);	
+			}
+			else
+			{
+				vars->err_flag = 0;
+				vars->cd_flag = 0;
+				g_error = 0;
+			}
+		}
 		vars->g_exit_code = WEXITSTATUS(status);        /////
 	}
 }

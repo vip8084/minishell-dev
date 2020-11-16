@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 11:07:05 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/07 18:49:54 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/16 19:11:12 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		ft_cd(char **comand_line, t_vars *vars)
 {
 	int		status;
 	char	*path;
-	
+
 	path = NULL;
 	errno = 0;
 	if(comand_line[0 + 1] != NULL)
@@ -25,7 +25,9 @@ void		ft_cd(char **comand_line, t_vars *vars)
 		if (chdir(path) == -1)
 		{
 			set_g_error(errno);
-			cd_error(comand_line[0], comand_line[1], errno);
+			vars->cd_flag = 1;
+			vars->err_flag = 0;
+			cd_error(comand_line[0], comand_line[1], strerror(errno));
 		}
 		free_two_dimensional_array(comand_line);
 		path = NULL;      
@@ -39,5 +41,3 @@ void		ft_cd(char **comand_line, t_vars *vars)
 		path = NULL;
 	}
 }
-
-//проверить возрат баша на папку к которой нет прав в том числе код ошибки

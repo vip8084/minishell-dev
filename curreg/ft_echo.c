@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 11:46:29 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/07 18:47:42 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/09 17:57:54 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void			ft_echo(char **line, t_vars *vars)
 			{
 				show_g_error();
 				vars->err_flag = 0;
+				vars->cd_flag = 0;
 			}
 			path = init_patch(vars, &line[i][1]);
 			ft_putstr_fd(path, 1);

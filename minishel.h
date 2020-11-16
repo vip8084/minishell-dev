@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/08 16:55:07 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/09 20:25:12 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/16 19:05:31 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int         cd_flag;
 void        set_g_error(int err);
 void        show_g_error();
 void        command_error(char *cmd, t_vars *vars);
-void        cd_error(char *cmd, char* arg, int err);
+void        cd_error(char *cmd, char *arg, char *err);
 
 
 void		free_two_dimensional_array(char **arr);

@@ -6,11 +6,148 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/17 17:11:47 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/17 17:16:45 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishel.h"
+
+char **semicolon(char *line)
+{
+	int i;
+	int flag;
+	int j;
+	int count;
+	char **argv;
+	
+	i = 0;
+	j = 0;
+	flag = 0;
+	count = 0;
+	while(line[i] != '\0')
+	{
+		if ((line[i] == '\'' || line[i] == '"') && flag == 0 && line[i + 1] != '\0')
+		{
+			flag = 1;
+			i++;
+		}
+		if ((line[i] == '\'' || line[i] == '"') && flag == 1 && line[i + 1] != '\0')
+		{
+			flag = 0;
+			i++;
+		}		
+		if (flag == 0 && line[i] == ';')
+		{
+			count++;
+		}
+		i++;
+	}
+	argv = malloc(sizeof(char*) * (count + 2));
+	i = 0;
+	count = 0;
+	flag = 0;
+	while(line[i] != '\0')
+	{
+		if ((line[i] == '\'' || line[i] == '"') && flag == 0)
+		{
+			flag = 1;
+		}
+		else if((line[i] == '\'' || line[i] == '"') && flag == 1)
+		{
+			flag = 0;
+		}
+		if (flag == 0 && line[i] == ';')
+		{
+			argv[count] = ft_substr(line, 0, i);
+			line = ft_strdup(&line[i + 1]);
+			count++;
+			i = 0;
+		}
+		if (line[i + 1] == '\0')
+		{
+			argv[count] = ft_substr(line, 0, i + 1);
+			count++;
+		}
+		i++;
+	}
+	argv[count] = NULL;
+	// count = 0;
+	// while(argv[count] != NULL)
+	// {
+	// 	printf("%s\n",argv[count]);
+	// 	count++;
+	// }
+	// exit(0);
+	return(argv);
+}
+
+char *check_space(char *line)
+{
+	int i;
+	int flag = 0;
+	char *ptr;
+	char *ptr_for_free = NULL;
+	
+	ptr = NULL;
+	i = 0;
+	while(line[i] != '\0')
+	{
+		if ((line[i] == '\'' || line[i] == '"') && flag == 0 && line[i + 1] != '\0')
+		{
+			flag = 1;
+			i++;
+		}
+		if ((line[i] == '\'' || line[i] == '"') && flag == 1 && line[i + 1] != '\0')
+		{
+			flag = 1;
+			i++;
+		}		
+		if ((line[i] == '>' || line[i] == '|' || line[i] == '<') && flag == 0)
+		{
+			if (line[i - 1] != ' ' && i != 0 && line[i - 1] != '>')
+			{
+				//if (ptr != NULL)
+				//	ptr_for_free = ptr;
+				ptr=ft_substr(line, 0, i);
+				//if (ptr_for_free != NULL)
+				//	free(ptr_for_free);
+				//ptr_for_free = ptr;
+				ptr=ft_strjoin(ptr, " ");
+				//	free(ptr_for_free);
+				//ptr_for_free = ptr;	
+				ptr = ft_strjoin(ptr, &line[i]);
+				//free(ptr_for_free);
+				line = ptr;
+			}
+			else if(line[i + 1] != ' ' && line[i + 1] != '\0' && line[i + 1] != '>')
+			{
+				//if (ptr != NULL)
+				//	ptr_for_free = ptr;				
+				ptr = ft_substr(line, 0 , i + 1);
+				//if (ptr_for_free != NULL)
+				//	free(ptr_for_free);
+				//ptr_for_free = ptr;				
+				ptr = ft_strjoin(ptr, " ");
+				//free(ptr_for_free);
+				//ptr_for_free = ptr;				
+				ptr = ft_strjoin(ptr, &line[i + 1]);
+				line = ptr;
+			}
+			else if (line[i + 2] != ' ' && line[i + 2] != '\0' && line[i + 1] == '>')
+			{
+				ptr = ft_substr(line, 0 , i + 2);
+				ptr = ft_strjoin(ptr, " ");
+				ptr = ft_strjoin(ptr, &line[i + 2]);
+				line = ptr;
+				i++;
+			}
+		}
+		i++;
+	}
+	// printf("%s\n", line);
+	// exit(0);
+	return line;
+}
 
 char *delete_quotes(char *line)
 {
@@ -130,13 +267,22 @@ char **environment_variable_substitution(char **comand_line, t_vars *vars)
 				{
 					j++;
 				}
-				ptr = ft_substr(comand_line[i], 0, k);
-				env_var = ft_substr(comand_line[i], k + 1, j - k);
-				ptr2 = ft_substr(comand_line[i], j, 100);
-				ptr = ft_strjoin(ptr, (init_patch(vars, env_var)));
-				ptr = ft_strjoin(ptr, &ptr2[1]);
+				if (j - k > 1)
+				{
+					ptr = ft_substr(comand_line[i], 0, k);
+					env_var = ft_substr(comand_line[i], k + 1, j - k);
+					ptr2 = ft_substr(comand_line[i], j, 100);
+					ptr = ft_strjoin(ptr, (init_patch(vars, env_var)));
+					ptr = ft_strjoin(ptr, &ptr2[1]);
 				// printf("%s\n", ptr);
-				comand_line[i] = ptr;
+					comand_line[i] = ptr;
+					i = 0;
+				}
+				else
+				{
+					j++;
+				}
+				
 			}
 			else
 				j++;	
@@ -226,7 +372,6 @@ char	**ft_pars(char *line, t_vars *vars)
 				i++;
 			}
 			comand_line[count] = ft_substr(line, j, i - j);
-			// printf("%s\n", comand_line[count]);
 			count++;
 		}
 		else
@@ -234,7 +379,6 @@ char	**ft_pars(char *line, t_vars *vars)
 	}
 	
 	comand_line[count] = NULL;
-	// exit(0);
 	environment_variable_substitution(comand_line, vars);
 	return (comand_line);
 }
@@ -298,8 +442,8 @@ char	**move_arguments(char **comand_line)
 		i = 0;
 		poz++;
 	}
-	i = 0;
-	poz = 0;
+	// i = 0;
+	// poz = 0;
 	// while(comand_line[i] != NULL)
 	// {
 	// 	printf("%s ", comand_line[i]);
@@ -307,6 +451,39 @@ char	**move_arguments(char **comand_line)
 	// }
 	// exit(0);
 	return comand_line;
+}
+
+void	execute_command(char *line, t_vars *vars)
+{
+	char **comand_line;
+	char *comand_path;
+
+	line = check_space(line);
+	comand_line = ft_pars(line, vars);
+	comand_line = move_arguments(comand_line);
+	check_pipe(comand_line, vars);
+	check_redirect(comand_line, vars);
+	if (vars->count_pipe == 0 && vars->count_redirect == 0)
+	{
+		if(!(checking_recoded_functions(comand_line, vars)))
+		{
+			comand_path = check_system_funk(vars, comand_line);
+			if (comand_path == NULL)
+				comand_path = comand_line[0];
+			else
+			{	
+				comand_path = ft_strjoin(comand_path, "/");
+				comand_path = ft_strjoin(comand_path, comand_line[0]);
+			}			
+			system_funk(comand_path, comand_line, vars);
+		}
+	}
+	else
+	{
+		ft_conveyor(line, comand_line, vars);
+		dup2(vars->save_std_in, 0);
+		dup2(vars->save_std_out, 1);
+	}
 }
 
 void	ft_pars_argument(char *line, t_vars *vars)
@@ -321,28 +498,35 @@ void	ft_pars_argument(char *line, t_vars *vars)
 		int	i = 0;
 		int t = 0;
 		
-		// line=ft_pars(line);
-		// comand_line = ft_split(line, ' ');
-		comand_line = ft_pars(line, vars);
-		comand_line = move_arguments(comand_line);
-		check_pipe(comand_line, vars);
-		check_redirect(comand_line, vars);
-		if (vars->count_pipe == 0 && vars->count_redirect == 0)
+		
+		argv = semicolon(line);
+		while (argv[i] != NULL)
 		{
-			if(!(checking_recoded_functions(comand_line, vars)))
-			{
-				comand_path = check_system_funk(vars, comand_line);
-				comand_path = ft_strjoin(comand_path, "/");
-				comand_path = ft_strjoin(comand_path, comand_line[0]);			
-				system_funk(comand_path, comand_line, vars);
-			}
+			if (ft_strlen(argv[i]) != 0)
+				execute_command(argv[i], vars);
+			i++;
 		}
-		else
-		{
-			ft_conveyor(line, comand_line, vars);
-			dup2(vars->save_std_in, 0);
-			dup2(vars->save_std_out, 1);
-		}
+		// line = check_space(line);
+		// comand_line = ft_pars(line, vars);
+		// comand_line = move_arguments(comand_line);
+		// check_pipe(comand_line, vars);
+		// check_redirect(comand_line, vars);
+		// if (vars->count_pipe == 0 && vars->count_redirect == 0)
+		// {
+		// 	if(!(checking_recoded_functions(comand_line, vars)))
+		// 	{
+		// 		comand_path = check_system_funk(vars, comand_line);
+		// 		comand_path = ft_strjoin(comand_path, "/");
+		// 		comand_path = ft_strjoin(comand_path, comand_line[0]);			
+		// 		system_funk(comand_path, comand_line, vars);
+		// 	}
+		// }
+		// else
+		// {
+		// 	ft_conveyor(line, comand_line, vars);
+		// 	dup2(vars->save_std_in, 0);
+		// 	dup2(vars->save_std_out, 1);
+		// }
 }
 
 int main(int argc, char **argv, char **envp)
@@ -366,6 +550,11 @@ int main(int argc, char **argv, char **envp)
 	ft_putstr_fd("minishell>", 1);
 	while((i = get_next_line(0, &line)) > 0)
 	{
+		if(ft_strlen(line) == 0)
+		{
+			ft_putstr_fd("minishell>", 1);
+			continue;
+		}
 		ft_pars_argument(line, &vars);
 		free(line);
 		line = NULL;

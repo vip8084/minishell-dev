@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 18:27:08 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/12 15:52:31 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/17 17:15:58 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,8 +242,15 @@ char	*ft_join_path(t_vars *vars, char **com_whis_flags)
 	char *comand_path;
 
 	comand_path = check_system_funk(vars, &com_whis_flags[0]);
-	comand_path = ft_strjoin(comand_path, "/");
-	comand_path = ft_strjoin(comand_path, com_whis_flags[0]);
+	if (comand_path == NULL)
+	{
+		comand_path = com_whis_flags[0];
+	}
+	else
+	{
+		comand_path = ft_strjoin(comand_path, "/");
+		comand_path = ft_strjoin(comand_path, com_whis_flags[0]);
+	}
 	return (comand_path);
 }
 
@@ -255,6 +262,52 @@ void		ft_pipe_eof(void)
 	write(mas[1], "", 0);
 	dup2(mas[0], 0);
 	close(mas[1]);    
+}
+
+void	create_file(char **comand_line)
+{
+	int i;
+	int fd;
+
+	fd = 0;
+	i = 0;
+	while (comand_line[i] != NULL)
+	{
+		if (ft_strncmp(comand_line[i], ">", 2) == 0 && comand_line[i + 1] != NULL)
+		{
+			fd = open(comand_line[i + 1], O_WRONLY | O_TRUNC | O_CREAT, 0666);
+			if (fd == -1)
+			{
+				ft_putstr_fd(comand_line[i + 1], 2);
+				ft_putstr_fd(": Permission denied\n", 2);
+				break;
+			}
+			close(fd);
+		}
+		if (ft_strncmp(comand_line[i], "<", 2) == 0 && comand_line[i + 1] != NULL)
+		{
+			fd = open(comand_line[i + 1], O_RDONLY);
+			if (fd == -1)
+			{
+				// ft_putstr_fd(comand_line[i + 1], 2);
+				// ft_putstr_fd(": Permission denied\n", 2);
+				break;
+			}
+			close(fd);
+		}		
+		if (ft_strncmp(comand_line[i], ">>", 3) == 0 && comand_line[i + 1] != NULL)
+		{
+			fd = open(comand_line[i + 1], O_WRONLY | O_CREAT | O_APPEND, 0666);
+			if (fd == -1)
+			{
+				ft_putstr_fd(comand_line[i + 1], 2);
+				ft_putstr_fd(": Permission denied\n", 2);
+				break;
+			}			
+			close(fd);
+		}
+		i++;
+	}
 }
 
 void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
@@ -274,31 +327,46 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 	k = 0;
 	int t = 0;
 	int flag = 0;
-	while (comand_line[i] != NULL)
-	{
-		if (ft_strncmp(comand_line[i], ">", 2) == 0 && comand_line[i + 1] != NULL)
-		{
-			fd = open(comand_line[i + 1], O_WRONLY | O_TRUNC | O_CREAT, 0666);
-			close(fd);
-		}
-		if (ft_strncmp(comand_line[i], ">>", 3) == 0 && comand_line[i + 1] != NULL)
-		{
-			fd = open(comand_line[i + 1], O_WRONLY | O_CREAT | O_APPEND, 0666);
-			close(fd);
-		}		
-		i++;
-	}
+	// while (comand_line[i] != NULL)
+	// {
+	// 	if (ft_strncmp(comand_line[i], ">", 2) == 0 && comand_line[i + 1] != NULL)
+	// 	{
+	// 		fd = open(comand_line[i + 1], O_WRONLY | O_TRUNC | O_CREAT, 0666);
+	// 		if (fd == -1)
+	// 		{
+	// 			ft_putstr_fd(comand_line[i + 1], 2);
+	// 			ft_putstr_fd(": Permission denied\n", 2);
+	// 			break;
+	// 		}
+	// 		close(fd);
+	// 	}
+	// 	if (ft_strncmp(comand_line[i], ">>", 3) == 0 && comand_line[i + 1] != NULL)
+	// 	{
+	// 		fd = open(comand_line[i + 1], O_WRONLY | O_CREAT | O_APPEND, 0666);
+	// 		if (fd == -1)
+	// 		{
+	// 			ft_putstr_fd(comand_line[i + 1], 2);
+	// 			ft_putstr_fd(": Permission denied\n", 2);
+	// 			break;
+	// 		}			
+	// 		close(fd);
+	// 	}		
+	// 	i++;
+	// }
+	create_file(comand_line);
 	i = 0;
 	while(comand_line[i] != NULL)
 	{
 		if (i != 0 && ((ft_strncmp(comand_line[i], "|", 1) == 0) && vars->flag_redirect == 1))
 		{		
 			ft_pipe_eof();
+			create_file(&comand_line[i]);
 			vars->flag_redirect = 0;
 			i++;
 		}
 		if ((ft_strncmp(comand_line[i], "|", 1) == 0) && vars->flag_redirect == 0)
 		{
+			create_file(&comand_line[i]);
 			com_whis_flags = make_comand_mas_start(comand_line, i, (j - 1));
 			comand_path = ft_join_path(vars, com_whis_flags);
 			ft_pipe(comand_path, com_whis_flags, vars);	
@@ -366,8 +434,7 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 			}	
 			j = 0;
 			k = 0;
-			// vars->flag_redirect = 1;
-			// i--;
+			flag = 0;
 		}
 		else if (comand_line[i + 1] == NULL)
 		{

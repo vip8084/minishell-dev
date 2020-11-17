@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 19:07:14 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/10 16:55:03 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/17 16:10:36 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,55 +23,36 @@ void		ft_redirects(char *path, char **comand, char **mas_redirektion, t_vars *va
 	char *name_file;
 
 	i = 0;
-	// while(vars->count_redirect > 0)
-	// {
-	// 	name_file = ft_strtrim(comand[i], " ");
-	// 	fd = open(name_file, O_WRONLY | O_CREAT, 0666);
-	// 	if(vars->count_redirect > 1)
-	// 		close(fd);
-	// 	i++;
-	// 	vars->count_redirect--;
-	// }
+
 	int count_redirects = 0;
 	
 	while(mas_redirektion[count_redirects] != NULL)
 	{
 		count_redirects++;
 	}
-	// while(mas_redirektion[i] != NULL)
-	// {
-		fd = open(mas_redirektion[count_redirects - 1], O_WRONLY | O_CREAT | O_APPEND, 0666);
-		// if(count_redirects > 1)
-		// 	close(fd);
-		// i++;
-		// if (count_redirects > 0)
-		// 	count_redirects--;
-	// }
-    // pipe(mas);
-    pid = fork();
-    if (pid == 0)
-    {
-        // close(mas[0]);
-        dup2(fd, 1);
-        // close(mas[1]);
-		if(checking_recoded_functions(comand, vars))
+	fd = open(mas_redirektion[count_redirects - 1], O_WRONLY | O_APPEND, 0666);
+	if (fd > 0)
+	{
+		pid = fork();
+		if (pid == 0)
 		{
-			exit (0);// забирать значение эрно из внутренних функций и передавать сюда
+			dup2(fd, 1);
+			if(checking_recoded_functions(comand, vars))
+			{
+				exit (0);// забирать значение эрно из внутренних функций и передавать сюда
+			}
+			if ((status = execve(path, comand, vars->envp_copy)) == -1)
+				exit(WEXITSTATUS(status));
 		}
-		if ((status = execve(path, comand, vars->envp_copy)) == -1)
-			exit(WEXITSTATUS(status));
-    }
-	else if (pid < 0)
-		ft_putendl_fd("error", 2);
-	else
-    {
-        // close(mas[1]);
-        // dup2(fd, 0);
-        // close(mas[0]);
-        waitpid(pid, &status, WUNTRACED);
-		vars->g_exit_code = WEXITSTATUS(status);
-		close(fd);
-    }
+		else if (pid < 0)
+			ft_putendl_fd("error", 2);
+		else
+		{
+			waitpid(pid, &status, WUNTRACED);
+			vars->g_exit_code = WEXITSTATUS(status);
+			close(fd);
+		}
+	}
 }
 
 void		ft_redirects_revers(char *path, char **comand, char **mas_redirektion, t_vars *vars)
@@ -85,55 +66,41 @@ void		ft_redirects_revers(char *path, char **comand, char **mas_redirektion, t_v
 	char *name_file;
 
 	i = 0;
-	// while(vars->count_redirect > 0)
-	// {
-	// 	name_file = ft_strtrim(comand[i], " ");
-	// 	fd = open(name_file, O_WRONLY | O_CREAT, 0666);
-	// 	if(vars->count_redirect > 1)
-	// 		close(fd);
-	// 	i++;
-	// 	vars->count_redirect--;
-	// }
 	int count_redirects = 0;
 	
 	while(mas_redirektion[count_redirects] != NULL)
 	{
+		fd = open(mas_redirektion[count_redirects], O_RDONLY);
+		if (fd < 0)
+		{
+			ft_putstr_fd(mas_redirektion[i], 2);
+			ft_putstr_fd(": Permission denied\n", 2);
+			break;			
+		}
 		count_redirects++;
 	}
-	// while(mas_redirektion[i] != NULL)
-	// {
-		fd = open(mas_redirektion[count_redirects - 1], O_RDONLY);
-		// if(count_redirects > 1)
-		// 	close(fd);
-		// i++;
-		// if (count_redirects > 0)
-		// 	count_redirects--;
-	// }
-    // pipe(mas);
-    pid = fork();
-    if (pid == 0)
-    {
-        // close(mas[0]);
-        dup2(fd, 0);
-        // close(mas[1]);
-		if(checking_recoded_functions(comand, vars))
+	if (fd > 0)
+	{
+		pid = fork();
+		if (pid == 0)
 		{
-			exit (0);// забирать значение эрно из внутренних функций и передавать сюда
+			dup2(fd, 0);
+			if(checking_recoded_functions(comand, vars))
+			{
+				exit (0);// забирать значение эрно из внутренних функций и передавать сюда
+			}
+			if ((status = execve(path, comand, vars->envp_copy)) == -1)
+				exit(WEXITSTATUS(status));
 		}
-		if ((status = execve(path, comand, vars->envp_copy)) == -1)
-			exit(WEXITSTATUS(status));
-    }
-	else if (pid < 0)
-		ft_putendl_fd("error", 2);
-	else
-    {
-        // close(mas[1]);
-        // dup2(fd, 0);
-        // close(mas[0]);
-        waitpid(pid, &status, WUNTRACED);
-		vars->g_exit_code = WEXITSTATUS(status);
-		close(fd);
-    }
+		else if (pid < 0)
+			ft_putendl_fd("error", 2);
+		else
+		{
+			waitpid(pid, &status, WUNTRACED);
+			vars->g_exit_code = WEXITSTATUS(status);
+			close(fd);
+		}	
+	}
 }
 
 void		ft_redirects_pipe(char *path, char **comand, char **mas_redirektion, t_vars *vars)
@@ -147,57 +114,49 @@ void		ft_redirects_pipe(char *path, char **comand, char **mas_redirektion, t_var
 	char *name_file;
 
 	i = 0;
-	// while(vars->count_redirect > 0)
-	// {
-	// 	name_file = ft_strtrim(comand[i], " ");
-	// 	fd = open(name_file, O_WRONLY | O_CREAT, 0666);
-	// 	if(vars->count_redirect > 1)
-	// 		close(fd);
-	// 	i++;
-	// 	vars->count_redirect--;
-	// }
 	int count_redirects = 0;
 	
 	while(mas_redirektion[count_redirects] != NULL)
 	{
+		fd = open(mas_redirektion[count_redirects], O_RDONLY);
+		if (fd < 0)
+		{
+			ft_putstr_fd(mas_redirektion[i], 2);
+			ft_putstr_fd(": Permission denied\n", 2);
+			break;			
+		}
 		count_redirects++;
 	}
-	// while(mas_redirektion[i] != NULL)
-	// {
-		fd = open(mas_redirektion[count_redirects - 1], O_RDONLY);
-		// if(count_redirects > 1)
-		// 	close(fd);
-		// i++;
-		// if (count_redirects > 0)
-		// 	count_redirects--;
-	// }
-    pipe(mas);
-    pid = fork();
-    if (pid == 0)
-    {
-        close(mas[0]);
-        dup2(fd, 0);
-        dup2(mas[1], 1);
-        close(mas[1]);
-		if(checking_recoded_functions(comand, vars))
+	if (fd > 0)
+	{
+		pipe(mas);
+		pid = fork();
+		if (pid == 0)
 		{
-			exit (0);// забирать значение эрно из внутренних функций и передавать сюда
+			close(mas[0]);
+			dup2(fd, 0);
+			dup2(mas[1], 1);
+			close(mas[1]);
+			if(checking_recoded_functions(comand, vars))
+			{
+				exit (0);// забирать значение эрно из внутренних функций и передавать сюда
+			}
+			if ((status = execve(path, comand, vars->envp_copy)) == -1)
+				exit(WEXITSTATUS(status));
 		}
-		if ((status = execve(path, comand, vars->envp_copy)) == -1)
-			exit(WEXITSTATUS(status));
-    }
-	else if (pid < 0)
-		ft_putendl_fd("error", 2);
-	else
-    {
-        close(mas[1]);
-        dup2(fd, 0);
-		dup2(mas[0], 0);
-        close(mas[0]);
-        waitpid(pid, &status, WUNTRACED);
-		vars->g_exit_code = WEXITSTATUS(status);
-		close(fd);
-    }
+		else if (pid < 0)
+			ft_putendl_fd("error", 2);
+		else
+		{
+			close(mas[1]);
+			dup2(fd, 0);
+			dup2(mas[0], 0);
+			close(mas[0]);
+			waitpid(pid, &status, WUNTRACED);
+			vars->g_exit_code = WEXITSTATUS(status);
+			close(fd);
+		}		
+	}	
 }
 
 void		ft_redirects_redirect(char *path, char **comand, char **mas_redirektion, char **mas_redirektion2, t_vars *vars)
@@ -214,36 +173,45 @@ void		ft_redirects_redirect(char *path, char **comand, char **mas_redirektion, c
 	
 	while(mas_redirektion[count_redirects] != NULL)
 	{
+		fd = open(mas_redirektion[count_redirects], O_RDONLY);
+		if (fd < 0)
+		{
+			ft_putstr_fd(mas_redirektion[i], 2);
+			ft_putstr_fd(": Permission denied\n", 2);
+			break;			
+		}
 		count_redirects++;
 	}
-	fd = open(mas_redirektion[count_redirects - 1], O_RDONLY);
 	count_redirects = 0;
 	while(mas_redirektion2[count_redirects] != NULL)
 	{
 		count_redirects++;
 	}
 	fd2 = open(mas_redirektion2[count_redirects - 1], O_WRONLY | O_APPEND, 0666);
-    pid = fork();
-    if (pid == 0)
-    {
-        dup2(fd, 0);
-        dup2(fd2, 1);
-		if(checking_recoded_functions(comand, vars))
+	if (fd > 0 && fd2 > 0)
+	{
+		pid = fork();
+		if (pid == 0)
 		{
-			exit (0);// забирать значение эрно из внутренних функций и передавать сюда
+			dup2(fd, 0);
+			dup2(fd2, 1);
+			if(checking_recoded_functions(comand, vars))
+			{
+				exit (0);// забирать значение эрно из внутренних функций и передавать сюда
+			}
+			if ((status = execve(path, comand, vars->envp_copy)) == -1)
+				exit(WEXITSTATUS(status));
 		}
-		if ((status = execve(path, comand, vars->envp_copy)) == -1)
-			exit(WEXITSTATUS(status));
-    }
-	else if (pid < 0)
-		ft_putendl_fd("error", 2);
-	else
-    {
-        waitpid(pid, &status, WUNTRACED);
-		vars->g_exit_code = WEXITSTATUS(status);
-		close(fd);
-		close(fd2);
-    }
+		else if (pid < 0)
+			ft_putendl_fd("error", 2);
+		else
+		{
+			waitpid(pid, &status, WUNTRACED);
+			vars->g_exit_code = WEXITSTATUS(status);
+			close(fd);
+			close(fd2);
+		}		
+	}
 }
 
 // менеджмент ошибок

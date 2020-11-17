@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 16:41:45 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/02 16:41:57 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/17 11:41:39 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,12 @@ char 			*check_system_funk(t_vars *vars, char **str) // проверяет на�
 	path = ft_split(init_patch(vars, "PATH"), ':');
 	arg = str;
 	char **argv = str;
+	while(str[0][i] != '\0')
+	{
+		str[0][i] = ft_tolower(str[0][i]);
+		i++;
+	}
+	i = 0;
 	while(path[i] != NULL)
 	{
 		if ((dir = opendir(path[i])) == NULL)

@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/20 20:58:20 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/20 21:21:38 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -514,6 +514,7 @@ void	execute_command(char *line, t_vars *vars)
 	}
 	else
 	{
+		
 		ft_conveyor(line, comand_line, vars);
 		dup2(vars->save_std_in, 0);
 		dup2(vars->save_std_out, 1);

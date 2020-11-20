@@ -6,13 +6,13 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/14 16:49:43 by hmiso             #+#    #+#             */
-/*   Updated: 2020/10/27 11:16:21 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/19 20:18:10 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFFER_SIZE 1000
+# define BUFFER_SIZE 1
 # include <stdlib.h>
 # include <unistd.h>
 

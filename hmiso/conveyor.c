@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 18:27:08 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/17 17:15:58 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/20 13:29:27 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	**make_comand_mas_start(char **comand_line, int i, int j)
 	return comand_whis_flags;
 }
 
-char	**make_list_rederection(char **comand_line, int i, int j)
+char	**make_list_rederection(char **comand_line, int i, int j, t_vars *vars)
 {
 	int count;
 	int k;
@@ -38,11 +38,11 @@ char	**make_list_rederection(char **comand_line, int i, int j)
 
 	count = 0;
 	k = i - j;
-	while(k <= i && (ft_strncmp(comand_line[k], "|", 2) != 0))
+	while(k <= i && ((ft_strncmp(comand_line[k], "|", 2) != 0) || vars->mas_flags[k] == 1))
 	{
-		if ((ft_strncmp(comand_line[k], ">", 2) == 0 ) || (ft_strncmp(comand_line[k], ">>", 3) == 0 ))
+		if (((ft_strncmp(comand_line[k], ">", 2) == 0) && vars->mas_flags[k] == 0) || ((ft_strncmp(comand_line[k], ">>", 3) == 0 ) && vars->mas_flags[k] == 0))
 		{
-			if ((ft_strncmp(comand_line[k - 1], ">", 2) != 0 ) || (ft_strncmp(comand_line[k - 1], ">>", 3) != 0 ))
+			if (((ft_strncmp(comand_line[k - 1], ">", 2) != 0 && vars->mas_flags[k - 1] == 0)) || (ft_strncmp(comand_line[k - 1], ">>", 3) != 0 && vars->mas_flags[k - 1] == 0))
 			{
 				k++;
 				continue;
@@ -54,11 +54,11 @@ char	**make_list_rederection(char **comand_line, int i, int j)
 	mas = malloc(sizeof(char *) * (count + 1));
 	k = i - j;
 	count = 0;
-	while(k <= i && (ft_strncmp(comand_line[k], "|", 2) != 0))
+	while(k <= i && (ft_strncmp(comand_line[k], "|", 2) != 0 || vars->mas_flags[k] == 1))
 	{
-		if ((ft_strncmp(comand_line[k], ">", 2) == 0 ) || (ft_strncmp(comand_line[k], ">>", 3) == 0 ))
+		if (((ft_strncmp(comand_line[k], ">", 2) == 0) && vars->mas_flags[k] == 0) || ((ft_strncmp(comand_line[k], ">>", 3) == 0 ) && vars->mas_flags[k] == 0))
 		{
-			if ((ft_strncmp(comand_line[k - 1], ">", 2) != 0 ) || (ft_strncmp(comand_line[k - 1], ">>", 3) != 0 ))
+			if (((ft_strncmp(comand_line[k - 1], ">", 2) != 0 && vars->mas_flags[k - 1] == 0)) || (ft_strncmp(comand_line[k - 1], ">>", 3) != 0 && vars->mas_flags[k - 1] == 0))
 			{
 				k++;
 				continue;
@@ -72,7 +72,7 @@ char	**make_list_rederection(char **comand_line, int i, int j)
 	return mas;
 }
 
-char	**make_list_rederection_revers(char **comand_line, int i, int j)
+char	**make_list_rederection_revers(char **comand_line, int i, int j, t_vars *vars)
 {
 	int count;
 	int k;
@@ -80,11 +80,11 @@ char	**make_list_rederection_revers(char **comand_line, int i, int j)
 
 	count = 0;
 	k = i - j;
-	while(k <= i && (ft_strncmp(comand_line[k], "|", 2) != 0) && (ft_strncmp(comand_line[k], ">", 2) != 0) && (ft_strncmp(comand_line[k], ">>", 3) != 0))
+	while(k <= i && (ft_strncmp(comand_line[k], "|", 2) != 0 || vars->mas_flags[k] == 1) && (ft_strncmp(comand_line[k], ">", 2) != 0 || vars->mas_flags[k] == 1) && ((ft_strncmp(comand_line[k], ">>", 3) != 0) || vars->mas_flags[k] == 1))
 	{
-		if ((ft_strncmp(comand_line[k], "<", 2) == 0 ))
+		if ((ft_strncmp(comand_line[k], "<", 2) == 0) && vars->mas_flags[k] == 0)
 		{
-			if ((ft_strncmp(comand_line[k - 1], "<", 2) != 0 ))
+			if ((ft_strncmp(comand_line[k - 1], "<", 2) != 0 && vars->mas_flags[k - 1] == 0))
 			{
 				k++;
 				continue;
@@ -96,11 +96,11 @@ char	**make_list_rederection_revers(char **comand_line, int i, int j)
 	mas = malloc(sizeof(char *) * (count + 1));
 	k = i - j;
 	count = 0;
-	while(k <= i && (ft_strncmp(comand_line[k], "|", 2) != 0) && (ft_strncmp(comand_line[k], ">", 2) != 0) && (ft_strncmp(comand_line[k], ">>", 3) != 0))
+	while(k <= i&& (ft_strncmp(comand_line[k], "|", 2) != 0 || vars->mas_flags[k] == 1) && (ft_strncmp(comand_line[k], ">", 2) != 0 || vars->mas_flags[k] == 1) && ((ft_strncmp(comand_line[k], ">>", 3) != 0) || vars->mas_flags[k] == 1))
 	{
-		if ((ft_strncmp(comand_line[k], "<", 2) == 0 ))
+		if ((ft_strncmp(comand_line[k], "<", 2) == 0) && vars->mas_flags[k] == 0)
 		{
-			if ((ft_strncmp(comand_line[k - 1], "<", 2) != 0 ))
+			if ((ft_strncmp(comand_line[k - 1], "<", 2) != 0 ) && vars->mas_flags[k - 1] == 0)
 			{
 				k++;
 				continue;
@@ -357,14 +357,14 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 	i = 0;
 	while(comand_line[i] != NULL)
 	{
-		if (i != 0 && ((ft_strncmp(comand_line[i], "|", 1) == 0) && vars->flag_redirect == 1))
+		if (i != 0 && ((ft_strncmp(comand_line[i], "|", 2) == 0) && vars->flag_redirect == 1)  && vars->mas_flags[i] != 1)
 		{		
 			ft_pipe_eof();
 			create_file(&comand_line[i]);
 			vars->flag_redirect = 0;
 			i++;
 		}
-		if ((ft_strncmp(comand_line[i], "|", 1) == 0) && vars->flag_redirect == 0)
+		if ((ft_strncmp(comand_line[i], "|", 2) == 0) && vars->flag_redirect == 0 && vars->mas_flags[i] != 1)
 		{
 			create_file(&comand_line[i]);
 			com_whis_flags = make_comand_mas_start(comand_line, i, (j - 1));
@@ -373,44 +373,45 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 			j = 0;
 			vars->flag_redirect = 0;
 		}
-		else if ((ft_strncmp(comand_line[i], ">", 2) == 0) || (ft_strncmp(comand_line[i], ">>", 3) == 0))
+		else if (((ft_strncmp(comand_line[i], ">", 2) == 0) || (ft_strncmp(comand_line[i], ">>", 3) == 0)) && vars->mas_flags[i] != 1)
 		{
 			com_whis_flags = make_comand_mas_start(comand_line, i, (j - 1));
 			comand_path = ft_join_path(vars, com_whis_flags);
 			while(comand_line[i + 1] != NULL)
 			{
-				if (ft_strncmp(comand_line[i], "|", 1) == 0)
+				if (ft_strncmp(comand_line[i], "|", 2) == 0 && vars->mas_flags[i] == 0)
 				{
 					break;
 				}
 				i++;
 				k++;
 			}
-			mas_redirektion = make_list_rederection(comand_line, i, k);
+			mas_redirektion = make_list_rederection(comand_line, i, k, vars);
 			ft_redirects(comand_path, com_whis_flags, mas_redirektion, vars);
 			j = 0;
 			k = 0;
 			vars->flag_redirect = 1;
-			i--;
+			if(mas_redirektion[0] != NULL)
+				i--;
 		}
-		else if ((ft_strncmp(comand_line[i], "<", 2) == 0))
+		else if ((ft_strncmp(comand_line[i], "<", 2) == 0) && vars->mas_flags[i] != 1)
 		{
 			com_whis_flags = make_comand_mas_start(comand_line, i, (j - 1));
 			comand_path = ft_join_path(vars, com_whis_flags);
 			while(comand_line[i + 1] != NULL)
 			{
-				if (ft_strncmp(comand_line[i], "|", 2) == 0 || ft_strncmp(comand_line[i], ">", 2) == 0 || ft_strncmp(comand_line[i], ">>", 3) == 0)
+				if ((ft_strncmp(comand_line[i], "|", 2) == 0 || ft_strncmp(comand_line[i], ">", 2) == 0 || ft_strncmp(comand_line[i], ">>", 3) == 0) && vars->mas_flags[i] != 1)
 				{
-					if (ft_strncmp(comand_line[i], ">", 2) == 0 || ft_strncmp(comand_line[i], ">>", 3) == 0)
+					if ((ft_strncmp(comand_line[i], ">", 2) == 0 || ft_strncmp(comand_line[i], ">>", 3) == 0) && vars->mas_flags[i] == 0)
 						flag = 2;
 					else 
-						flag = 1;	
+						flag = 1;
 					break;
 				}
 				i++;
 				k++;
 			}
-			mas_redirektion = make_list_rederection_revers(comand_line, i, k);
+			mas_redirektion = make_list_rederection_revers(comand_line, i, k, vars);
 			if (flag == 0)
 				ft_redirects_revers(comand_path, com_whis_flags, mas_redirektion, vars);
 			if (flag == 1)
@@ -421,14 +422,14 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 				k = 0;
 				while(comand_line[i + 1] != NULL)
 				{
-					if (ft_strncmp(comand_line[i], "|", 1) == 0)
+					if (ft_strncmp(comand_line[i], "|", 2) == 0 && vars->mas_flags[i] == 0)
 					{
 						break;
 					}
 					i++;
 					k++;
 				}
-				mas_redirektion2 = make_list_rederection(comand_line, i, j);
+				mas_redirektion2 = make_list_rederection(comand_line, i, j, vars);
 				ft_redirects_redirect(comand_path, com_whis_flags, mas_redirektion, mas_redirektion2, vars);
 				//i++;
 			}	

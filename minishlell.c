@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/17 17:16:45 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/20 13:25:07 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,6 @@ char *check_space(char *line)
 		}
 		i++;
 	}
-	// printf("%s\n", line);
-	// exit(0);
 	return line;
 }
 
@@ -263,11 +261,11 @@ char **environment_variable_substitution(char **comand_line, t_vars *vars)
 			if (comand_line[i][j] == '$' && flag != 1)
 			{
 				k = j;
-				while((comand_line[i][j + 1] != ' ') && comand_line[i][j] != '\0' && (comand_line[i][j + 1] != '"' && comand_line[i][j + 1] != '\'' && comand_line[i][j + 1] != '$'))
+				while((comand_line[i][j + 1] != ' ') && comand_line[i][j] != '\0' && ft_isalpha(comand_line[i][j + 1]) == 1)
 				{
 					j++;
 				}
-				if (j - k > 1)
+				if (j - k >= 1)
 				{
 					ptr = ft_substr(comand_line[i], 0, k);
 					env_var = ft_substr(comand_line[i], k + 1, j - k);
@@ -291,9 +289,25 @@ char **environment_variable_substitution(char **comand_line, t_vars *vars)
 		j = 0;
 	}
 	i = 0;
+	// while(comand_line[i] != NULL)
+	// {
+	// 	printf("%s\n",comand_line[i]);
+	// 	i++;
+	// }
+	// exit(0);
+	while(comand_line[i] != NULL)
+	{
+		i++;
+	}
+	vars->mas_flags = malloc(sizeof(int) * i);
+	i = 0;
 	while (comand_line[i] != NULL)
 	{
-		comand_line[i] = delete_quotes(comand_line[i]);	
+		if(comand_line[i][0] == '"' || comand_line[i][0] == '\'')
+			vars->mas_flags[i] = 1;
+		else
+			vars->mas_flags[i] = 0;
+		comand_line[i] = delete_quotes(comand_line[i]);
 		i++;
 	}
 	return comand_line;
@@ -383,31 +397,77 @@ char	**ft_pars(char *line, t_vars *vars)
 	return (comand_line);
 }
 
-char	**move_arguments(char **comand_line)
+char	**move_arguments(char **comand_line, t_vars *vars)
 {
 	int i;
 	int poz;
 	char *ptr;
 	char *ptr2;
 	int flag;
+	int flag2=0;
 
 	flag = 0;
 	i = 0;
 	poz = 0;
+	int count = 0;
 	while (comand_line[poz] != NULL)	
 	{
 		while (comand_line[i] != NULL)
 		{
-			if (ft_strncmp(comand_line[i], ">", 2) == 0  || ft_strncmp(comand_line[i], ">>", 3) == 0 || ft_strncmp(comand_line[i], "<", 2) == 0)
+			if ((ft_strncmp(comand_line[i], ">", 2) == 0  || ft_strncmp(comand_line[i], ">>", 3) == 0 || ft_strncmp(comand_line[i], "<", 2) == 0) && vars->mas_flags[i] != 1)
 			{
 				if ((comand_line[i + 2] != NULL) && (ft_strncmp(comand_line[i + 2], "|", 2) != 0))
 				{
 					if ((ft_strncmp(comand_line[i + 2], ">", 2) != 0  && ft_strncmp(comand_line[i + 2], ">>", 3) != 0 && ft_strncmp(comand_line[i + 2], "<", 2) != 0))
 					{
 						ptr = comand_line[i]; // копируем символ редиректа в ячейку
+						flag = vars->mas_flags[i];
 						comand_line[i] = comand_line[i + 2]; // меняем редирект на флаг
+						vars->mas_flags[i] = vars->mas_flags[i + 2];
 						comand_line[i + 2] = comand_line[i + 1]; // меняем флаг на название файла
+						vars->mas_flags[i + 2] = vars->mas_flags[i + 1];
 						comand_line[i + 1] = ptr; // заменяем название файла на флаг
+						vars->mas_flags[i + 1] = flag;
+					}
+				}
+			}
+			i++;
+		}
+		i = 0;
+		poz++;
+	}
+	// exit(0);
+	i = 0;
+	poz = 0;
+	// while(comand_line[i] != NULL)
+	// {
+	// 	printf("%s ", comand_line[i]);
+	// 	printf("%d ", vars->mas_flags[i]);
+	// 	i++;
+	// }
+	// exit(0);	
+	while (comand_line[poz] != NULL)	
+	{
+		while (comand_line[i] != NULL)
+		{
+			if ((ft_strncmp(comand_line[i], ">", 2) == 0  || ft_strncmp(comand_line[i], ">>", 3) == 0) && vars->mas_flags[i] != 1)
+			{
+				if ((comand_line[i + 2] != NULL) && ((ft_strncmp(comand_line[i + 2], "|", 2) != 0) && vars->mas_flags[i + 2] != 1))
+				{
+					if ((ft_strncmp(comand_line[i + 2], "<", 2) == 0) && vars->mas_flags[i] != 1)
+					{
+						ptr = comand_line[i]; // копируем редирект
+						flag = vars->mas_flags[i];
+						ptr2 = comand_line[i + 1]; // копируем название файла
+						flag2 = vars->mas_flags[i + 1];
+						comand_line[i] = comand_line[i + 2]; // меняем редиректы
+						vars->mas_flags[i] = vars->mas_flags[i + 2];
+						comand_line[i + 1] = comand_line[i + 3]; //меняем названия файлов
+						vars->mas_flags[i + 1] = vars->mas_flags[i + 3];
+						comand_line[i + 2] = ptr;
+						vars->mas_flags[i + 2] = flag;
+						comand_line[i + 3] = ptr2;
+						vars->mas_flags[i + 3] = flag2;
 					}
 				}
 			}
@@ -418,35 +478,10 @@ char	**move_arguments(char **comand_line)
 	}
 	i = 0;
 	poz = 0;
-	while (comand_line[poz] != NULL)	
-	{
-		while (comand_line[i] != NULL)
-		{
-			if (ft_strncmp(comand_line[i], ">", 2) == 0  || ft_strncmp(comand_line[i], ">>", 3) == 0)
-			{
-				if ((comand_line[i + 2] != NULL) && (ft_strncmp(comand_line[i + 2], "|", 2) != 0))
-				{
-					if (ft_strncmp(comand_line[i + 2], "<", 2) == 0)
-					{
-						ptr = comand_line[i]; // копируем редирект 
-						ptr2 = comand_line[i + 1]; // копируем название файла
-						comand_line[i] = comand_line[i + 2]; // меняем редиректы
-						comand_line[i + 1] = comand_line[i + 3]; //меняем названия файлов
-						comand_line[i + 2] = ptr;
-						comand_line[i + 3] = ptr2;
-					}
-				}
-			}
-			i++;
-		}
-		i = 0;
-		poz++;
-	}
-	// i = 0;
-	// poz = 0;
 	// while(comand_line[i] != NULL)
 	// {
 	// 	printf("%s ", comand_line[i]);
+	// 	printf("%d ", vars->mas_flags[i]);
 	// 	i++;
 	// }
 	// exit(0);
@@ -460,7 +495,7 @@ void	execute_command(char *line, t_vars *vars)
 
 	line = check_space(line);
 	comand_line = ft_pars(line, vars);
-	comand_line = move_arguments(comand_line);
+	comand_line = move_arguments(comand_line, vars);
 	check_pipe(comand_line, vars);
 	check_redirect(comand_line, vars);
 	if (vars->count_pipe == 0 && vars->count_redirect == 0)
@@ -506,27 +541,13 @@ void	ft_pars_argument(char *line, t_vars *vars)
 				execute_command(argv[i], vars);
 			i++;
 		}
-		// line = check_space(line);
-		// comand_line = ft_pars(line, vars);
-		// comand_line = move_arguments(comand_line);
-		// check_pipe(comand_line, vars);
-		// check_redirect(comand_line, vars);
-		// if (vars->count_pipe == 0 && vars->count_redirect == 0)
-		// {
-		// 	if(!(checking_recoded_functions(comand_line, vars)))
-		// 	{
-		// 		comand_path = check_system_funk(vars, comand_line);
-		// 		comand_path = ft_strjoin(comand_path, "/");
-		// 		comand_path = ft_strjoin(comand_path, comand_line[0]);			
-		// 		system_funk(comand_path, comand_line, vars);
-		// 	}
-		// }
-		// else
-		// {
-		// 	ft_conveyor(line, comand_line, vars);
-		// 	dup2(vars->save_std_in, 0);
-		// 	dup2(vars->save_std_out, 1);
-		// }
+}
+
+void	ft_signals(int signal)
+{
+	write(1, "\b\b  \b\b", 6);
+	write(1, "\n", 1);
+	ft_putstr_fd("minishell>", 1);
 }
 
 int main(int argc, char **argv, char **envp)
@@ -538,9 +559,9 @@ int main(int argc, char **argv, char **envp)
 	struct dirent *dir;
 	vars.count_call_pipe = 0;
 	vars.flag_redirect = 0;
-
 	errno = 0;
 	g_error = 0;
+	g_signal =0;
 	vars.err_flag = 0;
 	vars.cd_flag = 0;
 	vars.save_std_in = dup(0);
@@ -548,17 +569,25 @@ int main(int argc, char **argv, char **envp)
 	envp_copy(envp, &vars);
 	vars.path = init_patch(&vars, "PATH");
 	ft_putstr_fd("minishell>", 1);
+	signal(SIGINT, &ft_signals);
 	while((i = get_next_line(0, &line)) > 0)
 	{
 		if(ft_strlen(line) == 0)
 		{
 			ft_putstr_fd("minishell>", 1);
-			continue;
 		}
 		ft_pars_argument(line, &vars);
+		if(ft_strlen(line) != 0)
+		{
+			if(g_signal == 0)
+				ft_putstr_fd("minishell>", 1);
+			else
+			{
+				g_signal = 0;
+			}
+		}
 		free(line);
 		line = NULL;
-		ft_putstr_fd("minishell>", 1);
 		vars.count_call_pipe = 0;
 	}
 	return 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   system_funk.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 16:42:45 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/16 21:13:20 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/20 12:50:23 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void			system_funk(char *path, char **argv, t_vars *vars)//вызов систе
 	else
 	{
 		waitpid(pid, &status, WUNTRACED);
+		if (status==2)
+			g_signal=1;
 		if (WIFEXITED(status))
 		{
 			if(WEXITSTATUS(status))

@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/17 17:17:06 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/20 12:25:25 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 #define PIPE_WRITE 1
 
 int g_error;
+int g_signal;
 
 typedef struct s_vars{
 
@@ -46,8 +47,8 @@ int			count_call_pipe;
 int         flag_redirect;
 int         err_flag;
 int         cd_flag;
+int			*mas_flags;
 }				t_vars;
-
 
 void        set_g_error(int err);
 void        show_g_error();
@@ -82,8 +83,9 @@ void		check_redirect(char **comand_mas, t_vars *vars);
 void		ft_conveyor_test(char *line, char **comand_line, t_vars *vars);
 void		ft_redirects(char *path, char **comand, char **mas_redirektion, t_vars *vars);
 void		ft_redirects_revers(char *path, char **comand, char **mas_redirektion, t_vars *vars);
-char	    **move_arguments(char **comand_line);
+char	    **move_arguments(char **comand_line, t_vars *vars);
 void		ft_redirects_pipe(char *path, char **comand, char **mas_redirektion, t_vars *vars);
 void		ft_redirects_redirect(char *path, char **comand, char **mas_redirektion, char **mas_redirektion2, t_vars *vars);
-
+void		ft_signals(int signal);
+void		ft_signal(int signal);
 #endif

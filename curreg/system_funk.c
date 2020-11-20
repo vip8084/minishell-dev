@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 16:42:45 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/20 17:54:57 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/20 18:48:44 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,15 @@ void			system_funk(char *path, char **argv, t_vars *vars)//вызов систе
 	{
 		waitpid(pid, &status, WUNTRACED);
 		if (status == 2)
+		{
 			g_signal = 1;
+			g_error = 130;
+		}
 		if (status == 3)
+		{
 			ft_putstr_fd("^\\Quit: 3\n", 1);
+			g_error = 131;
+		}
 		if (WIFEXITED(status))
 		{
 			if(WEXITSTATUS(status))

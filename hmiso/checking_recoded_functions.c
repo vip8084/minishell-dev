@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 17:31:40 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/20 16:50:40 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/20 19:02:24 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		checking_recoded_functions(char **comand_line, t_vars *vars)
 	{
 		ft_cd(comand_line, vars);
 		vars->err_flag = 0;
-		g_error = 0;
+		g_error = 1; //////
 		return (1);
 	}
 	else if (ft_strncmp(comand_line[0], "pwd", 4) == 0)

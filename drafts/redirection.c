@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 19:07:14 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/17 17:15:22 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/20 18:49:47 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,45 @@ void		ft_redirects(char *path, char **comand, char **mas_redirektion, t_vars *va
 		else
 		{
 			waitpid(pid, &status, WUNTRACED);
+
+			/////////////////////
+			if (status == 2)
+			{
+				g_signal = 1;
+				g_error = 130;
+			}
+			if (status == 3)
+			{
+				ft_putstr_fd("^\\Quit: 3\n", 1);
+				g_error = 131;
+			}
+			if (WIFEXITED(status))
+			{
+				if(WEXITSTATUS(status))
+				{
+					if (status == 256 || errno == 13 || errno == 2)
+					{
+						vars->err_flag = 1;
+						g_error = 1;
+						errno = 0;
+					}
+					// printf("\nERRNO = %i\n", errno);
+					// printf("STATUS = %d\n", status);
+					// printf("WEXITSTATUS = %d\n", WEXITSTATUS(status));
+					// printf("G_ERROR = %d\n", g_error);
+					// printf("after that g_error = %d\n\n", g_error);
+					if (status != 256 && status != 16384)
+						command_error(comand[0], vars);	
+				}
+				else
+				{
+					vars->err_flag = 0;
+					vars->cd_flag = 0;
+					g_error = 0;
+				}
+			}
+			/////////////////
+			
 			vars->g_exit_code = WEXITSTATUS(status);
 			close(fd);
 		}
@@ -97,6 +136,45 @@ void		ft_redirects_revers(char *path, char **comand, char **mas_redirektion, t_v
 		else
 		{
 			waitpid(pid, &status, WUNTRACED);
+
+			/////////////////////
+			if (status == 2)
+			{
+				g_signal = 1;
+				g_error = 130;
+			}
+			if (status == 3)
+			{
+				ft_putstr_fd("^\\Quit: 3\n", 1);
+				g_error = 131;
+			}
+			if (WIFEXITED(status))
+			{
+				if(WEXITSTATUS(status))
+				{
+					if (status == 256 || errno == 13 || errno == 2)
+					{
+						vars->err_flag = 1;
+						g_error = 1;
+						errno = 0;
+					}
+					// printf("\nERRNO = %i\n", errno);
+					// printf("STATUS = %d\n", status);
+					// printf("WEXITSTATUS = %d\n", WEXITSTATUS(status));
+					// printf("G_ERROR = %d\n", g_error);
+					// printf("after that g_error = %d\n\n", g_error);
+					if (status != 256 && status != 16384)
+						command_error(comand[0], vars);	
+				}
+				else
+				{
+					vars->err_flag = 0;
+					vars->cd_flag = 0;
+					g_error = 0;
+				}
+			}
+			/////////////////
+
 			vars->g_exit_code = WEXITSTATUS(status);
 			close(fd);
 		}	

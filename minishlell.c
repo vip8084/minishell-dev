@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/20 16:55:59 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/20 18:45:47 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -547,6 +547,7 @@ void	ft_signals(int signal)
 {
 	write(1, "\b\b  \b\b", 6);
 	write(1, "\n", 1);
+	g_error = 1;
 	ft_putstr_fd("minishell>", 1);
 }
 

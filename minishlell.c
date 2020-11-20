@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/20 13:25:07 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/20 15:40:13 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -550,6 +550,11 @@ void	ft_signals(int signal)
 	ft_putstr_fd("minishell>", 1);
 }
 
+void	ft_signal(int signal)
+{
+	write(1, "\b\b  \b\b", 6);
+}
+
 int main(int argc, char **argv, char **envp)
 {
 	t_vars	vars;
@@ -570,6 +575,7 @@ int main(int argc, char **argv, char **envp)
 	vars.path = init_patch(&vars, "PATH");
 	ft_putstr_fd("minishell>", 1);
 	signal(SIGINT, &ft_signals);
+	signal(SIGQUIT, &ft_signal);
 	while((i = get_next_line(0, &line)) > 0)
 	{
 		if(ft_strlen(line) == 0)

@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 16:42:45 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/20 12:50:23 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/20 15:46:37 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void			system_funk(char *path, char **argv, t_vars *vars)//вызов систе
 	pid = fork();
 	if (pid == 0)
 	{
+		signal(SIGQUIT, SIG_DFL);
 		if ((status = execve(path, argv, vars->envp_copy)) == -1)
 			exit(errno);
 	}
@@ -30,8 +31,10 @@ void			system_funk(char *path, char **argv, t_vars *vars)//вызов систе
 	else
 	{
 		waitpid(pid, &status, WUNTRACED);
-		if (status==2)
-			g_signal=1;
+		if (status == 2)
+			g_signal = 1;
+		if (status == 3)
+			ft_putstr_fd("^\\Quit: 3\n", 1);
 		if (WIFEXITED(status))
 		{
 			if(WEXITSTATUS(status))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checking_recoded_functions.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 17:31:40 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/19 20:40:15 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/20 20:44:38 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int		checking_recoded_functions(char **comand_line, t_vars *vars)
 	{
 		ft_cd(comand_line, vars);
 		vars->err_flag = 0;
-		g_error = 0;
+		g_error = 1; //////
 		return (1);
 	}
 	else if (ft_strncmp(comand_line[0], "pwd", 4) == 0)
@@ -48,10 +48,20 @@ int		checking_recoded_functions(char **comand_line, t_vars *vars)
 	}
 	else if (ft_strncmp(comand_line[0], "env", 4) == 0)
 	{
-		ft_env(vars);
-		vars->err_flag = 0;
-		g_error = 0;
-		return (1);
+		if (comand_line[1] != NULL)
+		{
+			ft_putstr_fd("minishell>env: ", 1);
+			ft_putstr_fd(comand_line[1], 2);
+			ft_putstr_fd(": No such file or directory\n", 2);
+			g_error = 127;
+		}
+		else
+		{
+			ft_env(vars);
+			vars->err_flag = 0;
+			g_error = 0;
+		}
+			return (1);
 	}
 	else if (ft_strncmp(comand_line[0], "export", 7) == 0)
 	{
@@ -79,6 +89,5 @@ int		checking_recoded_functions(char **comand_line, t_vars *vars)
 		g_error = 0;
 		return (1);
 	}
-	
 	return (0);
 }

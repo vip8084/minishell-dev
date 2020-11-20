@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conveyor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 18:27:08 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/20 13:29:27 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/20 16:23:13 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -327,6 +327,7 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 	k = 0;
 	int t = 0;
 	int flag = 0;
+	int flag_pipe = 0;
 	// while (comand_line[i] != NULL)
 	// {
 	// 	if (ft_strncmp(comand_line[i], ">", 2) == 0 && comand_line[i + 1] != NULL)
@@ -362,6 +363,7 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 			ft_pipe_eof();
 			create_file(&comand_line[i]);
 			vars->flag_redirect = 0;
+			flag_pipe = 1;
 			i++;
 		}
 		if ((ft_strncmp(comand_line[i], "|", 2) == 0) && vars->flag_redirect == 0 && vars->mas_flags[i] != 1)
@@ -372,6 +374,7 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 			ft_pipe(comand_path, com_whis_flags, vars);	
 			j = 0;
 			vars->flag_redirect = 0;
+			flag_pipe = 1;
 		}
 		else if (((ft_strncmp(comand_line[i], ">", 2) == 0) || (ft_strncmp(comand_line[i], ">>", 3) == 0)) && vars->mas_flags[i] != 1)
 		{
@@ -391,6 +394,7 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 			j = 0;
 			k = 0;
 			vars->flag_redirect = 1;
+			flag_pipe = 0;
 			if(mas_redirektion[0] != NULL)
 				i--;
 		}
@@ -436,8 +440,9 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 			j = 0;
 			k = 0;
 			flag = 0;
+			flag_pipe = 0;
 		}
-		else if (comand_line[i + 1] == NULL)
+		else if (comand_line[i + 1] == NULL && flag_pipe == 1)
 		{
 			com_whis_flags = make_comand_mas_start(comand_line, i + 1, j);
 			comand_path = ft_join_path(vars, com_whis_flags);

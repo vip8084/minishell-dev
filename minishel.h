@@ -5,10 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< HEAD
 /*   Created: 2020/10/08 16:55:07 by hmiso             #+#    #+#             */
 /*   Updated: 2020/11/10 16:14:38 by hmiso            ###   ########.fr       */
+=======
+/*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
+/*   Updated: 2020/11/20 12:25:25 by hmiso            ###   ########.fr       */
+>>>>>>> beck
 /*                                                                            */
 /* ************************************************************************** */
+
 
 # ifndef MINISHEL_H
 # define MINISHEL_H
@@ -21,11 +27,14 @@
 #include <signal.h>
 #include <stdio.h>
 #include <dirent.h>
+#include <string.h>
 #include "get_next_line/get_next_line.h"
 #include "libft/libft.h"
 #define PIPE_READ 0
 #define PIPE_WRITE 1
 
+int g_error;
+int g_signal;
 
 typedef struct s_vars{
 
@@ -41,7 +50,16 @@ int 		g_exit_code;
 int			count_redirect;
 int			count_call_pipe;
 int         flag_redirect;
+int         err_flag;
+int         cd_flag;
+int			*mas_flags;
 }				t_vars;
+
+void        set_g_error(int err);
+void        show_g_error();
+void        command_error(char *cmd, t_vars *vars);
+void        cd_error(char *cmd, char *arg, char *err);
+
 
 void		free_two_dimensional_array(char **arr);
 void		envp_copy(char **envp, t_vars *vars);
@@ -70,8 +88,9 @@ void		check_redirect(char **comand_mas, t_vars *vars);
 void		ft_conveyor_test(char *line, char **comand_line, t_vars *vars);
 void		ft_redirects(char *path, char **comand, char **mas_redirektion, t_vars *vars);
 void		ft_redirects_revers(char *path, char **comand, char **mas_redirektion, t_vars *vars);
-char	    **move_arguments(char **comand_line);
+char	    **move_arguments(char **comand_line, t_vars *vars);
 void		ft_redirects_pipe(char *path, char **comand, char **mas_redirektion, t_vars *vars);
 void		ft_redirects_redirect(char *path, char **comand, char **mas_redirektion, char **mas_redirektion2, t_vars *vars);
-
+void		ft_signals(int signal);
+void		ft_signal(int signal);
 #endif

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.21-school.ru>         +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/06 22:00:24 by hmiso             #+#    #+#             */
-/*   Updated: 2020/06/24 14:00:53 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/20 11:25:09 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include "../minishel.h"
 
 int		funk_for_free_dup(char **ptr, char *ptr2)
 {
@@ -63,8 +64,13 @@ int		gnl_read(int fd, char **ptr_static, char **line, char **ptr)
 
 	if (!(buf = (char*)malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
-	while (!*ptr && ((i = read(fd, buf, BUFFER_SIZE)) > 0))
+	while (!*ptr && ((i = read(fd, buf, BUFFER_SIZE)) >= 0))
 	{
+		if (i == 0 && ft_strlen(*line) == 0)
+		{
+			ft_putstr_fd("exit\n", 1);
+			exit(0);
+		}
 		buf[i] = '\0';
 		if ((*ptr = ft_strchr(buf, '\n')))
 		{

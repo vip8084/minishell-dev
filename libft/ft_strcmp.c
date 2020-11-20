@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_pipe.c                                       :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/02 16:39:42 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/20 16:46:25 by hmiso            ###   ########.fr       */
+/*   Created: 2020/11/04 20:11:01 by curreg            #+#    #+#             */
+/*   Updated: 2020/11/04 20:11:12 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishel.h"
+#include "libft.h"
 
-void	check_pipe(char **comand_mas, t_vars *vars)
+int	ft_strcmp(char *s1, char *s2)
 {
-	int i = 0;
-	vars->count_pipe = 0;
-	
-	while(comand_mas[i] != NULL)
-	{
-		if(ft_strncmp(comand_mas[i], "|", 2) == 0 && vars->mas_flags[i] == 0)
-		{
-			vars->count_pipe++;
-		}
+	int i;
+
+	i = 0;
+	while (s1[i] == s2[i] && s1[i] != '\0' && s2[i] != '\0')
 		i++;
-	}
+	return (s1[i] - s2[i]);
 }

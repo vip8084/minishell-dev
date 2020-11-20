@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checking_recoded_functions.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 17:31:40 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/19 20:40:15 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/20 16:50:40 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,6 @@ int		checking_recoded_functions(char **comand_line, t_vars *vars)
 		g_error = 0;
 		return (1);
 	}
-	
+
 	return (0);
 }

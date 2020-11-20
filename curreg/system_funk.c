@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 16:42:45 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/20 16:29:44 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/20 17:54:57 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,18 @@ void			system_funk(char *path, char **argv, t_vars *vars)//вызов систе
 		{
 			if(WEXITSTATUS(status))
 			{
-				set_g_error(WEXITSTATUS(status));
-				if(status != 256)
+				if (status == 256 || errno == 13 || errno == 2)
+				{
+					vars->err_flag = 1;
+					g_error = 1;
+					errno = 0;
+				}
+				// printf("\nERRNO = %i\n", errno);
+				// printf("STATUS = %d\n", status);
+				// printf("WEXITSTATUS = %d\n", WEXITSTATUS(status));
+				// printf("G_ERROR = %d\n", g_error);
+				// printf("after that g_error = %d\n\n", g_error);
+				if (status != 256 && status != 16384)
 					command_error(argv[0], vars);	
 			}
 			else

@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/03 12:05:33 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/08 16:26:40 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/20 16:46:44 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	check_redirect(char **comand_mas, t_vars *vars)
 	
 	while(comand_mas[i] != NULL)
 	{
-		if(ft_strncmp(comand_mas[i], ">", 2) == 0 || ft_strncmp(comand_mas[i], "<", 2) == 0 || ft_strncmp(comand_mas[i], ">>", 3) == 0) 
+		if((ft_strncmp(comand_mas[i], ">", 2) == 0 || ft_strncmp(comand_mas[i], "<", 2) == 0 || ft_strncmp(comand_mas[i], ">>", 3) == 0) && vars->mas_flags[i] == 0) 
 		{
 			vars->count_redirect++;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishlell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/20 18:45:47 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/20 20:50:52 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -488,6 +488,25 @@ char	**move_arguments(char **comand_line, t_vars *vars)
 	return comand_line;
 }
 
+int	verification_of_tokens(char **comand_line)
+{
+	int i;
+
+	i = 0;
+	while(comand_line[i + 1] != NULL)
+	{
+		i++;
+	}
+	if (ft_strncmp(">", comand_line[i], 2) == 0 || ft_strncmp(">>", comand_line[i], 3) == 0 || ft_strncmp("<", comand_line[i], 3) == 0)
+	{
+		ft_putstr_fd("minishell> syntax error near unexpected token `newline'\n", 2);
+		g_error = 258;
+		return 0;
+	}
+	
+	return 1;
+}
+
 void	execute_command(char *line, t_vars *vars)
 {
 	char **comand_line;
@@ -496,28 +515,31 @@ void	execute_command(char *line, t_vars *vars)
 	line = check_space(line);
 	comand_line = ft_pars(line, vars);
 	comand_line = move_arguments(comand_line, vars);
-	check_pipe(comand_line, vars);
-	check_redirect(comand_line, vars);
-	if (vars->count_pipe == 0 && vars->count_redirect == 0)
+	if (verification_of_tokens(comand_line) != 0)
 	{
-		if(!(checking_recoded_functions(comand_line, vars)))
+		check_pipe(comand_line, vars);
+		check_redirect(comand_line, vars);
+		if (vars->count_pipe == 0 && vars->count_redirect == 0)
 		{
-			comand_path = check_system_funk(vars, comand_line);
-			if (comand_path == NULL)
-				comand_path = comand_line[0];
-			else
-			{	
-				comand_path = ft_strjoin(comand_path, "/");
-				comand_path = ft_strjoin(comand_path, comand_line[0]);
-			}			
-			system_funk(comand_path, comand_line, vars);
+			if(!(checking_recoded_functions(comand_line, vars)))
+			{
+				comand_path = check_system_funk(vars, comand_line);
+				if (comand_path == NULL)
+					comand_path = comand_line[0];
+				else
+				{	
+					comand_path = ft_strjoin(comand_path, "/");
+					comand_path = ft_strjoin(comand_path, comand_line[0]);
+				}			
+				system_funk(comand_path, comand_line, vars);
+			}
 		}
-	}
-	else
-	{
-		ft_conveyor(line, comand_line, vars);
-		dup2(vars->save_std_in, 0);
-		dup2(vars->save_std_out, 1);
+		else
+		{
+			ft_conveyor(line, comand_line, vars);
+			dup2(vars->save_std_in, 0);
+			dup2(vars->save_std_out, 1);
+		}		
 	}
 }
 

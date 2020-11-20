@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 19:07:14 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/20 18:49:47 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/20 19:50:43 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,11 @@ void		ft_redirects_revers(char *path, char **comand, char **mas_redirektion, t_v
 		fd = open(mas_redirektion[count_redirects], O_RDONLY);
 		if (fd < 0)
 		{
+			ft_putstr_fd("minishell>", 2);
 			ft_putstr_fd(mas_redirektion[i], 2);
-			ft_putstr_fd(": Permission denied\n", 2);
+			ft_putstr_fd(": ", 2);
+			ft_putstr_fd(strerror(errno), 2);
+			ft_putstr_fd("\n", 2);
 			break;			
 		}
 		count_redirects++;

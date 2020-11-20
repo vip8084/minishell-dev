@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checking_recoded_functions.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 17:31:40 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/20 20:34:26 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/20 20:44:38 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ int		checking_recoded_functions(char **comand_line, t_vars *vars)
 	{
 		if (comand_line[1] != NULL)
 		{
-			ft_putstr_fd("error\n", 2);
+			ft_putstr_fd("minishell>env: ", 1);
+			ft_putstr_fd(comand_line[1], 2);
+			ft_putstr_fd(": No such file or directory\n", 2);
+			g_error = 127;
 		}
 		else
 		{

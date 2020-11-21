@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:52:35 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/02 12:58:15 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/21 12:19:21 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	export_out(t_vars *vars, char **line)//команда export добавле
 	char **argv;
 
 	i = 1;
-	if(line[i] != '\0')
+	if(line[i] != NULL)
 	{
 		argv = &line[i];
 		argv = check_duplicate(argv);

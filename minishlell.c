@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/20 21:28:07 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/21 13:58:31 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -488,23 +488,88 @@ char	**move_arguments(char **comand_line, t_vars *vars)
 	return comand_line;
 }
 
-int	verification_of_tokens(char **comand_line)
+void sig_pipe(int signal)
+{
+	write(0, "", 0);
+	write(0, "\n", 1);
+}
+
+char **verification_of_tokens(char **comand_line, t_vars *vars)
 {
 	int i;
+	int j;
+	int count;
 
 	i = 0;
+	j = 0;
+	count = 0;
+	char *line;
+	char **new_comand_line;
+	char **argv;
+	line = NULL;
 	while(comand_line[i + 1] != NULL)
 	{
 		i++;
 	}
-	if (ft_strncmp(">", comand_line[i], 2) == 0 || ft_strncmp(">>", comand_line[i], 3) == 0 || ft_strncmp("<", comand_line[i], 3) == 0)
+	if ((ft_strncmp(">", comand_line[i], 2) == 0 || ft_strncmp(">>", comand_line[i], 3) == 0 || ft_strncmp("<", comand_line[i], 3) == 0) && vars->mas_flags[i] == 0)
 	{
 		ft_putstr_fd("minishell> syntax error near unexpected token `newline'\n", 2);
 		g_error = 258;
-		return 0;
+		return NULL;
 	}
-	
-	return 1;
+	if (ft_strncmp("|", comand_line[i], 2) == 0)
+	{
+		write(1, "> ", 2);
+		get_next_line_two(0, &line);
+		if (ft_strlen(line) != 0)
+		{
+			i = 0;
+			// printf("%s\n", line);
+			line = check_space(line);
+			argv = ft_pars(line, vars);
+			argv = move_arguments(argv, vars);
+			while(comand_line[i] != NULL)
+			{
+				i++;
+			}			
+			while (argv[j] != NULL)
+			{
+				j++;
+			}
+			new_comand_line = malloc(sizeof(char *) * (i + 2 + j));
+			i = 0;
+			j = 0;
+			while(comand_line[i] != NULL)
+			{
+				new_comand_line[i] = ft_strdup(comand_line[i]);
+				i++;
+			}
+			while(argv[j] != NULL)
+			{
+				new_comand_line[i] = ft_strdup(argv[j]);
+				i++;
+				j++;
+			}
+			new_comand_line[i] = NULL;
+			// i = 0;
+			// // while(new_comand_line[i] != NULL)
+			// // {
+			// // 	printf("%s\n", new_comand_line[i]);
+			// // 	i++;
+			// // }
+			// exit(0);
+			if (ft_strncmp(new_comand_line[i - 1], "|", 2) == 0)
+			{
+				new_comand_line = verification_of_tokens(new_comand_line, vars);
+			}
+			return (new_comand_line);			
+		}
+		else
+		{
+			return comand_line;
+		}
+	}
+	return comand_line;
 }
 
 void	execute_command(char *line, t_vars *vars)
@@ -515,7 +580,7 @@ void	execute_command(char *line, t_vars *vars)
 	line = check_space(line);
 	comand_line = ft_pars(line, vars);
 	comand_line = move_arguments(comand_line, vars);
-	if (verification_of_tokens(comand_line) != 0)
+	if ((comand_line = verification_of_tokens(comand_line, vars)) != NULL)
 	{
 		check_pipe(comand_line, vars);
 		check_redirect(comand_line, vars);

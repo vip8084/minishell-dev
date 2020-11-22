@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 16:39:42 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/17 17:52:39 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/21 19:39:14 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	check_pipe(char **comand_mas, t_vars *vars)
 	
 	while(comand_mas[i] != NULL)
 	{
-		if(ft_strncmp(comand_mas[i], "|", 2) == 0)
+		if(ft_strncmp(comand_mas[i], "|", 2) == 0 && vars->mas_flags[i] == 0)
 		{
 			vars->count_pipe++;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conveyor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 18:27:08 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/20 16:23:13 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/22 10:54:03 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,7 +264,7 @@ void		ft_pipe_eof(void)
 	close(mas[1]);    
 }
 
-void	create_file(char **comand_line)
+void	create_file(char **comand_line,int *mas_flags)
 {
 	int i;
 	int fd;
@@ -273,7 +273,7 @@ void	create_file(char **comand_line)
 	i = 0;
 	while (comand_line[i] != NULL)
 	{
-		if (ft_strncmp(comand_line[i], ">", 2) == 0 && comand_line[i + 1] != NULL)
+		if (ft_strncmp(comand_line[i], ">", 2) == 0 && comand_line[i + 1] != NULL && mas_flags[i] == 0)
 		{
 			fd = open(comand_line[i + 1], O_WRONLY | O_TRUNC | O_CREAT, 0666);
 			if (fd == -1)
@@ -284,7 +284,7 @@ void	create_file(char **comand_line)
 			}
 			close(fd);
 		}
-		if (ft_strncmp(comand_line[i], "<", 2) == 0 && comand_line[i + 1] != NULL)
+		if (ft_strncmp(comand_line[i], "<", 2) == 0 && comand_line[i + 1] != NULL && mas_flags[i] == 0)
 		{
 			fd = open(comand_line[i + 1], O_RDONLY);
 			if (fd == -1)
@@ -295,7 +295,7 @@ void	create_file(char **comand_line)
 			}
 			close(fd);
 		}		
-		if (ft_strncmp(comand_line[i], ">>", 3) == 0 && comand_line[i + 1] != NULL)
+		if (ft_strncmp(comand_line[i], ">>", 3) == 0 && comand_line[i + 1] != NULL && mas_flags[i] == 0)
 		{
 			fd = open(comand_line[i + 1], O_WRONLY | O_CREAT | O_APPEND, 0666);
 			if (fd == -1)
@@ -354,21 +354,21 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 	// 	}		
 	// 	i++;
 	// }
-	create_file(comand_line);
+	create_file(comand_line, vars->mas_flags);
 	i = 0;
 	while(comand_line[i] != NULL)
 	{
 		if (i != 0 && ((ft_strncmp(comand_line[i], "|", 2) == 0) && vars->flag_redirect == 1)  && vars->mas_flags[i] != 1)
 		{		
 			ft_pipe_eof();
-			create_file(&comand_line[i]);
+			create_file(&comand_line[i], &vars->mas_flags[i]);
 			vars->flag_redirect = 0;
 			flag_pipe = 1;
 			i++;
 		}
 		if ((ft_strncmp(comand_line[i], "|", 2) == 0) && vars->flag_redirect == 0 && vars->mas_flags[i] != 1)
 		{
-			create_file(&comand_line[i]);
+			create_file(&comand_line[i], &vars->mas_flags[i]);
 			com_whis_flags = make_comand_mas_start(comand_line, i, (j - 1));
 			comand_path = ft_join_path(vars, com_whis_flags);
 			ft_pipe(comand_path, com_whis_flags, vars);	
@@ -417,9 +417,15 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 			}
 			mas_redirektion = make_list_rederection_revers(comand_line, i, k, vars);
 			if (flag == 0)
+			{
 				ft_redirects_revers(comand_path, com_whis_flags, mas_redirektion, vars);
+				flag_pipe = 1;
+			}
 			if (flag == 1)
+			{
 				ft_redirects_pipe(comand_path, com_whis_flags, mas_redirektion, vars);
+				flag_pipe = 1;
+			}
 			if (flag == 2)
 			{
 				j = 0;
@@ -436,11 +442,11 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 				mas_redirektion2 = make_list_rederection(comand_line, i, j, vars);
 				ft_redirects_redirect(comand_path, com_whis_flags, mas_redirektion, mas_redirektion2, vars);
 				//i++;
+				flag_pipe = 0;
 			}	
 			j = 0;
 			k = 0;
 			flag = 0;
-			flag_pipe = 0;
 		}
 		else if (comand_line[i + 1] == NULL && flag_pipe == 1)
 		{

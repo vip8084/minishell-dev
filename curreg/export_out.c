@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_out.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:52:35 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/23 19:01:36 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/24 17:36:04 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ void	export_out(t_vars *vars, char **line)//команда export добавле
 	if(line[i] != NULL)
 	{
 		argv = &line[i];
+		if (!check_valid_id(line[i]))
+		{
+			id_error(line[i], vars);
+			return;
+		}
 		argv = check_duplicate(argv);
 		update_envp(argv, vars);
 	}

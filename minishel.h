@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/24 17:01:10 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/24 17:35:27 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void        show_g_error();
 void        command_error(char *cmd, t_vars *vars);
 void        cd_error(char *cmd, char *arg, char *err);
 int         check_valid_id(char *str);
-
+void        id_error(char *cmd, t_vars *vars);
 
 void		free_two_dimensional_array(char **arr);
 void		envp_copy(char **envp, t_vars *vars);

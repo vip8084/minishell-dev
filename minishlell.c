@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishlell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/24 13:30:50 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/24 18:04:09 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -716,6 +716,13 @@ void	execute_command(char *line, t_vars *vars)
 
 	line = check_space(line);
 	comand_line = ft_pars(line, vars);
+	int i = 0;
+	while(comand_line[i] != NULL)
+	{
+		printf("%s\n", comand_line[i]);
+		i++;
+	}
+	exit(0);
 	if (comand_line[0] != NULL)
 	{
 		// comand_line = move_arguments(comand_line, vars);

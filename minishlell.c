@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/22 16:56:48 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/24 12:24:34 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,11 +228,22 @@ char *delete_quotes(char *line)
 	return line_dubl;
 }
 
+void free_ptr(char **ptr)
+{
+	if (*ptr != NULL)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
+}
+
 char **environment_variable_substitution(char **comand_line, t_vars *vars)
 {
-	char *ptr;
-	char *env_var;
-	char *ptr2;
+	char *ptr = NULL;
+	char *env_var = NULL;
+	char *ptr2 = NULL;
+	char *ptr_for_free = NULL;
+	char *ptr_for_free2 = NULL;
 	int i;
 	int j;
 	int flag;
@@ -274,12 +285,27 @@ char **environment_variable_substitution(char **comand_line, t_vars *vars)
 					ptr = ft_substr(comand_line[i], 0, k);
 					env_var = ft_substr(comand_line[i], k + 1, j - k);
 					ptr2 = ft_substr(comand_line[i], j, 100);
+					ptr_for_free = ptr;
 					if (ft_strncmp(env_var, "?", 2) == 0)
-						ptr = (ft_strjoin(ptr, ft_itoa(g_error)));
-					else	
-						ptr = ft_strjoin(ptr, (init_patch(vars, env_var)));
+					{
+						ptr_for_free2 = ft_itoa(g_error);
+						ptr = ft_strjoin(ptr, ptr_for_free2);
+						free_ptr(&ptr_for_free2);
+					}
+					else
+					{	
+						ptr_for_free2 = init_patch(vars, env_var);
+						ptr = ft_strjoin(ptr, ptr_for_free2);
+						free_ptr(&ptr_for_free2);
+					}
+					free(ptr_for_free);
+					ptr_for_free = ptr;	
 					ptr = ft_strjoin(ptr, &ptr2[1]);
+					free(ptr_for_free);
+					free(comand_line[i]);
 					comand_line[i] = ptr;
+					free_ptr(&env_var);
+					free_ptr(&ptr2);
 					i = 0;
 				}
 				else
@@ -315,7 +341,9 @@ char **environment_variable_substitution(char **comand_line, t_vars *vars)
 				vars->mas_flags[i] = 1;
 			else
 				vars->mas_flags[i] = 0;
+			ptr_for_free2 = comand_line[i];	
 			comand_line[i] = delete_quotes(comand_line[i]);
+			free_ptr(&ptr_for_free2);
 			i++;
 		}
 		vars->mas_flags[i] = 2;
@@ -327,7 +355,7 @@ char **environment_variable_substitution(char **comand_line, t_vars *vars)
 		{
 			j++;
 		}
-		mas_flags= malloc(sizeof(int) * (i + j + 1));
+		mas_flags= malloc(sizeof(int) * (i + j));
 		j = 0;
 		while(vars->mas_flags[j] != 2)
 		{
@@ -341,8 +369,11 @@ char **environment_variable_substitution(char **comand_line, t_vars *vars)
 				mas_flags[j] = 1;
 			else
 				mas_flags[j] = 0;
+			ptr_for_free2 = comand_line[i];	
 			comand_line[i] = delete_quotes(comand_line[i]);
+			free_ptr(&ptr_for_free2);
 			i++;
+			j++;
 		}
 		mas_flags[j] = 2;
 		free(vars->mas_flags);
@@ -552,7 +583,9 @@ char **verification_of_tokens(char **comand_line, t_vars *vars)
 	count = 0;
 	char *line;
 	char **new_comand_line;
+	char **fre_arr;
 	char **argv;
+	int fd =0;
 	line = NULL;
 	while(comand_line[i + 1] != NULL && ft_strncmp(comand_line[i], "|", 2) !=0 && vars->mas_flags[i] == 0)
 	{
@@ -598,14 +631,32 @@ char **verification_of_tokens(char **comand_line, t_vars *vars)
 		g_error = 258;
 		return NULL;
 	}
+	if (ft_strncmp(comand_line[0], "<", 2) == 0 && vars->mas_flags[0] == 0)
+	{
+		fd = open(comand_line[1], O_RDONLY);
+		if (fd > 0)
+		{
+			free_two_dimensional_array(comand_line);
+			return NULL;
+		}
+		else
+		{
+			ft_putstr_fd("minishell> ", 2);
+			ft_putstr_fd(comand_line[1], 2);
+			ft_putstr_fd(" No such file or directory\n", 2);
+			free_two_dimensional_array(comand_line);
+			return NULL;	
+		}
+	}
 	if (ft_strncmp("|", comand_line[i], 2) == 0 && vars->mas_flags[i] == 0)
 	{
 		if ((ft_strncmp(">", comand_line[i - 1], 2) == 0 || ft_strncmp(">>", comand_line[i - 1], 3) == 0 || ft_strncmp("<", comand_line[i - 1], 3) == 0) && vars->mas_flags[i - 1] == 0)
 		{
-			ft_putstr_fd("minishell> syntax error near unexpected token `newline'\n", 2);
-			g_error = 258;
-			return NULL;
-		}	
+		ft_putstr_fd("minishell> syntax error near unexpected token `newline'\n", 2);
+		g_error = 258;
+		return NULL;
+		}
+	//}
 		write(1, "> ", 2);
 		get_next_line_two(0, &line);
 		if (ft_strlen(line) != 0)
@@ -614,7 +665,9 @@ char **verification_of_tokens(char **comand_line, t_vars *vars)
 			// printf("%s\n", line);
 			line = check_space(line);
 			argv = ft_pars(line, vars);
+			//fre_arr = argv;
 			argv = move_arguments(argv, vars);
+			//free_two_dimensional_array(fre_arr);
 			while(comand_line[i] != NULL)
 			{
 				i++;
@@ -638,18 +691,14 @@ char **verification_of_tokens(char **comand_line, t_vars *vars)
 				j++;
 			}
 			new_comand_line[i] = NULL;
-			// i = 0;
-			// // while(new_comand_line[i] != NULL)
-			// // {
-			// // 	printf("%s\n", new_comand_line[i]);
-			// // 	i++;
-			// // }
-			// exit(0);
 			if (ft_strncmp(new_comand_line[i - 1], "|", 2) == 0)
 			{
 				new_comand_line = verification_of_tokens(new_comand_line, vars);
 			}
-			return (new_comand_line);			
+			free(line);
+			free_two_dimensional_array(argv);
+			free_two_dimensional_array(comand_line);
+			return (new_comand_line);
 		}
 		else
 		{
@@ -661,8 +710,9 @@ char **verification_of_tokens(char **comand_line, t_vars *vars)
 
 void	execute_command(char *line, t_vars *vars)
 {
-	char **comand_line;
-	char *comand_path;
+	char **comand_line = NULL;
+	char *comand_path = NULL;
+	char *ptr_free;
 
 	line = check_space(line);
 	comand_line = ft_pars(line, vars);
@@ -677,6 +727,13 @@ void	execute_command(char *line, t_vars *vars)
 		// }
 		if ((comand_line = verification_of_tokens(comand_line, vars)) != NULL)
 		{
+			// int i = 0;
+			// while(comand_line[i] != NULL)
+			// {
+			// 	printf("%s\n", comand_line[i]);
+			// 	i++;
+			// }
+			// exit(0);
 			comand_line = move_arguments(comand_line, vars);
 			check_pipe(comand_line, vars);
 			check_redirect(comand_line, vars);
@@ -686,12 +743,16 @@ void	execute_command(char *line, t_vars *vars)
 				{
 					comand_path = check_system_funk(vars, comand_line);
 					if (comand_path == NULL)
-						comand_path = comand_line[0];
+						comand_path = ft_strdup(comand_line[0]);
 					else
-					{	
+					{
+						ptr_free = comand_path;
 						comand_path = ft_strjoin(comand_path, "/");
+						free(ptr_free);
+						ptr_free = comand_path;
 						comand_path = ft_strjoin(comand_path, comand_line[0]);
-					}			
+						free(ptr_free);
+					}	
 					system_funk(comand_path, comand_line, vars);
 				}
 			}
@@ -703,21 +764,17 @@ void	execute_command(char *line, t_vars *vars)
 			}		
 		}		
 	}
+	if(comand_line != NULL && comand_line[0] != NULL)
+		free_two_dimensional_array(comand_line);
+	if (comand_path != NULL)	
+		free(comand_path);
 }
 
 void	ft_pars_argument(char *line, t_vars *vars)
 {
-		char **comand_line;
-		char **line_pipe;
-		char *comand_path;
-		char **argv;
-		char *ptr;
-		int mas[2];
-		int count = 0;
 		int	i = 0;
-		int t = 0;
-		
-		
+		char **argv;
+
 		argv = semicolon(line);
 		while (argv[i] != NULL)
 		{
@@ -725,6 +782,7 @@ void	ft_pars_argument(char *line, t_vars *vars)
 				execute_command(argv[i], vars);
 			i++;
 		}
+		free_two_dimensional_array(argv);
 }
 
 void	ft_signals(int signal)
@@ -746,7 +804,6 @@ int main(int argc, char **argv, char **envp)
 	char *ptr;
 	char *line = NULL;
 	int i = 0;
-	struct dirent *dir;
 	vars.count_call_pipe = 0;
 	vars.flag_redirect = 0;
 	errno = 0;
@@ -781,6 +838,7 @@ int main(int argc, char **argv, char **envp)
 		free(line);
 		line = NULL;
 		vars.count_call_pipe = 0;
+		free(vars.mas_flags);
 		vars.mas_flags = NULL;
 	}
 	return 0;

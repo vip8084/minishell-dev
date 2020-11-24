@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:52:35 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/21 12:19:21 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/23 19:01:36 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,9 @@ void	export_out(t_vars *vars, char **line)//команда export добавле
 		argv = &line[i];
 		argv = check_duplicate(argv);
 		update_envp(argv, vars);
-		while(line[i] != NULL)
-			i++;
 	}
 	else
-	{
-		i = 0;
+	{	
 		while(vars->envp_copy[i] != NULL)
 		{
 			ft_putstr_fd("declare -x ", 1);

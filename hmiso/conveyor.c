@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 18:27:08 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/24 12:17:44 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/24 14:05:54 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -407,7 +407,7 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 				if(mas_redirektion[0] != NULL)
 					i--;
 				free_two_dimensional_array(com_whis_flags);
-				free(comand_path);
+				//free(comand_path);
 				free_two_dimensional_array(mas_redirektion);
 			}
 			else

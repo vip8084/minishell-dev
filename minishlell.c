@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/24 12:24:34 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/24 18:22:45 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char **semicolon(char *line)
 	return(argv);
 }
 
-char *check_space(char *line)
+char *check_space(char *line_old)
 {
 	int i;
 	int flag = 0;
@@ -90,6 +90,8 @@ char *check_space(char *line)
 	
 	ptr = NULL;
 	i = 0;
+	char *line;
+	line = ft_strdup(line_old);
 	while(line[i] != '\0')
 	{
 		if ((line[i] == '\'' || line[i] == '"') && flag == 0 && line[i + 1] != '\0')
@@ -106,39 +108,41 @@ char *check_space(char *line)
 		{
 			if (line[i - 1] != ' ' && i != 0 && line[i - 1] != '>')
 			{
-				//if (ptr != NULL)
-				//	ptr_for_free = ptr;
 				ptr=ft_substr(line, 0, i);
-				//if (ptr_for_free != NULL)
-				//	free(ptr_for_free);
-				//ptr_for_free = ptr;
+				ptr_for_free = ptr;
 				ptr=ft_strjoin(ptr, " ");
-				//	free(ptr_for_free);
-				//ptr_for_free = ptr;	
+				free(ptr_for_free);
+				ptr_for_free = ptr;	
 				ptr = ft_strjoin(ptr, &line[i]);
-				//free(ptr_for_free);
-				line = ptr;
+				free(ptr_for_free);
+				free(line);
+				line = ft_strdup(ptr);
+				free(ptr);
 			}
 			else if(line[i + 1] != ' ' && line[i + 1] != '\0' && line[i + 1] != '>')
-			{
-				//if (ptr != NULL)
-				//	ptr_for_free = ptr;				
+			{			
 				ptr = ft_substr(line, 0 , i + 1);
-				//if (ptr_for_free != NULL)
-				//	free(ptr_for_free);
-				//ptr_for_free = ptr;				
+				ptr_for_free = ptr;
 				ptr = ft_strjoin(ptr, " ");
-				//free(ptr_for_free);
-				//ptr_for_free = ptr;				
+				free(ptr_for_free);
+				ptr_for_free = ptr;				
 				ptr = ft_strjoin(ptr, &line[i + 1]);
-				line = ptr;
+				free(ptr_for_free);
+				free(line);
+				line = ft_strdup(ptr);
+				free(ptr);
 			}
 			else if (line[i + 2] != ' ' && line[i + 2] != '\0' && line[i + 1] == '>')
 			{
 				ptr = ft_substr(line, 0 , i + 2);
+				ptr_for_free = ptr;
 				ptr = ft_strjoin(ptr, " ");
+				free(ptr_for_free);
+				ptr_for_free = ptr;
 				ptr = ft_strjoin(ptr, &line[i + 2]);
-				line = ptr;
+				free(ptr_for_free);
+				line = ft_strdup(ptr);
+				free(ptr);
 				i++;
 			}
 		}
@@ -585,6 +589,7 @@ char **verification_of_tokens(char **comand_line, t_vars *vars)
 	char **new_comand_line;
 	char **fre_arr;
 	char **argv;
+	char *fre_ptr;
 	int fd =0;
 	line = NULL;
 	while(comand_line[i + 1] != NULL && ft_strncmp(comand_line[i], "|", 2) !=0 && vars->mas_flags[i] == 0)
@@ -663,7 +668,9 @@ char **verification_of_tokens(char **comand_line, t_vars *vars)
 		{
 			i = 0;
 			// printf("%s\n", line);
+			fre_ptr = line;
 			line = check_space(line);
+			free(fre_ptr);
 			argv = ft_pars(line, vars);
 			//fre_arr = argv;
 			argv = move_arguments(argv, vars);
@@ -716,6 +723,7 @@ void	execute_command(char *line, t_vars *vars)
 
 	line = check_space(line);
 	comand_line = ft_pars(line, vars);
+	int i = 0;
 	if (comand_line[0] != NULL)
 	{
 		// comand_line = move_arguments(comand_line, vars);
@@ -768,6 +776,7 @@ void	execute_command(char *line, t_vars *vars)
 		free_two_dimensional_array(comand_line);
 	if (comand_path != NULL)	
 		free(comand_path);
+	free(line);	
 }
 
 void	ft_pars_argument(char *line, t_vars *vars)

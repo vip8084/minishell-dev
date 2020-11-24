@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:59:20 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/02 13:14:06 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/23 19:28:01 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char		**check_duplicate(char **argv) // проверка на наличие д�
 		}
 		if(count > 1)
 		{
+			free(argv[i]);
 			argv[i] = NULL;
 			count_2++;
 		}
@@ -58,7 +59,6 @@ char		**check_duplicate(char **argv) // проверка на наличие д�
 		if(argv[count] != NULL)
 		{
 			new_argv[j] = ft_strdup(argv[count]);
-			free(argv[count]);
 			j++;
 		}
 		count++;

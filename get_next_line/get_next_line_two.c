@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_two.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/06 22:00:24 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/23 19:42:28 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/21 14:12:59 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int		funk_for_free_dup(char **ptr, char *ptr2)
 	return (0);
 }
 
-int		funk_for_free_join(char **ptr, char *ptr2)
+static int		funk_for_free_join(char **ptr, char *ptr2)
 {
 	char	*ptr_for_free;
 
@@ -37,7 +37,7 @@ int		funk_for_free_join(char **ptr, char *ptr2)
 	return (0);
 }
 
-static int		gnl_static(char **ptr_static, char **line, char **ptr)
+static int	gnl_static(char **ptr_static, char **line, char **ptr)
 {
 	if ((*ptr = (ft_strchr(*ptr_static, '\n'))))
 	{
@@ -68,8 +68,8 @@ static int		gnl_read(int fd, char **ptr_static, char **line, char **ptr)
 	{
 		if (i == 0 && ft_strlen(*line) == 0)
 		{
-			ft_putstr_fd("exit\n", 1);
-			exit(0);
+			ft_putstr_fd("minishell> : syntax error: unexpected end of file\n", 2);
+			break;
 		}
 		buf[i] = '\0';
 		if ((*ptr = ft_strchr(buf, '\n')))
@@ -88,7 +88,7 @@ static int		gnl_read(int fd, char **ptr_static, char **line, char **ptr)
 	return (i == 0 ? 1 : -1);
 }
 
-int		get_next_line(int fd, char **line)
+int		get_next_line_two(int fd, char **line)
 {
 	char		*ptr;
 	static char	*ptr_static;

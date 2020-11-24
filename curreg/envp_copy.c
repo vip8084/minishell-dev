@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 13:41:52 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/02 13:42:06 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/23 18:07:28 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,4 @@ void		envp_copy(char **envp, t_vars *vars)//создание копии пере
 		i++;
 	}
 	vars->envp_copy[i] = NULL;
-	vars->count_envp = i - 1;
 }

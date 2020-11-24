@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:52:35 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/24 22:20:52 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/24 22:26:00 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static void check_line_value(char **line)
       temp = NULL;
     }
 }
-
 
 void	export_out(t_vars *vars, char **line)//команда export добавление + вывод
 {

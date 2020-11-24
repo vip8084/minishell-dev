@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishel.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/23 15:50:47 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/24 17:01:10 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void        set_g_error(int err);
 void        show_g_error();
 void        command_error(char *cmd, t_vars *vars);
 void        cd_error(char *cmd, char *arg, char *err);
+int         check_valid_id(char *str);
 
 
 void		free_two_dimensional_array(char **arr);

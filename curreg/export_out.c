@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:52:35 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/24 17:36:04 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/24 18:35:53 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	export_out(t_vars *vars, char **line)//команда export добавле
 		if (!check_valid_id(line[i]))
 		{
 			id_error(line[i], vars);
+			vars->err_flag_export = 1;
 			return;
 		}
 		argv = check_duplicate(argv);

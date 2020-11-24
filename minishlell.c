@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/24 18:04:09 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/24 18:35:36 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -716,13 +716,6 @@ void	execute_command(char *line, t_vars *vars)
 
 	line = check_space(line);
 	comand_line = ft_pars(line, vars);
-	int i = 0;
-	while(comand_line[i] != NULL)
-	{
-		printf("%s\n", comand_line[i]);
-		i++;
-	}
-	exit(0);
 	if (comand_line[0] != NULL)
 	{
 		// comand_line = move_arguments(comand_line, vars);
@@ -816,6 +809,7 @@ int main(int argc, char **argv, char **envp)
 	g_error = 0;
 	g_signal =0;
 	vars.err_flag = 0;
+	vars.err_flag_export = 0;
 	vars.cd_flag = 0;
 	vars.mas_flags=NULL;
 	vars.save_std_in = dup(0);

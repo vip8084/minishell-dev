@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/24 17:35:27 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/24 18:33:26 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int			count_redirect;
 int			count_call_pipe;
 int         flag_redirect;
 int         err_flag;
+int         err_flag_export;
 int         cd_flag;
 int			*mas_flags;
 }				t_vars;

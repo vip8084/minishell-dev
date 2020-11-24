@@ -6,7 +6,7 @@
 #    By: curreg <curreg@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/05/18 20:15:21 by hmiso             #+#    #+#              #
-#    Updated: 2020/11/04 20:14:25 by curreg           ###   ########.fr        #
+#    Updated: 2020/11/24 18:51:18 by curreg           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,8 @@ OBJ_FILES = ft_memset.o \
 			ft_putstr_fd.o \
 			ft_putendl_fd.o \
 			ft_putnbr_fd.o \
-			ft_strcmp.o
+			ft_strcmp.o \
+			ft_sort_str_arr.o
 
 BONUSO =	ft_lstnew.o \
 			ft_lstadd_front.o \

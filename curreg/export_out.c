@@ -6,11 +6,30 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:52:35 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/24 18:35:53 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/24 22:20:52 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
+
+static void check_line_value(char **line)
+{
+    int i;
+    int length;
+    char *temp;
+
+    i = 0;
+    temp = NULL;
+    length = ft_strlen(*line);
+    if (length > 1 && (*line)[length - 1] == '=')
+    {
+      temp = *line;
+      *line = ft_strjoin(*line, "\"\"");
+	  //free(temp);
+      temp = NULL;
+    }
+}
+
 
 void	export_out(t_vars *vars, char **line)//команда export добавление + вывод
 {
@@ -19,8 +38,10 @@ void	export_out(t_vars *vars, char **line)//команда export добавле
 	char **argv;
 
 	i = 1;
+	ft_sort_str_arr(vars->envp_copy);
 	if(line[i] != NULL)
 	{
+		check_line_value(&line[i]);	
 		argv = &line[i];
 		if (!check_valid_id(line[i]))
 		{
@@ -41,9 +62,11 @@ void	export_out(t_vars *vars, char **line)//команда export добавле
 			if(argv[1] != NULL)
 			{
 				ft_putchar_fd('=', 1);
-				ft_putchar_fd('"', 1);
+				if (!ft_strncmp(argv[1], """", 3))
+					ft_putchar_fd('"', 1);
 				ft_putstr_fd(argv[1], 1);
-				ft_putchar_fd('"', 1);				
+				if (!ft_strncmp(argv[1], """", 3))
+					ft_putchar_fd('"', 1);				
 			}
 			ft_putchar_fd('\n', 1);
 			free_two_dimensional_array(argv);

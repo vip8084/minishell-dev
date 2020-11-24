@@ -6,11 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2020/11/20 20:58:20 by hmiso            ###   ########.fr       */
-=======
-/*   Updated: 2020/11/24 12:24:34 by hmiso            ###   ########.fr       */
->>>>>>> hmiso_branch
+/*   Updated: 2020/11/24 13:30:50 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -570,8 +566,6 @@ char	**move_arguments(char **comand_line, t_vars *vars)
 	return comand_line;
 }
 
-<<<<<<< HEAD
-=======
 void sig_pipe(int signal)
 {
 	write(0, "", 0);
@@ -714,7 +708,6 @@ char **verification_of_tokens(char **comand_line, t_vars *vars)
 	return comand_line;
 }
 
->>>>>>> hmiso_branch
 void	execute_command(char *line, t_vars *vars)
 {
 	char **comand_line = NULL;
@@ -723,31 +716,6 @@ void	execute_command(char *line, t_vars *vars)
 
 	line = check_space(line);
 	comand_line = ft_pars(line, vars);
-<<<<<<< HEAD
-	comand_line = move_arguments(comand_line, vars);
-	check_pipe(comand_line, vars);
-	check_redirect(comand_line, vars);
-	if (vars->count_pipe == 0 && vars->count_redirect == 0)
-	{
-		if(!(checking_recoded_functions(comand_line, vars)))
-		{
-			comand_path = check_system_funk(vars, comand_line);
-			if (comand_path == NULL)
-				comand_path = comand_line[0];
-			else
-			{	
-				comand_path = ft_strjoin(comand_path, "/");
-				comand_path = ft_strjoin(comand_path, comand_line[0]);
-			}			
-			system_funk(comand_path, comand_line, vars);
-		}
-	}
-	else
-	{
-		ft_conveyor(line, comand_line, vars);
-		dup2(vars->save_std_in, 0);
-		dup2(vars->save_std_out, 1);
-=======
 	if (comand_line[0] != NULL)
 	{
 		// comand_line = move_arguments(comand_line, vars);
@@ -795,7 +763,6 @@ void	execute_command(char *line, t_vars *vars)
 				dup2(vars->save_std_out, 1);
 			}		
 		}		
->>>>>>> hmiso_branch
 	}
 	if(comand_line != NULL && comand_line[0] != NULL)
 		free_two_dimensional_array(comand_line);

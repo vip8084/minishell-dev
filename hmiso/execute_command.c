@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 13:10:28 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 13:10:42 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/25 16:36:03 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,9 @@ void	execute_command(char *line, t_vars *vars)
 			}		
 		}
 	}
-	if(comand_line != NULL && comand_line[0] != NULL)
+	if(comand_line != NULL)
 		free_two_dimensional_array(comand_line);
-	if (comand_path != NULL)	
+	if (comand_path != NULL)
 		ptr_free(&comand_path);
 	ptr_free(&line);
 	free(vars->mas_flags);

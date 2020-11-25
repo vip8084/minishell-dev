@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 12:49:39 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 13:02:49 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/25 16:24:17 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char **environment_variable_substitution(char **comand_line, t_vars *vars)
 	}
 	if (vars->mas_flags == NULL)
 	{
-		vars->mas_flags = malloc(sizeof(int) * i + 1);
+		vars->mas_flags = malloc(sizeof(int) * (i + 1));
 		i = 0;
 		while (comand_line[i] != NULL)
 		{

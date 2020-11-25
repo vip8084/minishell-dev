@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/27 16:56:20 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/03 14:30:06 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/25 16:36:16 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,20 +91,6 @@ char		*init_patch(t_vars *vars, char *arg) // возвращает значен�
 		i++;
 	}
 	return (value);
-}
-
-void		free_two_dimensional_array(char **arr)//освобождение памяти в двухмерном масиве
-{
-	int i;
-
-	i = 0;
-	while(arr[i] != NULL)
-	{
-		free(arr[i]);
-		arr[i] = NULL;
-		i++;
-	}
-	free(arr);
 }
 
 void		envp_copy(char **envp, t_vars *vars)//создание копии переменных среды

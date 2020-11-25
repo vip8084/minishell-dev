@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishlell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 16:02:29 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/25 16:23:26 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,6 @@ int main(int argc, char **argv, char **envp)
 				g_signal = 0;
 			}
 		}
-		free(vars.mas_flags);
-		vars.mas_flags = NULL;
 		ptr_free(&line);
 		line = NULL;
 		vars.count_call_pipe = 0;

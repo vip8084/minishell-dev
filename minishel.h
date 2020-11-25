@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishel.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 16:02:20 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/25 18:13:29 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void        id_error(char *cmd, t_vars *vars);
 void		envp_copy(char **envp, t_vars *vars);
 void		update_envp(char **str, t_vars *vars);
 void		export_out(t_vars *vars, char **line);
-void		ft_unset(t_vars *vars, char *str);
+void		ft_unset(t_vars *vars, char **str);
 void		free_two_dimensional_array(char **arr);
 void		ft_echo(char **line, t_vars *vars);
 void		ft_echo_n(char **line, t_vars *vars);

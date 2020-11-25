@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checking_recoded_functions.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 17:31:40 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/24 18:35:15 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/25 18:36:31 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,7 @@ int		checking_recoded_functions(char **comand_line, t_vars *vars)
 	}
 	else if (ft_strncmp(comand_line[0], "unset", 6) == 0)
 	{
-		argv = &comand_line[0];
-		while(argv[count] != NULL)
-		{
-			ft_unset(vars, argv[count]);
-			count++;
-		}
+		ft_unset(vars, &comand_line[1]);
 		vars->err_flag = 0;
 		g_error = 0;
 		return (1);

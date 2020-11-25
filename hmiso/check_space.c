@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 12:35:13 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 12:35:35 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/25 16:48:18 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char *check_space(char *line_old)
 			flag = 0;
 			i++;
 		}		
-		if ((line[i] == '>' || line[i] == '|' || line[i] == '<') && flag == 0)
+		if (ft_strlen(line) != 1 && (line[i] == '>' || line[i] == '|' || line[i] == '<') && flag == 0)
 		{
 			if (line[i - 1] != ' ' && i != 0 && line[i - 1] != '>')
 			{
@@ -50,7 +50,7 @@ char *check_space(char *line_old)
 				line = ft_strdup(ptr);
 				ptr_free(&ptr);
 			}
-			else if(line[i + 1] != ' ' && line[i + 1] != '\0' && line[i + 1] != '>')
+			else if (line[i + 1] != ' ' && line[i + 1] != '\0' && line[i + 1] != '>')
 			{			
 				ptr = ft_substr(line, 0 , i + 1);
 				ptr_for_free = ptr;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_out.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:52:35 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 17:03:00 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/25 19:16:20 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void check_line_value(char **line)
     {
       temp = *line;
       *line = ft_strjoin(*line, "\"\"");
-	  //free(temp);
+	  free(temp);
       temp = NULL;
     }
 }

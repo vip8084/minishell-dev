@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 11:46:29 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/24 20:40:44 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/25 20:26:44 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ void			ft_echo(char **line, t_vars *vars)//команда echo
 				write(1, " ", 1);			
 		// }
 	}
-	free_two_dimensional_array(line);
 	write(1, "\n", 1);
 	g_error = 0;
 }

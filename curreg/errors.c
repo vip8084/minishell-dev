@@ -6,11 +6,19 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 17:51:37 by curreg            #+#    #+#             */
-/*   Updated: 2020/11/20 17:46:58 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/24 17:37:01 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
+
+void id_error(char *cmd, t_vars *vars)
+{
+    ft_putstr_fd("minishell>export: `", 1);
+    ft_putstr_fd(cmd, 1);
+    ft_putstr_fd("': not a valid identifier\n", 1);
+    g_error = 1;
+}
 
 void command_error(char *cmd, t_vars *vars)
 {

@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 17:31:40 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/20 20:44:38 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/24 18:35:15 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,9 @@ int		checking_recoded_functions(char **comand_line, t_vars *vars)
 	{
 		export_out(vars, &comand_line[0]);
 		vars->err_flag = 0;
-		g_error = 0;
+		if (!vars->err_flag_export)
+			g_error = 0;
+		vars->err_flag_export = 0;
 		return (1);
 	}
 	else if (ft_strncmp(comand_line[0], "exit", 6) == 0)

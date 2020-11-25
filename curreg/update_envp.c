@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_envp.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 13:14:43 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 15:58:14 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/25 16:02:10 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,7 @@ void	update_envp(char **str, t_vars *vars)//добаавление новой п
 	}
 	while(j < i)
 	{
-		ar_2 = ft_split(str[j], '=');
-		if (!check_valid_id(ar_2[0]))
-		{
-			printf("some sssstr\n");
-			return;
-		}	
+		ar_2 = ft_split(str[j], '=');	
 		while (vars->envp_copy[count] != NULL)
 		{
 			ar_1 = ft_split(vars->envp_copy[count], '=');

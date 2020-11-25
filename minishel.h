@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishel.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 15:58:25 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/25 16:02:20 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int			count_redirect;
 int			count_call_pipe;
 int         flag_redirect;
 int         err_flag;
+int         err_flag_export;
 int         cd_flag;
 int			*mas_flags;
 }				t_vars;
@@ -55,7 +56,7 @@ void        show_g_error();
 void        command_error(char *cmd, t_vars *vars);
 void        cd_error(char *cmd, char *arg, char *err);
 int         check_valid_id(char *str);
-
+void        id_error(char *cmd, t_vars *vars);
 
 
 void		envp_copy(char **envp, t_vars *vars);

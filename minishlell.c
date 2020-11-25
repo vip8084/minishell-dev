@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishlell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 15:58:19 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/25 16:02:29 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int main(int argc, char **argv, char **envp)
 	g_error = 0;
 	g_signal =0;
 	vars.err_flag = 0;
+	vars.err_flag_export = 0;
 	vars.cd_flag = 0;
 	vars.mas_flags=NULL;
 	vars.save_std_in = dup(0);

@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:52:35 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/24 22:26:00 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/25 15:27:02 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	export_out(t_vars *vars, char **line)//команда export добавле
 
 	i = 1;
 	ft_sort_str_arr(vars->envp_copy);
-	if(line[i] != NULL)
+	if(line[i] != NULL && ft_strcmp(line[i], ""))
 	{
 		check_line_value(&line[i]);	
 		argv = &line[i];

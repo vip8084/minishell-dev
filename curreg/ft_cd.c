@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 11:07:05 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/23 16:10:27 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/25 12:28:33 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void		ft_cd(char **comand_line, t_vars *vars)
 			cd_error(comand_line[0], comand_line[1], strerror(errno));
 		}
 		free_two_dimensional_array(comand_line);
-		path = NULL;      
+		path = NULL;
 	}
 	else
 	{

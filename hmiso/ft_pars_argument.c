@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_two_dimensional_array.c                       :+:      :+:    :+:   */
+/*   ft_pars_argument.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/02 16:55:07 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/24 20:40:34 by hmiso            ###   ########.fr       */
+/*   Created: 2020/11/25 13:17:09 by hmiso             #+#    #+#             */
+/*   Updated: 2020/11/25 13:17:19 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
-void		free_two_dimensional_array(char **arr)//освобождение памяти в двухмерном масиве
+void	ft_pars_argument(char *line, t_vars *vars)
 {
-	int i;
+		int	i = 0;
+		char **argv;
 
-	i = 0;
-	if (arr != NULL)
-	{
-		while(arr[i] != NULL)
+		argv = semicolon(line);
+		// for (i = 0; argv[i] != NULL; i++)
+		// {
+		// 	printf("%s\n", argv[i]);
+		// }
+		// exit(0);
+		while (argv[i] != NULL)
 		{
-			free(arr[i]);
-			arr[i] = NULL;
+			if (ft_strlen(argv[i]) != 0)
+					execute_command(argv[i], vars);
 			i++;
 		}
-		free(arr);
-		arr=NULL;
-	}
+		free_two_dimensional_array(argv);
 }
-
-//вроде норм добавить проверку на NULL дабы не сегала если хрень придет

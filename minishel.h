@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishel.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/24 17:01:10 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/25 15:58:25 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void        cd_error(char *cmd, char *arg, char *err);
 int         check_valid_id(char *str);
 
 
-void		free_two_dimensional_array(char **arr);
+
 void		envp_copy(char **envp, t_vars *vars);
 void		update_envp(char **str, t_vars *vars);
 void		export_out(t_vars *vars, char **line);
@@ -75,7 +75,7 @@ char		**check_duplicate(char **argv);
 char		*init_patch(t_vars *vars, char *arg);
 void		ft_exit(char **comand_line);
 void		system_funk(char *path, char **argv, t_vars *vars);
-char 		*check_system_funk(t_vars *vars, char **str);
+char 		*check_system_funk(t_vars *vars, char *str);
 void		ft_pipe(char *path, char **comand, t_vars *vars);
 void		check_pipe(char **comand_mas, t_vars *vars);
 int			checking_recoded_functions(char **comand_line, t_vars *vars);
@@ -89,4 +89,13 @@ void		ft_redirects_pipe(char *path, char **comand, char **mas_redirektion, t_var
 void		ft_redirects_redirect(char *path, char **comand, char **mas_redirektion, char **mas_redirektion2, t_vars *vars);
 void		ft_signals(int signal);
 void		ft_signal(int signal);
+void		ptr_free(char **ptr);
+char		**semicolon(char *line);
+char 		*check_space(char *line_old);
+char		*delete_quotes(char *line);
+char		**environment_variable_substitution(char **comand_line, t_vars *vars);
+char		**count_comands(char *line);
+char		**ft_pars(char *line, t_vars *vars);
+char		**verification_of_tokens(char **comand_line, t_vars *vars);
+void		execute_command(char *line, t_vars *vars);
 #endif

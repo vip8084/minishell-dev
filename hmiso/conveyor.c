@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 18:27:08 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/24 12:17:44 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/24 21:26:30 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,22 +240,25 @@ char	**make_comand_mas_end_red(char **comand_line, int i, t_vars *vars)
 char	*ft_join_path(t_vars *vars, char **com_whis_flags)
 {
 	char *comand_path;
-	char *free_ptr;
+	char *fre_ptr;
+	char *ptr;
 
-	comand_path = check_system_funk(vars, &com_whis_flags[0]);
+	ptr = ft_strdup(com_whis_flags[0]);
+	comand_path = check_system_funk(vars, ptr);
 	if (comand_path == NULL)
 	{
-		comand_path = com_whis_flags[0];
+		comand_path = ft_strdup(com_whis_flags[0]);
 	}
 	else
 	{
-		free_ptr = comand_path;
+		fre_ptr = comand_path;
 		comand_path = ft_strjoin(comand_path, "/");
-		free(free_ptr);
-		free_ptr = comand_path;
+		ptr_free(&fre_ptr);
+		fre_ptr = comand_path;
 		comand_path = ft_strjoin(comand_path, com_whis_flags[0]);
-		free(free_ptr);
+		ptr_free(&fre_ptr);
 	}
+	ptr_free(&ptr);
 	return (comand_path);
 }
 
@@ -407,7 +410,7 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 				if(mas_redirektion[0] != NULL)
 					i--;
 				free_two_dimensional_array(com_whis_flags);
-				free(comand_path);
+				ptr_free(&comand_path);
 				free_two_dimensional_array(mas_redirektion);
 			}
 			else
@@ -480,7 +483,7 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 				k = 0;
 				flag = 0;
 				free_two_dimensional_array(com_whis_flags);
-				free(comand_path);
+				ptr_free(&comand_path);
 				free_two_dimensional_array(mas_redirektion);
 			}
 			else
@@ -538,7 +541,7 @@ void	ft_conveyor(char *line, char **comand_line, t_vars *vars)
 			j = 0;
 			vars->flag_redirect = 0;
 			free_two_dimensional_array(com_whis_flags);
-			free(comand_path);			
+			ptr_free(&comand_path);			
 		}
 		j++;
 		i++;

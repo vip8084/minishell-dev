@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 13:02:21 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/02 13:05:45 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/25 12:24:43 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void		ft_unset(t_vars *vars, char *str)//удаление переменной �
 				flag++;
 			}
 		}
+		free_two_dimensional_array(argv);
 		count++;
 	}
 	count = 0;
@@ -51,6 +52,7 @@ void		ft_unset(t_vars *vars, char *str)//удаление переменной �
 			}
 			i++;
 		}
+		//free_two_dimensional_array(vars->envp_copy);
 		vars->envp_copy = env_new;
 	}
 }

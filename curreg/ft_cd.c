@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 11:07:05 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 20:48:03 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/26 15:17:28 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void		ft_cd(char **comand_line, t_vars *vars)
 
 	path = NULL;
 	errno = 0;
-	pwd[0] = "OLDPWD=";
-	ptr = getcwd(NULL,0);
-	pwd[0] = ft_strjoin(pwd[0], ptr);
-	pwd[1] = NULL;
-	free(ptr);
+	//pwd[0] = "OLDPWD=";
+	//ptr = getcwd(NULL,0);
+	//pwd[0] = ft_strjoin(pwd[0], ptr);
+	//pwd[1] = NULL;
+	// free(ptr);
 	if(comand_line[0 + 1] != NULL)
 	{
-		update_envp(pwd, vars);
+		//update_envp(pwd, vars);
 		path = comand_line[1];
 		if (chdir(path) == -1)
 		{

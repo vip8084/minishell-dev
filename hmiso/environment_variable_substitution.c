@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 12:49:39 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 16:24:17 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/26 14:57:24 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,9 @@ char **environment_variable_substitution(char **comand_line, t_vars *vars)
 					ptr_free(&env_var);
 					ptr_free(&ptr2);
 					i = 0;
+					j = 0;
 				}
-				else
+				else if (comand_line[i][j] != '\0')
 				{
 					j++;
 				}

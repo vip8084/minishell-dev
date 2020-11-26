@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 19:55:06 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/26 21:15:55 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ typedef struct s_vars{
 
 char		**envp_copy;
 int			count_envp;
-char        *path;
 int			save_std_in;
 int			save_std_out;
 int			count_pipe;
@@ -50,6 +49,19 @@ int         err_flag_export;
 int         cd_flag;
 int			*mas_flags;
 }				t_vars;
+
+typedef struct s_upd{
+
+	int i;
+	int j;
+	char **new_envp;
+	char **ar_1;
+	char **ar_2;
+	int count;
+	int flag;
+	char *ptr;
+	char **new_str;
+}				t_upd;
 
 void        set_g_error(int err);
 void        show_g_error();

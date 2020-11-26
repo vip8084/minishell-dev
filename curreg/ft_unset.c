@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 13:02:21 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 18:55:06 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/26 10:51:49 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void		ft_unset(t_vars *vars, char **str)//удаление переменной 
 					free(vars->envp_copy[count]);
 					vars->envp_copy[count]=NULL;
 					flag++;
-					// count_env--;
 					free_two_dimensional_array(argv);
 					break;
 				}

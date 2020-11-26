@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 18:13:29 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/25 19:55:06 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,11 @@ char		**count_comands(char *line);
 char		**ft_pars(char *line, t_vars *vars);
 char		**verification_of_tokens(char **comand_line, t_vars *vars);
 void		execute_command(char *line, t_vars *vars);
+void		create_file(char **comand_line,int *mas_flags);
+void		ft_pipe_eof(void);
+char		*ft_join_path(t_vars *vars, char **com_whis_flags);
+char		**make_list_rederection_revers(char **comand_line, int i, int j, t_vars *vars);
+char		**make_list_rederection(char **comand_line, int i, int j, t_vars *vars);
+char		**make_comand_mas_start(char **comand_line, int i, int j);
+
 #endif

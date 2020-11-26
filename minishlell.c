@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 16:23:26 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/25 21:20:10 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ int main(int argc, char **argv, char **envp)
 	char *ptr;
 	char *line = NULL;
 	int i = 0;
+	char *ptr2[2];
+
+	ptr2[0]="OLDPWD";
+	ptr2[1]=NULL;
 	vars.count_call_pipe = 0;
 	vars.flag_redirect = 0;
 	errno = 0;

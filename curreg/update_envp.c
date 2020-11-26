@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_envp.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 13:14:43 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 16:02:10 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/25 21:45:58 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	update_envp(char **str, t_vars *vars)//добаавление новой п
 	char **ar_2;
 	int count = 0;
 	int flag = 0;
+	int flag2 = 0;
 	char *ptr;
 	while(str[i] != NULL)
 	{
@@ -28,11 +29,19 @@ void	update_envp(char **str, t_vars *vars)//добаавление новой п
 	}
 	while(j < i)
 	{
-		ar_2 = ft_split(str[j], '=');	
+		if (ft_strncmp(str[j], "=", 2) == 0)
+		{
+			ft_putstr_fd("export: `=': not a valid identifier\n", 2);
+			j++;
+			flag2++;
+			count = 0;
+			continue;
+		}
+		ar_2 = ft_split(str[j], '=');
 		while (vars->envp_copy[count] != NULL)
 		{
 			ar_1 = ft_split(vars->envp_copy[count], '=');
-			if(ft_strlen(ar_1[0])  == ft_strlen(ar_2[0]))
+			if(ft_strlen(ar_1[0]) == ft_strlen(ar_2[0]))
 			{
 				if(ft_strncmp(ar_1[0],ar_2[0], ft_strlen(ar_1[0])) == 0)
 				{
@@ -68,7 +77,7 @@ void	update_envp(char **str, t_vars *vars)//добаавление новой п
 	{
 		j++;
 	}
-	new_envp = malloc(sizeof(char *) *(j + i + 1));
+	new_envp = malloc(sizeof(char *) *(j + i + 1 - flag2));
 	j = 0;
 	i = 0;
 	while(vars->envp_copy[i] != NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishlell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/26 11:39:52 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/27 19:33:23 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int main(int argc, char **argv, char **envp)
 	char *ptr;
 	char *line = NULL;
 	int i = 0;
+	char *old_pwd[2] = {"OLDPWD", NULL};
 
 	vars.count_call_pipe = 0;
 	vars.flag_redirect = 0;
@@ -45,6 +46,7 @@ int main(int argc, char **argv, char **envp)
 	vars.save_std_in = dup(0);
 	vars.save_std_out = dup(1);
 	envp_copy(envp, &vars);
+	ft_unset(&vars, old_pwd);
 	ft_putstr_fd("minishell>", 1);
 	signal(SIGINT, &ft_signals);
 	signal(SIGQUIT, &ft_signal);

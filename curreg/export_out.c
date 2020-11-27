@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_out.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:52:35 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/27 11:13:45 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/27 18:08:22 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,19 @@ void	export_out(t_vars *vars, char **line)//команда export добавле
 			ft_putstr_fd(argv[0], 1);
 			if(argv[1] != NULL)
 			{
-				ft_putchar_fd('=', 1);
-				if (!ft_strncmp(argv[1], """", 3))
+
+				if (!ft_strcmp(argv[1], "\"\""))
+				{
+					ft_putchar_fd('=', 1);
+					ft_putstr_fd(argv[1], 1);
+				}
+				else
+				{
+					ft_putchar_fd('=', 1);
 					ft_putchar_fd('"', 1);
-				ft_putstr_fd(argv[1], 1);
-				if (!ft_strncmp(argv[1], """", 3))
-					ft_putchar_fd('"', 1);				
+					ft_putstr_fd(argv[1], 1);
+					ft_putchar_fd('"', 1);
+				}				
 			}
 			ft_putchar_fd('\n', 1);
 			free_two_dimensional_array(argv);
@@ -75,5 +82,3 @@ void	export_out(t_vars *vars, char **line)//команда export добавле
 		}
 	}
 }
-//выводит export
-// течет хз на каком этапе

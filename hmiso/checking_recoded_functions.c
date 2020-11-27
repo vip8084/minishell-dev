@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checking_recoded_functions.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 17:31:40 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/27 16:49:34 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/27 18:20:45 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int		checking_recoded_functions(char **comand_line, t_vars *vars)
 	}
 	else if (ft_strncmp(comand_line[0], "exit", 6) == 0)
 	{
+		ft_putstr_fd("exit\n", 1);
 		ft_exit(comand_line);
 		vars->err_flag = 0;
 		g_error = 0;

@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 13:08:39 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/27 17:02:14 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/27 21:32:13 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,13 @@ char **verification_of_tokens(char **comand_line, t_vars *vars)
 	}
 	if ((i == 0 && ft_strncmp(comand_line[i], "|", 2) == 0) && vars->mas_flags[i] == 0)
 	{
-		ft_putstr_fd("minishell>syntax error near unexpected token `|'\n", 2);
-		g_error = 258;
+		syntax_error("|");
 		free_two_dimensional_array(comand_line);
 		return NULL;
 	}
 	if (comand_line[i + 1] != NULL && ((i >= 1 && ft_strncmp(comand_line[i], "|", 2) == 0) && ft_strncmp(comand_line[i + 1], "|", 2) == 0 && vars->mas_flags[i + 1] == 0 && vars->mas_flags[i] == 0))
 	{
-		ft_putstr_fd("minishell>syntax error near unexpected token `|'\n", 2);
-		g_error = 258;
+		syntax_error("|");
 		free_two_dimensional_array(comand_line);
 		return NULL;
 	}
@@ -59,8 +57,7 @@ char **verification_of_tokens(char **comand_line, t_vars *vars)
 	}
 	if (comand_line[i + 1] != NULL && i >= 1 && (ft_strncmp(comand_line[i + 1], ">", 2) == 0 || ft_strncmp(comand_line[i + 1], "<", 2) == 0 || ft_strncmp(comand_line[i + 1], ">>", 2) == 0) && vars->mas_flags[i + 1] == 0 && vars->mas_flags[i] == 0)
 	{
-		ft_putstr_fd("minishell>syntax error near unexpected token `>'\n", 2);
-		g_error = 258;
+		syntax_error(">");
 		free_two_dimensional_array(comand_line);
 		return NULL;
 	}
@@ -71,8 +68,7 @@ char **verification_of_tokens(char **comand_line, t_vars *vars)
 	}
 	if ((ft_strncmp(">", comand_line[i], 2) == 0 || ft_strncmp(">>", comand_line[i], 3) == 0 || ft_strncmp("<", comand_line[i], 3) == 0) && vars->mas_flags[i] == 0)
 	{
-		ft_putstr_fd("minishell>syntax error near unexpected token `newline'\n", 2);
-		g_error = 258;
+		syntax_error("newline");
 		free_two_dimensional_array(comand_line);
 		return NULL;
 	}
@@ -98,8 +94,7 @@ char **verification_of_tokens(char **comand_line, t_vars *vars)
 		// if ((ft_strncmp(">", comand_line[i - 1], 2) == 0 || ft_strncmp(">>", comand_line[i - 1], 3) == 0 || ft_strncmp("<", comand_line[i - 1], 3) == 0) && vars->mas_flags[i - 1] == 0)
 		// {
 			free_two_dimensional_array(comand_line);
-			ft_putstr_fd("minishell>syntax error near unexpected token `newline'\n", 2);
-			g_error = 258;
+			syntax_error("newline");
 			return NULL;
 	}
 		// }

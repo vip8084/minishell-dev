@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 17:51:37 by curreg            #+#    #+#             */
-/*   Updated: 2020/11/27 21:09:53 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/27 21:37:39 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,10 @@ void syntax_error(char *cmd)
         ft_putchar_fd(cmd[0], 2);
         ft_putchar_fd(cmd[0], 2);
     }
-    else
+    else if (cmd[0] == ';')
 	    ft_putchar_fd(cmd[0], 2);
+    else
+        ft_putstr_fd(cmd, 2); 
     ft_putstr_fd("'\n", 2);
     g_error = 258;
 }

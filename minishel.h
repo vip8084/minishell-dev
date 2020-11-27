@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishel.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/27 13:53:22 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/27 20:24:42 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,7 @@ void        command_error(char *cmd, t_vars *vars);
 void        cd_error(char *cmd, char *arg, char *err);
 int         check_valid_id(char *str);
 void        id_error(char *cmd, t_vars *vars);
-
-
+void		set_pwd(char *var, t_vars *vars);
 void		envp_copy(char **envp, t_vars *vars);
 void		update_envp(char **str, t_vars *vars);
 void		export_out(t_vars *vars, char **line);

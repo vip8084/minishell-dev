@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 17:51:37 by curreg            #+#    #+#             */
-/*   Updated: 2020/11/24 17:37:01 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/27 21:09:53 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,20 @@ void command_error(char *cmd, t_vars *vars)
     }
     ft_putstr_fd(": command not found\n", 1);
     g_error = 127;
+}
+
+void syntax_error(char *cmd)
+{
+    ft_putstr_fd("minishell>syntax error near unexpected token `", 2);
+    if (cmd[1] == ';')
+    {
+        ft_putchar_fd(cmd[0], 2);
+        ft_putchar_fd(cmd[0], 2);
+    }
+    else
+	    ft_putchar_fd(cmd[0], 2);
+    ft_putstr_fd("'\n", 2);
+    g_error = 258;
 }
 
 void cd_error(char *cmd, char* arg, char *err)

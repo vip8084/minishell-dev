@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/27 20:24:42 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/27 21:04:50 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_sys_funk{
 void        set_g_error(int err);
 void        show_g_error();
 void        command_error(char *cmd, t_vars *vars);
+void		syntax_error(char *cmd);
 void        cd_error(char *cmd, char *arg, char *err);
 int         check_valid_id(char *str);
 void        id_error(char *cmd, t_vars *vars);

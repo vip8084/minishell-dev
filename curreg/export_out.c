@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:52:35 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/26 13:45:16 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/27 11:13:45 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ void	export_out(t_vars *vars, char **line)//команда export добавле
 		}
 		argv = check_duplicate(argv);
 		update_envp(argv, vars);
-		free(argv);
+		// free(argv);
+		free_two_dimensional_array(argv);
 	}
 	else
 	{	

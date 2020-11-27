@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 13:14:43 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/26 21:49:30 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/27 11:44:22 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,5 @@ void	update_envp(char **str, t_vars *vars)//добаавление новой п
 	free(vars->envp_copy);
 	envp_copy(upd.new_envp, vars);
 	free_two_dimensional_array(upd.new_envp);
+	free(upd.new_str);
 }
-// скорее всего течет
-// неокрректно рабботает с кейсе export a=b a a a
-// должна вернуть ошибку export a =c
-// проверить коды ошибок в баше

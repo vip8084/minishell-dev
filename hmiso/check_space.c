@@ -6,102 +6,89 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 12:35:13 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/26 19:28:26 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/27 13:19:19 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
-static void	check_space_res(char *ptr, char *line, int i)
+static void	check_space_res(t_space *space)
 {
-	char *ptr_for_free;
-	// char *ptr;
-	// char *line;
-
-	// ptr = *str;
-	// line = *line2;
-	ptr = ft_substr(line, 0, i);
-	ptr_for_free = ptr;
-	ptr = ft_strjoin(ptr, " ");
-	ptr_free(&ptr_for_free);
-	ptr_for_free = ptr;
-	ptr = ft_strjoin(ptr, &line[i]);
-	ptr_free(&ptr_for_free);
-	ptr_free(&line);
-	line = ft_strdup(ptr);
-	ptr_free(&ptr);
+	space->ptr = ft_substr(space->line, 0, space->i);
+	space->ptr_for_free = space->ptr;
+	space->ptr = ft_strjoin(space->ptr, " ");
+	ptr_free(&space->ptr_for_free);
+	space->ptr_for_free = space->ptr;
+	space->ptr = ft_strjoin(space->ptr, &space->line[space->i]);
+	ptr_free(&space->ptr_for_free);
+	ptr_free(&space->line);
+	space->line = ft_strdup(space->ptr);
+	ptr_free(&space->ptr);
 }
 
-char *check_space(char *line_old)
+static void	check_space_res_2(t_space *space)
 {
-	int		i;
-	int		flag;
-	char	*ptr;
-	char	*ptr_for_free = NULL;
-	char	*line;
-	
-	ptr = NULL;
-	i = 0;
-	flag = 0;
-	line = ft_strdup(line_old);
-	ptr_for_free = NULL;
-	while(line[i] != '\0')
+	space->ptr = ft_substr(space->line, 0, space->i + 1);
+	space->ptr_for_free = space->ptr;
+	space->ptr = ft_strjoin(space->ptr, " ");
+	ptr_free(&space->ptr_for_free);
+	space->ptr_for_free = space->ptr;
+	space->ptr = ft_strjoin(space->ptr, &space->line[space->i + 1]);
+	ptr_free(&space->ptr_for_free);
+	ptr_free(&space->line);
+	space->line = ft_strdup(space->ptr);
+	ptr_free(&space->ptr);
+}
+
+static void	check_space_res_3(t_space *space)
+{
+	space->ptr = ft_substr(space->line, 0, space->i + 2);
+	space->ptr_for_free = space->ptr;
+	space->ptr = ft_strjoin(space->ptr, " ");
+	ptr_free(&space->ptr_for_free);
+	space->ptr_for_free = space->ptr;
+	space->ptr = ft_strjoin(space->ptr, &space->line[space->i + 2]);
+	ptr_free(&space->ptr_for_free);
+	ptr_free(&space->line);
+	space->line = ft_strdup(space->ptr);
+	ptr_free(&space->ptr);
+	space->i++;
+}
+
+static void	init_spase(char *line_old, t_space *space)
+{
+	space->ptr = NULL;
+	space->i = 0;
+	space->flag = 0;
+	space->line = ft_strdup(line_old);
+	space->ptr_for_free = NULL;
+}
+
+char		*check_space(char *line_old)
+{
+	t_space space;
+
+	init_spase(line_old, &space);
+	while (space.line[space.i] != '\0')
 	{
-		if ((line[i] == '\'' || line[i] == '"') && flag == 0 && line[i + 1] != '\0')
+		check_space_res_4(&space);
+		if (ft_strlen(space.line) > 1 && (space.line[space.i] == '>'
+		|| space.line[space.i] == '|' || space.line[space.i] == '<')
+		&& space.flag == 0)
 		{
-			flag = 1;
-			i++;
+			if (space.i != 0 && space.line[space.i - 1] != ' '
+			&& space.i != 0 && space.line[space.i - 1] != '>')
+				check_space_res(&space);
+			else if (ft_strlen(space.line) >= space.i + 1
+			&& space.line[space.i + 1] != ' ' && space.line[space.i + 1] != '\0'
+			&& space.line[space.i + 1] != '>')
+				check_space_res_2(&space);
+			else if (ft_strlen(space.line) >= space.i + 2
+			&& space.line[space.i + 2] != ' ' && space.line[space.i + 2] != '\0'
+			&& space.line[space.i + 1] == '>')
+				check_space_res_3(&space);
 		}
-		if ((line[i] == '\'' || line[i] == '"') && flag == 1 && line[i + 1] != '\0')
-		{
-			flag = 0;
-			i++;
-		}		
-		if (ft_strlen(line) > 1 && (line[i] == '>' || line[i] == '|' || line[i] == '<') && flag == 0)
-		{
-			if (i !=0 && line[i - 1] != ' ' && i != 0 && line[i - 1] != '>')
-			{
-				ptr=ft_substr(line, 0, i);
-				ptr_for_free = ptr;
-				ptr=ft_strjoin(ptr, " ");
-				ptr_free(&ptr_for_free);
-				ptr_for_free = ptr;
-				ptr = ft_strjoin(ptr, &line[i]);
-				ptr_free(&ptr_for_free);
-				ptr_free(&line);
-				line = ft_strdup(ptr);
-				ptr_free(&ptr);
-				// check_space_res(ptr, line, i);
-			}
-			else if (ft_strlen(line) >= i + 1 && line[i + 1] != ' ' && line[i + 1] != '\0' && line[i + 1] != '>')
-			{			
-				ptr = ft_substr(line, 0 , i + 1);
-				ptr_for_free = ptr;
-				ptr = ft_strjoin(ptr, " ");
-				ptr_free(&ptr_for_free);
-				ptr_for_free = ptr;				
-				ptr = ft_strjoin(ptr, &line[i + 1]);
-				ptr_free(&ptr_for_free);
-				ptr_free(&line);
-				line = ft_strdup(ptr);
-				ptr_free(&ptr);
-			}
-			else if (ft_strlen(line) >= i + 2 && line[i + 2] != ' ' && line[i + 2] != '\0' && line[i + 1] == '>')
-			{
-				ptr = ft_substr(line, 0 , i + 2);
-				ptr_for_free = ptr;
-				ptr = ft_strjoin(ptr, " ");
-				ptr_free(&ptr_for_free);
-				ptr_for_free = ptr;
-				ptr = ft_strjoin(ptr, &line[i + 2]);
-				ptr_free(&ptr_for_free);
-				ptr_free(&line);
-				line = ft_strdup(ptr);
-				ptr_free(&ptr);
-				i++;
-			}
-		}
-		i++;
+		space.i++;
 	}
-	return (line);
+	return (space.line);
 }

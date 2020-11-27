@@ -6,23 +6,19 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 17:31:40 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 18:36:31 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/27 16:49:34 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
-int		checking_recoded_functions(char **comand_line, t_vars *vars)
+static int	checking_recoded_functions_res(char **comand_line, t_vars *vars)
 {
-	char **argv;
-	int count;
-
-	count = 0;
 	if (ft_strncmp(comand_line[0], "cd", 3) == 0)
 	{
 		ft_cd(comand_line, vars);
 		vars->err_flag = 0;
-		g_error = 1; //////
+		g_error = 1;
 		return (1);
 	}
 	else if (ft_strncmp(comand_line[0], "pwd", 4) == 0)
@@ -30,15 +26,46 @@ int		checking_recoded_functions(char **comand_line, t_vars *vars)
 		ft_pwd();
 		vars->err_flag = 0;
 		g_error = 0;
-		return (1);		
+		return (1);
 	}
-	else if ((ft_strncmp(comand_line[0], "echo", 5) == 0) && (comand_line[1] != NULL) && (ft_strncmp(comand_line[1], "-n", 3)) == 0)
+	else if ((ft_strncmp(comand_line[0], "echo", 5) == 0)
+	&& (comand_line[1] != NULL)
+	&& (ft_strncmp(comand_line[1], "-n", 3)) == 0)
 	{
 		ft_echo_n(&comand_line[0], vars);
 		vars->err_flag = 0;
 		g_error = 0;
 		return (1);
 	}
+	else
+		return (0);
+}	
+
+int		checking_recoded_functions(char **comand_line, t_vars *vars)
+{
+	// if (ft_strncmp(comand_line[0], "cd", 3) == 0)
+	// {
+	// 	ft_cd(comand_line, vars);
+	// 	vars->err_flag = 0;
+	// 	g_error = 1;
+	// 	return (1);
+	// }
+	// else if (ft_strncmp(comand_line[0], "pwd", 4) == 0)
+	// {
+	// 	ft_pwd();
+	// 	vars->err_flag = 0;
+	// 	g_error = 0;
+	// 	return (1);
+	// }
+	// else if ((ft_strncmp(comand_line[0], "echo", 5) == 0) && (comand_line[1] != NULL) && (ft_strncmp(comand_line[1], "-n", 3)) == 0)
+	// {
+	// 	ft_echo_n(&comand_line[0], vars);
+	// 	vars->err_flag = 0;
+	// 	g_error = 0;
+	// 	return (1);
+	// }
+	if (checking_recoded_functions_res(comand_line, vars) == 1)
+		return (1);
 	else if (ft_strncmp(comand_line[0], "echo", 5) == 0)
 	{
 		ft_echo(&comand_line[0], vars);

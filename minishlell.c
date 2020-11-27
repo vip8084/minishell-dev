@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 16:23:26 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/26 11:39:52 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,14 @@ int main(int argc, char **argv, char **envp)
 	char *ptr;
 	char *line = NULL;
 	int i = 0;
+
 	vars.count_call_pipe = 0;
 	vars.flag_redirect = 0;
 	errno = 0;
 	g_error = 0;
 	g_signal =0;
+	vars.count_pipe = 0; 
+	vars.count_redirect = 0;
 	vars.err_flag = 0;
 	vars.err_flag_export = 0;
 	vars.cd_flag = 0;
@@ -42,7 +45,6 @@ int main(int argc, char **argv, char **envp)
 	vars.save_std_in = dup(0);
 	vars.save_std_out = dup(1);
 	envp_copy(envp, &vars);
-	vars.path = init_patch(&vars, "PATH");
 	ft_putstr_fd("minishell>", 1);
 	signal(SIGINT, &ft_signals);
 	signal(SIGQUIT, &ft_signal);

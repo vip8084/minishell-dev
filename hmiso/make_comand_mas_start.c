@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   make_comand_mas_start.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/02 11:19:32 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 20:41:55 by hmiso            ###   ########.fr       */
+/*   Created: 2020/11/25 19:28:22 by hmiso             #+#    #+#             */
+/*   Updated: 2020/11/25 19:28:24 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
-void	ft_pwd(void)
+char	**make_comand_mas_start(char **comand_line, int i, int j)
 {
-	char *ptr;
-	
-	ft_putstr_fd((ptr = getcwd(NULL, 0)), 1);
-	write(1, "\n",1);
-	free(ptr);
-	ptr = NULL;
-}
+	int k;
+	int count = 0;
+	char **comand_whis_flags;
 
-//проверить работоспособность на разных кейсах (хз каких)
-//по идее все должно быть ок
-// на всякий случай почитай спецификации к pwd вдруг я что упустил
+	k = i - j; //смещение до пайпа или редиректа
+	comand_whis_flags = malloc(sizeof(char *) * (j + 1));
+	while (k < i)
+	{
+		comand_whis_flags[count] = ft_strdup(comand_line[k]);
+		k++;
+		count++;
+	}
+	comand_whis_flags[count] = NULL;	
+	return comand_whis_flags;
+}

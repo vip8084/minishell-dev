@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 13:10:28 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 16:36:03 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/25 20:12:46 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,8 @@ void	execute_command(char *line, t_vars *vars)
 	int i = 0;
 	if (comand_line[0] != NULL)
 	{
-		// comand_line = move_arguments(comand_line, vars);
-		// int i = 0;
-		// while(comand_line[i])
-		// {
-		// 	printf("%d %s\n", vars->mas_flags[i], comand_line[i]);
-		// 	i++;
-		// }
 		if ((comand_line = verification_of_tokens(comand_line, vars)) != NULL)
 		{
-			// int i = 0;
-			// while(comand_line[i] != NULL)
-			// {
-			// 	printf("%s\n", comand_line[i]);
-			// 	i++;
-			// }
-			// exit(0);
 			comand_line = move_arguments(comand_line, vars);
 			check_pipe(comand_line, vars);
 			check_redirect(comand_line, vars);

@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   check_space_res.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/02 11:19:32 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 20:41:55 by hmiso            ###   ########.fr       */
+/*   Created: 2020/11/27 13:12:26 by hmiso             #+#    #+#             */
+/*   Updated: 2020/11/27 13:19:44 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
-void	ft_pwd(void)
+void	check_space_res_4(t_space *space)
 {
-	char *ptr;
-	
-	ft_putstr_fd((ptr = getcwd(NULL, 0)), 1);
-	write(1, "\n",1);
-	free(ptr);
-	ptr = NULL;
+	if ((space->line[space->i] == '\'' || space->line[space->i] == '"')
+	&& space->flag == 0 && space->line[space->i + 1] != '\0')
+	{
+		space->flag = 1;
+		space->i++;
+	}
+	if ((space->line[space->i] == '\'' || space->line[space->i] == '"')
+	&& space->flag == 1 && space->line[space->i + 1] != '\0')
+	{
+		space->flag = 0;
+		space->i++;
+	}
 }
-
-//проверить работоспособность на разных кейсах (хз каких)
-//по идее все должно быть ок
-// на всякий случай почитай спецификации к pwd вдруг я что упустил

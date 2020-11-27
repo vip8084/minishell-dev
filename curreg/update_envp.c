@@ -3,94 +3,137 @@
 /*                                                        :::      ::::::::   */
 /*   update_envp.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 13:14:43 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 16:02:10 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/27 11:44:22 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
+static void init_upd(t_upd *upd, char **str)
+{
+	upd->i = 0;
+	upd->j = 0;
+	upd->new_envp = NULL;
+	upd->ar_1 = NULL;
+	upd->ar_2 = NULL;
+	upd->count = 0;
+	upd->flag = 0;
+	upd->ptr = NULL;
+	upd->new_str = str;
+}
+
+static void update_envp_res(t_upd *upd)
+{
+	int i;
+	int m;
+	char **new_str;
+	i = 0;
+	m = 0;
+
+	while(upd->new_str[i] != NULL)
+	{
+		if (ft_strncmp(upd->new_str[i], "=", 2) != 0)
+		{
+			m++;
+		}
+		else
+		{
+			g_error = 1;
+			ft_putstr_fd("export: `=': not a valid identifier\n", 2);
+		}
+		i++;
+	}
+	new_str = malloc(sizeof(char*) * (m + 1));
+	i = 0;
+	m = 0;
+	while(upd->new_str[i] != NULL)
+	{
+		if (ft_strncmp(upd->new_str[i], "=", 2) != 0)
+		{
+			new_str[m] = ft_strdup(upd->new_str[i]);
+			m++;
+		}
+		i++;
+	}
+	new_str[m] = NULL;
+	upd->new_str = new_str;
+}
+
 void	update_envp(char **str, t_vars *vars)//добаавление новой переменной в переменные окружения
 {
-	int i = 0;
-	int j = 0;
-	char **new_envp;
-	char **ar_1;
-	char **ar_2;
-	int count = 0;
-	int flag = 0;
-	char *ptr;
-	while(str[i] != NULL)
+	t_upd	upd;
+
+	init_upd(&upd, str);
+	update_envp_res(&upd);
+	while(upd.new_str[upd.i] != NULL)
 	{
-		i++;
+		upd.i++;
 	}
-	while(j < i)
+	while(upd.j < upd.i)
 	{
-		ar_2 = ft_split(str[j], '=');	
-		while (vars->envp_copy[count] != NULL)
+		upd.ar_2 = ft_split(upd.new_str[upd.j], '=');
+		while (vars->envp_copy[upd.count] != NULL)
 		{
-			ar_1 = ft_split(vars->envp_copy[count], '=');
-			if(ft_strlen(ar_1[0])  == ft_strlen(ar_2[0]))
+			upd.ar_1 = ft_split(vars->envp_copy[upd.count], '=');
+			if(ft_strlen(upd.ar_1[0]) == ft_strlen(upd.ar_2[0]))
 			{
-				if(ft_strncmp(ar_1[0],ar_2[0], ft_strlen(ar_1[0])) == 0)
+				if(ft_strncmp(upd.ar_1[0], upd.ar_2[0], ft_strlen(upd.ar_1[0])) == 0)
 				{
-					if(ar_2[1] != NULL)
+					if(upd.ar_2[1] != NULL)
 					{
-						free(vars->envp_copy[count]);
-						vars->envp_copy[count]=ft_strjoin(ar_2[0], "=");
-						ptr = vars->envp_copy[count];
-						vars->envp_copy[count]=ft_strjoin(vars->envp_copy[count], ar_2[1]);
-						free(ptr);
+						free(vars->envp_copy[upd.count]);
+						vars->envp_copy[upd.count]=ft_strjoin(upd.ar_2[0], "=");
+						upd.ptr = vars->envp_copy[upd.count];
+						vars->envp_copy[upd.count]=ft_strjoin(vars->envp_copy[upd.count], upd.ar_2[1]);
+						free(upd.ptr);
 					}
-					free(str[j]);
-					str[j] = NULL;
+					free(upd.new_str[upd.j]);
+					upd.new_str[upd.j] = NULL;
 				}
 			}
-			free_two_dimensional_array(ar_1);
-			count++;
+			free_two_dimensional_array(upd.ar_1);
+			upd.count++;
 		}
-		free_two_dimensional_array(ar_2);
-		count = 0;
-		j++;
+		free_two_dimensional_array(upd.ar_2);
+		upd.count = 0;
+		upd.j++;
 	}
-	count = i;
-	i = 0;
-	while (flag < count)
+	upd.count = upd.i;
+	upd.i = 0;
+	while (upd.flag < upd.count)
 	{
-		if(str[flag] != NULL)
-			i++;
-		flag++;
+		if(upd.new_str[upd.flag] != NULL)
+			upd.i++;
+		upd.flag++;
 	}
-	j = 0;
-	while(vars->envp_copy[j] != NULL)
+	upd.j = 0;
+	while(vars->envp_copy[upd.j] != NULL)
 	{
-		j++;
+		upd.j++;
 	}
-	new_envp = malloc(sizeof(char *) *(j + i + 1));
-	j = 0;
-	i = 0;
-	while(vars->envp_copy[i] != NULL)
+	upd.new_envp = malloc(sizeof(char *) * (upd.j + upd.i + 1));
+	upd.j = 0;
+	upd.i = 0;
+	while(vars->envp_copy[upd.i] != NULL)
 	{
-		new_envp[i] = vars->envp_copy[i];
-		i++;
+		upd.new_envp[upd.i] = vars->envp_copy[upd.i];
+		upd.i++;
 	}
-	while(j < count)
+	while(upd.j < upd.count)
 	{
-		if(str[j] != NULL)
+		if(upd.new_str[upd.j] != NULL)
 		{
-			new_envp[i] = str[j];
-			i++;
+			upd.new_envp[upd.i] = upd.new_str[upd.j];
+			upd.i++;
 		}
-		j++;
+		upd.j++;
 	}
-	new_envp[i] = NULL;
+	upd.new_envp[upd.i] = NULL;
 	free(vars->envp_copy);
-	envp_copy(new_envp, vars);
-	free_two_dimensional_array(new_envp);
+	envp_copy(upd.new_envp, vars);
+	free_two_dimensional_array(upd.new_envp);
+	free(upd.new_str);
 }
-// скорее всего течет
-// неокрректно рабботает с кейсе export a=b a a a
-// должна вернуть ошибку export a =c
-// проверить коды ошибок в баше

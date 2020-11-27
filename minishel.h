@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 18:13:29 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/27 13:53:22 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ typedef struct s_vars{
 
 char		**envp_copy;
 int			count_envp;
-char        *path;
 int			save_std_in;
 int			save_std_out;
 int			count_pipe;
@@ -50,6 +49,38 @@ int         err_flag_export;
 int         cd_flag;
 int			*mas_flags;
 }				t_vars;
+
+typedef struct s_upd{
+
+	int i;
+	int j;
+	char **new_envp;
+	char **ar_1;
+	char **ar_2;
+	int count;
+	int flag;
+	char *ptr;
+	char **new_str;
+}				t_upd;
+
+typedef struct s_space{
+
+	int		i;
+	int		flag;
+	char	*ptr;
+	char	*ptr_for_free;
+	char	*line;
+}				t_space;
+
+typedef struct s_sys_funk{
+
+	DIR				*dir;
+	struct dirent	*st;
+	char			**path;
+	char			*ptr;
+	int				i;
+	int				flag;
+}				t_sys_funk;
 
 void        set_g_error(int err);
 void        show_g_error();
@@ -99,4 +130,11 @@ char		**count_comands(char *line);
 char		**ft_pars(char *line, t_vars *vars);
 char		**verification_of_tokens(char **comand_line, t_vars *vars);
 void		execute_command(char *line, t_vars *vars);
+void		create_file(char **comand_line,int *mas_flags);
+void		ft_pipe_eof(void);
+char		*ft_join_path(t_vars *vars, char **com_whis_flags);
+char		**make_list_rederection_revers(char **comand_line, int i, int j, t_vars *vars);
+char		**make_list_rederection(char **comand_line, int i, int j, t_vars *vars);
+char		**make_comand_mas_start(char **comand_line, int i, int j);
+void		check_space_res_4(t_space *space);
 #endif

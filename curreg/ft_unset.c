@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 13:02:21 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/26 13:00:40 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/27 17:53:54 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ void		ft_unset(t_vars *vars, char **str)//удаление переменной 
 				if(ft_strncmp(argv[0], str[m], ft_strlen(argv[0])) == 0)
 				{
 					free(vars->envp_copy[count]);
-					vars->envp_copy[count]=NULL;
+					vars->envp_copy[count] = NULL;
 					flag++;
 					free_two_dimensional_array(argv);
+					count = 0;
 					break;
 				}
 			}
@@ -64,7 +65,17 @@ void		ft_unset(t_vars *vars, char **str)//удаление переменной 
 			i++;
 		}
 		env_new[j] = NULL;
-		free_two_dimensional_array(vars->envp_copy);
+		// free_two_dimensional_array(vars->envp_copy);
+		i = 0;
+		while(i < count_env)
+		{
+			if(vars->envp_copy[i] != NULL)
+			{
+				free(vars->envp_copy[i]);
+			}
+			i++;			
+		}
+		free(vars->envp_copy);
 		envp_copy(env_new, vars);
 		free_two_dimensional_array(env_new);
 	}

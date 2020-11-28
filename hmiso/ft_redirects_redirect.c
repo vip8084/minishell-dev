@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redirects_redirect.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 19:52:17 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 19:52:32 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/28 19:27:02 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void		ft_redirects_redirect(char *path, char **comand, char **mas_redirektion, c
 		else
 		{
 			waitpid(pid, &status, WUNTRACED);
-			vars->g_exit_code = WEXITSTATUS(status);
 			close(fd);
 			close(fd2);
 		}		

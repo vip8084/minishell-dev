@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   system_funk.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 16:42:45 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/28 14:08:00 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/28 19:26:54 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,5 @@ void			system_funk(char *path, char **argv, t_vars *vars)//вызов систе
 				g_error = 0;
 			}
 		}
-		vars->g_exit_code = WEXITSTATUS(status);        /////
 	}
 }

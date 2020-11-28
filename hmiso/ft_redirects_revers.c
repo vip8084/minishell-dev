@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redirects_revers.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 19:48:28 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 19:48:58 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/28 19:27:06 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ void		ft_redirects_revers(char *path, char **comand, char **mas_redirektion, t_v
 					g_error = 0;
 				}
 			}
-			vars->g_exit_code = WEXITSTATUS(status);
 			close(fd);
 		}	
 	}

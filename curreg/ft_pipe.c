@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 16:53:09 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/28 19:12:04 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/28 19:26:50 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void		ft_pipe(char *path, char **comand, t_vars *vars)
         if(checking_recoded_functions(comand, vars))
             exit(0);
         else if ((status = execve(path, comand, vars->envp_copy)) == -1)
-            exit(WEXITSTATUS(status)); ///
+            exit(WEXITSTATUS(status));
     }
     else if (pid < 0)
         ft_putendl_fd("error", 2);
@@ -38,6 +38,5 @@ void		ft_pipe(char *path, char **comand, t_vars *vars)
         dup2(mas[0], 0);
         close(mas[0]);
         waitpid(pid, &status, WUNTRACED);
-        vars->g_exit_code = WEXITSTATUS(status);
     }
-    }
+}

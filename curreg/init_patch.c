@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   init_patch.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 13:33:34 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/24 20:40:51 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/28 22:01:51 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
-char		*init_patch(t_vars *vars, char *arg) // возвращает значение переменной env
+char		*init_patch(t_vars *vars, char *arg)
 {
-	char **ptr;
-	int i;
-	int len_arg;
-	char *value;
+	char	**ptr;
+	char	*value;
+	int		i;
+	int		len_arg;
 
 	i = 0;
 	len_arg = ft_strlen(arg);

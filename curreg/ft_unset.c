@@ -6,83 +6,81 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 13:02:21 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/28 21:24:16 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/28 21:52:56 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
+static void	aux_ft_unset(t_vars *vars, char **str, t_unset_vars *uv)
+{
+	while (uv->count < uv->count_env)
+	{
+		uv->argv = ft_split(vars->envp_copy[uv->count], '=');
+		if (uv->argv != NULL &&
+			(ft_strlen(uv->argv[0]) == ft_strlen(str[uv->m])))
+		{
+			if (ft_strncmp(uv->argv[0], str[uv->m],
+							ft_strlen(uv->argv[0])) == 0)
+			{
+				free(vars->envp_copy[uv->count]);
+				vars->envp_copy[uv->count] = NULL;
+				uv->flag++;
+				free_two_dimensional_array(uv->argv);
+				uv->count = 0;
+				break ;
+			}
+		}
+		free_two_dimensional_array(uv->argv);
+		uv->count++;
+	}
+	uv->m++;
+	uv->count = 0;
+}
+
+static void	aux_ft_unset2(t_vars *vars, char **str, t_unset_vars *uv)
+{
+	uv->env_new = malloc(sizeof(char**) * (uv->count_env));
+	while (uv->i < uv->count_env)
+	{
+		if (vars->envp_copy[uv->i] != NULL)
+		{
+			uv->env_new[uv->j] = ft_strdup(vars->envp_copy[uv->i]);
+			uv->j++;
+		}
+		uv->i++;
+	}
+	uv->env_new[uv->j] = NULL;
+	uv->i = 0;
+	while (uv->i < uv->count_env)
+	{
+		if (vars->envp_copy[uv->i] != NULL)
+		{
+			free(vars->envp_copy[uv->i]);
+		}
+		uv->i++;
+	}
+}
+
 void		ft_unset(t_vars *vars, char **str)
 {
-	int		count;
-	int		count_env;
-	char	**env_new;
-	char	**argv;
-	int		i;
-	int		j;
-	int		m;
-	int		flag;
+	t_unset_vars uv;
 
-	count = 0;
-	count_env = 0;
-	i = 0;
-	j = 0;
-	m = 0;
-	flag = 0;
-	while (vars->envp_copy[count_env] != NULL)
-		count_env++;
-	while (str[j] != NULL)
-		j++;
-	while (m < j)
+	ft_memset(&uv, 0, sizeof(t_unset_vars));
+	while (vars->envp_copy[uv.count_env] != NULL)
+		uv.count_env++;
+	while (str[uv.j] != NULL)
+		uv.j++;
+	while (uv.m < uv.j)
+		aux_ft_unset(vars, str, &uv);
+	uv.j = 0;
+	uv.count = 0;
+	uv.i = 0;
+	if (uv.flag > 0)
 	{
-		while (count < count_env)
-		{
-			argv = ft_split(vars->envp_copy[count], '=');
-			if (argv != NULL && (ft_strlen(argv[0]) == ft_strlen(str[m])))
-			{
-				if (ft_strncmp(argv[0], str[m], ft_strlen(argv[0])) == 0)
-				{
-					free(vars->envp_copy[count]);
-					vars->envp_copy[count] = NULL;
-					flag++;
-					free_two_dimensional_array(argv);
-					count = 0;
-					break ;
-				}
-			}
-			free_two_dimensional_array(argv);
-			count++;
-		}
-		m++;
-		count = 0;
-	}
-	j = 0;
-	count = 0;
-	i = 0;
-	if (flag > 0)
-	{
-		env_new = malloc(sizeof(char**) * (count_env));
-		while (i < count_env)
-		{
-			if (vars->envp_copy[i] != NULL)
-			{
-				env_new[j] = ft_strdup(vars->envp_copy[i]);
-				j++;
-			}
-			i++;
-		}
-		env_new[j] = NULL;
-		i = 0;
-		while (i < count_env)
-		{
-			if (vars->envp_copy[i] != NULL)
-			{
-				free(vars->envp_copy[i]);
-			}
-			i++;
-		}
+		aux_ft_unset2(vars, str, &uv);
 		free(vars->envp_copy);
-		envp_copy(env_new, vars);
-		free_two_dimensional_array(env_new);
+		envp_copy(uv.env_new, vars);
+		free_two_dimensional_array(uv.env_new);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/28 21:17:47 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/28 21:26:35 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,6 +131,18 @@ typedef struct s_pars{
 	char		**comand_line;
 	int 		flag;
 }				t_pars;
+
+typedef struct s_unset_vars{
+
+	int			count;
+	int			count_env;
+	char		**env_new;
+	char		**argv;
+	int			i;
+	int			j;
+	int			m;
+	int			flag;
+}				t_unset_vars;
 
 void        set_g_error(int err);
 void        show_g_error();

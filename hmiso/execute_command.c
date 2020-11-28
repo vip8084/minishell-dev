@@ -6,60 +6,76 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 13:10:28 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 20:12:46 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/28 18:54:56 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
-void	execute_command(char *line, t_vars *vars)
+static void		init_exute(t_execute *execute)
 {
-	char **comand_line = NULL;
-	char *comand_path = NULL;
-	char *ptr_fre;
+	execute->comand_line = NULL;
+	execute->comand_path = NULL;
+	execute->ptr_fre = NULL;
+}
 
-	line = check_space(line);
-	comand_line = ft_pars(line, vars);
-	int i = 0;
-	if (comand_line[0] != NULL)
+static void		execute_command_res(t_execute *execute, t_vars *vars)
+{
+	if (!(checking_recoded_functions(execute->comand_line, vars)))
 	{
-		if ((comand_line = verification_of_tokens(comand_line, vars)) != NULL)
+		execute->comand_path = check_system_funk(vars, execute->comand_line[0]);
+		if (execute->comand_path == NULL)
+			execute->comand_path = ft_strdup(execute->comand_line[0]);
+		else
 		{
-			comand_line = move_arguments(comand_line, vars);
-			check_pipe(comand_line, vars);
-			check_redirect(comand_line, vars);
-			if (vars->count_pipe == 0 && vars->count_redirect == 0)
-			{
-				if(!(checking_recoded_functions(comand_line, vars)))
-				{
-					comand_path = check_system_funk(vars, comand_line[0]);
-					if (comand_path == NULL)
-						comand_path = ft_strdup(comand_line[0]);
-					else
-					{
-						ptr_fre = comand_path;
-						comand_path = ft_strjoin(comand_path, "/");
-						ptr_free(&ptr_fre);
-						ptr_fre = comand_path;
-						comand_path = ft_strjoin(comand_path, comand_line[0]);
-						ptr_free(&ptr_fre);
-					}	
-					system_funk(comand_path, comand_line, vars);
-				}
-			}
-			else
-			{
-				ft_conveyor(line, comand_line, vars);
-				dup2(vars->save_std_in, 0);
-				dup2(vars->save_std_out, 1);
-			}		
+			execute->ptr_fre = execute->comand_path;
+			execute->comand_path = ft_strjoin(execute->comand_path, "/");
+			ptr_free(&execute->ptr_fre);
+			execute->ptr_fre = execute->comand_path;
+			execute->comand_path = ft_strjoin(execute->comand_path,
+			execute->comand_line[0]);
+			ptr_free(&execute->ptr_fre);
 		}
+		system_funk(execute->comand_path, execute->comand_line, vars);
 	}
-	if(comand_line != NULL)
-		free_two_dimensional_array(comand_line);
-	if (comand_path != NULL)
-		ptr_free(&comand_path);
+}
+
+static void		execute_command_res_2(t_execute *execute,
+t_vars *vars, char *line)
+{
+	if (execute->comand_line != NULL)
+		free_two_dimensional_array(execute->comand_line);
+	if (execute->comand_path != NULL)
+		ptr_free(&execute->comand_path);
 	ptr_free(&line);
 	free(vars->mas_flags);
-	vars->mas_flags = NULL;	
+	vars->mas_flags = NULL;
+}
+
+void			execute_command(char *line, t_vars *vars)
+{
+	t_execute execute;
+
+	init_exute(&execute);
+	line = check_space(line);
+	execute.comand_line = ft_pars(line, vars);
+	if (execute.comand_line[0] != NULL)
+	{
+		if ((execute.comand_line = verification_of_tokens(execute.comand_line,
+		vars)) != NULL)
+		{
+			execute.comand_line = move_arguments(execute.comand_line, vars);
+			check_pipe(execute.comand_line, vars);
+			check_redirect(execute.comand_line, vars);
+			if (vars->count_pipe == 0 && vars->count_redirect == 0)
+				execute_command_res(&execute, vars);
+			else
+			{
+				ft_conveyor(line, execute.comand_line, vars);
+				dup2(vars->save_std_in, 0);
+				dup2(vars->save_std_out, 1);
+			}
+		}
+	}
+	execute_command_res_2(&execute, vars, line);
 }

@@ -6,51 +6,53 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 13:05:28 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 13:05:49 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/28 19:37:00 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
+static void	init_pars(t_pars *pars, char *line)
+{
+	pars->count = 0;
+	pars->i = 0;
+	pars->j = 0;
+	pars->flag = 0;
+	pars->comand_line = count_comands(line);	
+}
+
 char	**ft_pars(char *line, t_vars *vars)
 {
-	int i;
-	int j;
-	int count;
-	char **comand_line;
-	int flag = 0;
+	t_pars pars;
 
-	count = 0;
-	i = 0;
-	j = 0;
-	comand_line = count_comands(line);
-	while (line[i] != '\0')
+	init_pars(&pars, line);
+	while (line[pars.i] != '\0')
 	{
-		if (line[i] != ' ')
+		if (line[pars.i] != ' ')
 		{
-			j = i;
-			while((line[i] != ' ' || flag == 1 || flag == 2) && line[i] != '\0')
+			pars.j = pars.i;
+			while((line[pars.i] != ' ' || pars.flag == 1 || pars.flag == 2) && line[pars.i] != '\0')
 			{
-				if(line[i] == '"' || line[i] == '\'')
+				if(line[pars.i] == '"' || line[pars.i] == '\'')
 				{
-					if (flag == 0 && line[i] == '"')
-						flag = 1;
-					else if (flag == 1 && line[i] == '"')
-						flag = 0;
-					else if (flag == 0 && line[i] == '\'')
-						flag = 2;
-					else if (flag == 2 && line[i] == '\'')
-						flag = 0;		
+					if (pars.flag == 0 && line[pars.i] == '"')
+						pars.flag = 1;
+					else if (pars.flag == 1 && line[pars.i] == '"')
+						pars.flag = 0;
+					else if (pars.flag == 0 && line[pars.i] == '\'')
+						pars.flag = 2;
+					else if (pars.flag == 2 && line[pars.i] == '\'')
+						pars.flag = 0;		
 				}
-				i++;
+				pars.i++;
 			}
-			comand_line[count] = ft_substr(line, j, i - j);
-			count++;
+			pars.comand_line[pars.count] = ft_substr(line, pars.j, pars.i - pars.j);
+			pars.count++;
 		}
 		else
-			i++;
+			pars.i++;
 	}
-	comand_line[count] = NULL;
-	environment_variable_substitution(comand_line, vars);
-	return (comand_line);
+	pars.comand_line[pars.count] = NULL;
+	environment_variable_substitution(pars.comand_line, vars);
+	return (pars.comand_line);
 }

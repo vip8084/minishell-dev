@@ -6,23 +6,26 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:45:30 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/28 16:49:22 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/28 19:08:50 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
-void			ft_env(t_vars *vars)//вывод env команда env
+void			ft_env(t_vars *vars)
 {
-	int i = 0;
-	char **argv;
-	while(vars->envp_copy[i] != NULL)
+	int		i;
+	char	**argv;
+
+	i = 0;
+	argv = NULL;
+	while (vars->envp_copy[i] != NULL)
 	{
-		argv=ft_split(vars->envp_copy[i], '=');
-		if(argv[1] != NULL)
+		argv = ft_split(vars->envp_copy[i], '=');
+		if (argv[1] != NULL)
 		{
 			ft_putstr_fd(argv[0], 1);
-			ft_putchar_fd('=',1);
+			ft_putchar_fd('=', 1);
 			ft_putendl_fd(argv[1], 1);
 		}
 		i++;

@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 16:13:45 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/28 16:49:39 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/28 19:09:58 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void		ft_exit(char **comand_line)
 {
 	int i;
 
+	i = 0;
 	if (comand_line[1] != NULL)
 	{
 		if (ft_isdigit(comand_line[1][0]))
@@ -33,7 +34,5 @@ void		ft_exit(char **comand_line)
 		}
 	}
 	else
-	{
 		exit(0);
-	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 16:53:09 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/27 14:49:25 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/28 19:12:04 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,9 @@ void		ft_pipe(char *path, char **comand, t_vars *vars)
         dup2(mas[1], 1);
         close(mas[1]);
         if(checking_recoded_functions(comand, vars))
-        {
-            exit (0);// забирать значение эрно из внутренних функций и передавать сюда
-        }
+            exit(0);
         else if ((status = execve(path, comand, vars->envp_copy)) == -1)
-            exit(WEXITSTATUS(status));
+            exit(WEXITSTATUS(status)); ///
     }
     else if (pid < 0)
         ft_putendl_fd("error", 2);
@@ -43,4 +41,3 @@ void		ft_pipe(char *path, char **comand, t_vars *vars)
         vars->g_exit_code = WEXITSTATUS(status);
     }
     }
-// менеджмент ошибок

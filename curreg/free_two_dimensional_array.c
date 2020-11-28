@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_two_dimensional_array.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 16:55:07 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 20:14:02 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/28 19:03:52 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void		free_two_dimensional_array(char **arr)
 	i = 0;
 	if (arr != NULL)
 	{
-		while(arr[i] != NULL)
+		while (arr[i] != NULL)
 		{
 			free(arr[i]);
 			arr[i] = NULL;

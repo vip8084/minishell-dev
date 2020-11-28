@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/26 11:39:52 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/27 18:49:05 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int main(int argc, char **argv, char **envp)
 	vars.err_flag = 0;
 	vars.err_flag_export = 0;
 	vars.cd_flag = 0;
-	vars.mas_flags=NULL;
+	vars.mas_flags = NULL;
 	vars.save_std_in = dup(0);
 	vars.save_std_out = dup(1);
 	envp_copy(envp, &vars);

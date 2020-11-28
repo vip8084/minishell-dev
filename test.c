@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include "minishel.h"
+
 
 int main()
 {
-	printf("%s\n", "hello world");
+ return 2;
 }

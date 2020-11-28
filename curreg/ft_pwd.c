@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 11:19:32 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/28 16:48:46 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/28 21:21:12 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 void	ft_pwd(void)
 {
 	char *ptr;
-	
+
+	ptr = NULL;
 	ft_putstr_fd((ptr = getcwd(NULL, 0)), 1);
-	write(1, "\n",1);
+	write(1, "\n", 1);
 	free(ptr);
 	ptr = NULL;
 }

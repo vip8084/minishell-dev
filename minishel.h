@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/28 12:31:24 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/28 15:34:29 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,14 @@ typedef struct s_conveyor{
 	int			flag;
 	int			flag_pipe;
 }				t_conveyor;
+
+typedef struct s_quotes{
+
+	int			i;
+	int			flag;
+	int			count;
+	char		*line_dubl;
+}				t_quotes;
 
 void        set_g_error(int err);
 void        show_g_error();

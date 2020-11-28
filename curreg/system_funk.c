@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 16:42:45 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/27 21:58:59 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/28 14:08:00 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,6 @@ void			system_funk(char *path, char **argv, t_vars *vars)//вызов систе
 					g_error = 1;
 					errno = 0;
 				}
-				// printf("\nERRNO = %i\n", errno);
-				// printf("STATUS = %d\n", status);
-				// printf("WEXITSTATUS = %d\n", WEXITSTATUS(status));
-				// printf("G_ERROR = %d\n", g_error);
-				// printf("after that g_error = %d\n\n", g_error);
 				if (status != 256 && status != 16384)
 					command_error(argv[0], vars);	
 			}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishel.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/27 21:04:50 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/28 12:31:24 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,15 @@ int			*mas_flags;
 
 typedef struct s_upd{
 
-	int i;
-	int j;
-	char **new_envp;
-	char **ar_1;
-	char **ar_2;
-	int count;
-	int flag;
-	char *ptr;
-	char **new_str;
+	int		i;
+	int		j;
+	char	**new_envp;
+	char	**ar_1;
+	char	**ar_2;
+	int		count;
+	int		flag;
+	char	*ptr;
+	char	**new_str;
 }				t_upd;
 
 typedef struct s_space{
@@ -81,6 +81,20 @@ typedef struct s_sys_funk{
 	int				i;
 	int				flag;
 }				t_sys_funk;
+
+typedef struct s_conveyor{
+
+	char		**line_pipe;
+	char		*comand_path;
+	char		**com_whis_flags;
+	char		**mas_redirektion;
+	char		**mas_redirektion2;
+	int			i;
+	int			j;
+	int			k;
+	int			flag;
+	int			flag_pipe;
+}				t_conveyor;
 
 void        set_g_error(int err);
 void        show_g_error();
@@ -112,6 +126,20 @@ void		ft_pipe(char *path, char **comand, t_vars *vars);
 void		check_pipe(char **comand_mas, t_vars *vars);
 int			checking_recoded_functions(char **comand_line, t_vars *vars);
 void		ft_conveyor(char *line, char **comand_line, t_vars *vars);
+void		init_conveyor(t_conveyor *conveyor);
+void		conveyor_res(char **comand_line, t_vars *vars, t_conveyor *conveyor);
+void		conveyor_res_2(char **comand_line, t_vars *vars, t_conveyor *conveyor);
+void		conveyor_res_3(char **comand_line, t_vars *vars, t_conveyor *conveyor);
+void		conveyor_res_4(char **comand_line, t_vars *vars, t_conveyor *conveyor);
+void		conveyor_res_5(char **comand_line, t_vars *vars, t_conveyor *conveyor);
+void		conveyor_res_6(char **comand_line, t_vars *vars, t_conveyor *conveyor);
+void		conveyor_res_7(char **comand_line, t_vars *vars, t_conveyor *conveyor);
+void		conveyor_res_8(char **comand_line, t_vars *vars, t_conveyor *conveyor);
+void		conveyor_res_9(char **comand_line, t_vars *vars, t_conveyor *conveyor);
+void		conveyor_res_10(char **comand_line, t_vars *vars, t_conveyor *conveyor);
+void		conveyor_res_11(char **comand_line, t_vars *vars, t_conveyor *conveyor);
+void		conveyor_res_12(char **comand_line, t_vars *vars, t_conveyor *conveyor);
+void		conveyor_res_13(char **comand_line, t_vars *vars, t_conveyor *conveyor);
 void		check_redirect(char **comand_mas, t_vars *vars);
 void		ft_conveyor_test(char *line, char **comand_line, t_vars *vars);
 void		ft_redirects(char *path, char **comand, char **mas_redirektion, t_vars *vars);

@@ -1,34 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pars_argument.c                                 :+:      :+:    :+:   */
+/*   delete_quotes_res.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/25 13:17:09 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/28 18:58:05 by hmiso            ###   ########.fr       */
+/*   Created: 2020/11/28 16:32:25 by hmiso             #+#    #+#             */
+/*   Updated: 2020/11/28 16:37:51 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
-void	ft_pars_argument(char *line, t_vars *vars)
+void	quotes_res_4(t_quotes *quotes, char *line)
 {
-	int		i;
-	char	**argv;
-
-	i = 0;
-	if (line[0] == ';')
-	{
-		syntax_error(line);
-		return ;
-	}
-	argv = semicolon(line);
-	while (argv[i] != NULL)
-	{
-		if (ft_strlen(argv[i]) != 0)
-			execute_command(argv[i], vars);
-		i++;
-	}
-	free_two_dimensional_array(argv);
+	quotes->line_dubl[quotes->count] = line[quotes->i];
+	quotes->count++;
+	quotes->i++;
 }

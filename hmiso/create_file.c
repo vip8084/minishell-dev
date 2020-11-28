@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 19:19:31 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/28 14:40:31 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/28 19:27:03 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ int fd, int i)
 		fd = open(comand_line[i + 1], O_RDONLY);
 		if (fd == -1)
 		{
-			ft_putstr_fd(comand_line[i + 1], 2);
-			ft_putstr_fd(": Permission denied\n", 2);
 			return (1);
 		}
 		close(fd);

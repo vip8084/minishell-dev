@@ -6,117 +6,84 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 12:49:39 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/26 14:57:24 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/28 17:26:43 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
-char **environment_variable_substitution(char **comand_line, t_vars *vars)
+static void		init_envir(t_envir *envir)
 {
-	char *ptr = NULL;
-	char *env_var = NULL;
-	char *ptr2 = NULL;
-	char *ptr_for_free = NULL;
-	char *ptr_for_free2 = NULL;
-	int i;
-	int j;
-	int flag;
-	int k;
+	envir->ptr = NULL;
+	envir->env_var = NULL;
+	envir->ptr2 = NULL;
+	envir->ptr_for_free = NULL;
+	envir->ptr_for_free2 = NULL;
+	envir->i = 0;
+	envir->j = 0;
+	envir->flag = 0;
+	envir->k = 0;
+}
 
-	i = 0;
-	j = 0;
-	k = 0;
-	flag = 0;
-	while(comand_line[i] != NULL)
-	{
-		while (comand_line[i][j] != '\0')
-		{
-			if (comand_line[i][j] == '"')
-			{
-				if (flag == 0 && comand_line[i][j] == '"')
-					flag = 2;
-				else if (flag == 2 && comand_line[i][j] == '"')
-					flag = 0;
-			}
-			if (comand_line[i][j] == '\'' && flag != 2)
-			{
-				if (flag == 0 && comand_line[i][j] == '\'')
-					flag = 1;
-				else if (flag == 1 && comand_line[i][j] == '\'')
-					flag = 0;
-			}
-			if (comand_line[i][j] == '$' && flag != 1)
-			{
-				k = j;
-				while((comand_line[i][j + 1] != ' ') && comand_line[i][j] != '\0' && (ft_isalpha(comand_line[i][j + 1]) || ft_isdigit(comand_line[i][j + 1])) == 1)
-				{
-					j++;
-				}
-				if (comand_line[i][j + 1] == '?' && comand_line[i][j] != '\0')
-					j++;
-				if (j - k >= 1)
-				{
-					ptr = ft_substr(comand_line[i], 0, k);
-					env_var = ft_substr(comand_line[i], k + 1, j - k);
-					ptr2 = ft_substr(comand_line[i], j, 100);
-					ptr_for_free = ptr;
-					if (ft_strncmp(env_var, "?", 2) == 0)
-					{
-						ptr_for_free2 = ft_itoa(g_error);
-						ptr = ft_strjoin(ptr, ptr_for_free2);
-						ptr_free(&ptr_for_free2);
-					}
-					else
-					{	
-						ptr_for_free2 = init_patch(vars, env_var);
-						ptr = ft_strjoin(ptr, ptr_for_free2);
-						ptr_free(&ptr_for_free2);
-					}
-					ptr_free(&ptr_for_free);
-					ptr_for_free = ptr;	
-					ptr = ft_strjoin(ptr, &ptr2[1]);
-					ptr_free(&ptr_for_free);
-					ptr_free(&comand_line[i]);
-					comand_line[i] = ptr;
-					ptr_free(&env_var);
-					ptr_free(&ptr2);
-					i = 0;
-					j = 0;
-				}
-				else if (comand_line[i][j] != '\0')
-				{
-					j++;
-				}
-			}
-			else
-				j++;	
-		}
-		i++;
-		j = 0;
-	}
-	i = 0;
-	int *mas_flags;
-	while(comand_line[i] != NULL)
-	{
-		i++;
-	}
+void			env_var_res_6(char **comand_line, t_vars *vars, t_envir *envir)
+{
+	envir->i = 0;
+	while (comand_line[envir->i] != NULL)
+		envir->i++;
 	if (vars->mas_flags == NULL)
 	{
-		vars->mas_flags = malloc(sizeof(int) * (i + 1));
-		i = 0;
-		while (comand_line[i] != NULL)
+		vars->mas_flags = malloc(sizeof(int) * (envir->i + 1));
+		envir->i = 0;
+		while (comand_line[envir->i] != NULL)
 		{
-			if(comand_line[i][0] == '"' || comand_line[i][0] == '\'')
-				vars->mas_flags[i] = 1;
+			if (comand_line[envir->i][0] == '"'
+			|| comand_line[envir->i][0] == '\'')
+				vars->mas_flags[envir->i] = 1;
 			else
-				vars->mas_flags[i] = 0;
-			ptr_for_free2 = comand_line[i];	
-			comand_line[i] = delete_quotes(comand_line[i]);
-			ptr_free(&ptr_for_free2);
-			i++;
+				vars->mas_flags[envir->i] = 0;
+			envir->ptr_for_free2 = comand_line[envir->i];
+			comand_line[envir->i] = delete_quotes(comand_line[envir->i]);
+			ptr_free(&envir->ptr_for_free2);
+			envir->i++;
 		}
-		vars->mas_flags[i] = 2;
+		vars->mas_flags[envir->i] = 2;
 	}
-	return comand_line;
+}
+
+void			env_var_res_7(char **comand_line, t_vars *vars, t_envir *envir)
+{
+	while (comand_line[envir->i][envir->j] != '\0')
+	{
+		env_var_res(comand_line, vars, envir);
+		if (comand_line[envir->i][envir->j] == '$' && envir->flag != 1)
+		{
+			env_var_res_2(comand_line, vars, envir);
+			if (envir->j - envir->k >= 1)
+			{
+				env_var_res_3(comand_line, vars, envir);
+				env_var_res_4(comand_line, vars, envir);
+				env_var_res_5(comand_line, vars, envir);
+			}
+			else if (comand_line[envir->i][envir->j] != '\0')
+				envir->j++;
+		}
+		else
+			envir->j++;
+	}
+}
+
+char			**environment_variable_substitution(char **comand_line,
+t_vars *vars)
+{
+	t_envir	envir;
+
+	init_envir(&envir);
+	while (comand_line[envir.i] != NULL)
+	{
+		env_var_res_7(comand_line, vars, &envir);
+		envir.i++;
+		envir.j = 0;
+	}
+	env_var_res_6(comand_line, vars, &envir);
+	return (comand_line);
 }

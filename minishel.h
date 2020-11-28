@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/28 15:34:29 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/28 19:31:56 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,35 @@ typedef struct s_quotes{
 	char		*line_dubl;
 }				t_quotes;
 
+typedef struct s_envir{
+
+	char		*ptr;
+	char		*env_var;
+	char		*ptr2;
+	char		*ptr_for_free;
+	char		*ptr_for_free2;
+	int			i;
+	int			j;
+	int			flag;
+	int			k;
+}				t_envir;
+
+typedef struct s_execute{
+
+	char		**comand_line;
+	char		*comand_path;
+	char		*ptr_fre;
+}				t_execute;
+
+typedef struct s_pars{
+
+	int			i;
+	int			j;
+	int			count;
+	char		**comand_line;
+	int 		flag;
+}				t_pars;
+
 void        set_g_error(int err);
 void        show_g_error();
 void        command_error(char *cmd, t_vars *vars);
@@ -149,6 +178,7 @@ void		conveyor_res_11(char **comand_line, t_vars *vars, t_conveyor *conveyor);
 void		conveyor_res_12(char **comand_line, t_vars *vars, t_conveyor *conveyor);
 void		conveyor_res_13(char **comand_line, t_vars *vars, t_conveyor *conveyor);
 void		check_redirect(char **comand_mas, t_vars *vars);
+void		quotes_res_4(t_quotes *quotes, char *line);
 void		ft_conveyor_test(char *line, char **comand_line, t_vars *vars);
 void		ft_redirects(char *path, char **comand, char **mas_redirektion, t_vars *vars);
 void		ft_redirects_revers(char *path, char **comand, char **mas_redirektion, t_vars *vars);
@@ -162,6 +192,13 @@ char		**semicolon(char *line);
 char 		*check_space(char *line_old);
 char		*delete_quotes(char *line);
 char		**environment_variable_substitution(char **comand_line, t_vars *vars);
+void		env_var_res(char **comand_line, t_vars *vars, t_envir *envir);
+void		env_var_res_2(char **comand_line, t_vars *vars, t_envir *envir);
+void		env_var_res_3(char **comand_line, t_vars *vars, t_envir *envir);
+void		env_var_res_4(char **comand_line, t_vars *vars, t_envir *envir);
+void		env_var_res_5(char **comand_line, t_vars *vars, t_envir *envir);
+void		env_var_res_6(char **comand_line, t_vars *vars, t_envir *envir);
+void		env_var_res_7(char **comand_line, t_vars *vars, t_envir *envir);
 char		**count_comands(char *line);
 char		**ft_pars(char *line, t_vars *vars);
 char		**verification_of_tokens(char **comand_line, t_vars *vars);

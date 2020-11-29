@@ -6,12 +6,11 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/06 22:00:24 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/29 19:09:16 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/29 19:40:41 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-#include "../minishel.h"
+#include "libft.h"
 
 static int		func_for_free_dup(char **ptr, char *ptr2)
 {
@@ -66,7 +65,7 @@ static int		gnl_read(int fd, char **ptr_static, char **line, char **ptr)
 		return (-1);
 	while (!*ptr && ((i = read(fd, buf, BUFFER_SIZE)) >= 0))
 	{
-		if (check_line(i, *line))
+		if (ft_check_line(i, *line))
 			exit(0);
 		buf[i] = '\0';
 		if ((*ptr = ft_strchr(buf, '\n')))

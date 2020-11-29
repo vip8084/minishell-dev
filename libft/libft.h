@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/15 14:25:25 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/24 18:46:30 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/29 19:43:31 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <errno.h>
+
+# define BUFFER_SIZE 1000
 
 typedef struct	s_list
 {
@@ -35,8 +37,8 @@ size_t			ft_strlcpy(char *dst, const char *src, size_t size);
 size_t			ft_strlcat(char *dst, const char *src, size_t size);
 char			*ft_strchr(const char *s, int c);
 char			*ft_strrchr(const char *s, int c);
-char			*ft_strnstr(const char *haystack, const char *needle,
-size_t len);
+char			*ft_strnstr(const char *haystack, const char *needle, size_t len);
+int				ft_check_line(int i, char *line);
 int				ft_strncmp(const char *s1, const char *s2, size_t n);
 int				ft_isalpha(int c);
 int				ft_isdigit(int c);
@@ -67,5 +69,6 @@ void			ft_lstdelone(t_list *lst, void (*del)(void*));
 void			ft_lstclear(t_list **lst, void (*del)(void*));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
 void			ft_sort_str_arr(char **arr);
+int				get_next_line(int fd, char **line);
 
 #endif

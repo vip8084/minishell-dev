@@ -6,27 +6,26 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/29 18:31:37 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/29 19:43:34 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-# ifndef MINISHEL_H
+#ifndef MINISHEL_H
 # define MINISHEL_H
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <signal.h>
-#include <stdio.h>
-#include <dirent.h>
-#include <string.h>
-#include "get_next_line/get_next_line.h"
-#include "libft/libft.h"
-#define PIPE_READ 0
-#define PIPE_WRITE 1
+# include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <signal.h>
+# include <stdio.h>
+# include <dirent.h>
+# include <string.h>
+# include "libft/libft.h"
+# define PIPE_READ 0
+# define PIPE_WRITE 1
 
 int g_error;
 int g_signal;
@@ -253,4 +252,5 @@ char		**make_list_rederection_revers(char **comand_line, int i, int j, t_vars *v
 char		**make_list_rederection(char **comand_line, int i, int j, t_vars *vars);
 char		**make_comand_mas_start(char **comand_line, int i, int j);
 void		check_space_res_4(t_space *space);
+
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishel.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/29 17:01:47 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/29 17:10:28 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,22 @@ typedef struct s_unset_vars{
 	int			flag;
 }				t_unset_vars;
 
+typedef struct s_redir{
+
+	pid_t		pid;
+	int			status;
+	int			fd;
+	int			fd2;
+	int			count_redirects;
+}				t_redir;
+
+typedef struct s_list_red{
+
+	int			count;
+	int			k;
+	char		**mas;
+}				t_list_red;
+
 void		update_envp_res(t_upd *upd);
 void		fill_new_env(t_upd *upd, char **new_str, int *i, int *m);
 void		set_signals(int num);
@@ -195,10 +211,10 @@ void		check_redirect(char **comand_mas, t_vars *vars);
 void		quotes_res_4(t_quotes *quotes, char *line);
 void		ft_conveyor_test(char *line, char **comand_line, t_vars *vars);
 void		ft_redirects(char *path, char **comand, char **mas_redirektion, t_vars *vars);
-void		ft_redirects_revers(char *path, char **comand, char **mas_redirektion, t_vars *vars);
+void		ft_redirects_revers(t_conveyor *conveyor, t_vars *vars);
 char	    **move_arguments(char **comand_line, t_vars *vars);
 void		ft_redirects_pipe(char *path, char **comand, char **mas_redirektion, t_vars *vars);
-void		ft_redirects_redirect(char *path, char **comand, char **mas_redirektion, char **mas_redirektion2, t_vars *vars);
+void		ft_redirects_redirect(t_conveyor *conveyor, t_vars *vars);
 void		ft_signals(int signal);
 void		ft_signal(int signal);
 void		ptr_free(char **ptr);

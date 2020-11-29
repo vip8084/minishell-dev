@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 13:06:46 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 13:07:09 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/29 15:17:30 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,9 @@ char	**move_arguments(char **comand_line, t_vars *vars)
 	poz = 0;
 	int count = 0;
 	while(comand_line[i] != NULL)
-	{
 		i++;
-	}
 	while(vars->mas_flags[count] != 2)
-	{
 		count++;
-	}
 	count = count - i;
 	while (comand_line[poz] != NULL)	
 	{
@@ -60,16 +56,8 @@ char	**move_arguments(char **comand_line, t_vars *vars)
 		i = 0;
 		poz++;
 	}
-	// exit(0);
 	i = 0;
 	poz = 0;
-	// while(comand_line[i] != NULL)
-	// {
-	// 	printf("%s ", comand_line[i]);
-	// 	printf("%d ", vars->mas_flags[i]);
-	// 	i++;
-	// }
-	// exit(0);	
 	while (comand_line[poz] != NULL)	
 	{
 		while (comand_line[i] != NULL)
@@ -102,12 +90,5 @@ char	**move_arguments(char **comand_line, t_vars *vars)
 	}
 	i = 0;
 	poz = 0;
-	// while(comand_line[i] != NULL)
-	// {
-	// 	printf("%s ", comand_line[i]);
-	// 	printf("%d ", vars->mas_flags[i]);
-	// 	i++;
-	// }
-	// exit(0);
 	return comand_line;
 }

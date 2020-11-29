@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 19:28:22 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/25 19:28:24 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/29 15:16:41 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,12 @@
 
 char	**make_comand_mas_start(char **comand_line, int i, int j)
 {
-	int k;
-	int count = 0;
-	char **comand_whis_flags;
+	int		k;
+	int		count;
+	char	**comand_whis_flags;
 
-	k = i - j; //смещение до пайпа или редиректа
+	k = i - j;
+	count = 0;
 	comand_whis_flags = malloc(sizeof(char *) * (j + 1));
 	while (k < i)
 	{
@@ -26,6 +27,6 @@ char	**make_comand_mas_start(char **comand_line, int i, int j)
 		k++;
 		count++;
 	}
-	comand_whis_flags[count] = NULL;	
-	return comand_whis_flags;
+	comand_whis_flags[count] = NULL;
+	return (comand_whis_flags);
 }

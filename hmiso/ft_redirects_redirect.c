@@ -3,65 +3,67 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redirects_redirect.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 19:52:17 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/28 19:27:02 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/29 14:10:59 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
-void		ft_redirects_redirect(char *path, char **comand, char **mas_redirektion, char **mas_redirektion2, t_vars *vars)
+static void		init_redir(t_redir *redir)
 {
-    pid_t pid;
-    int mas[2];
-    int status;
-    int i;
-	int fd;
-	int fd2;
+	redir->count_redirects = 0;
+}
 
-	i = 0;
-	int count_redirects = 0;
-	
-	while(mas_redirektion[count_redirects] != NULL)
+static void		redir_redir_res(t_redir *redir, t_conveyor *conveyor)
+{
+	while (conveyor->mas_redirektion[redir->count_redirects] != NULL)
 	{
-		fd = open(mas_redirektion[count_redirects], O_RDONLY);
-		if (fd < 0)
+		redir->fd = open(conveyor->mas_redirektion[redir->count_redirects],
+		O_RDONLY);
+		if (redir->fd < 0)
 		{
-			ft_putstr_fd(mas_redirektion[i], 2);
+			ft_putstr_fd(conveyor->mas_redirektion[redir->count_redirects], 2);
 			ft_putstr_fd(": Permission denied\n", 2);
-			break;			
+			break ;
 		}
-		count_redirects++;
+		redir->count_redirects++;
 	}
-	count_redirects = 0;
-	while(mas_redirektion2[count_redirects] != NULL)
+	redir->count_redirects = 0;
+	while (conveyor->mas_redirektion2[redir->count_redirects] != NULL)
+		redir->count_redirects++;
+	redir->fd2 = open(conveyor->mas_redirektion2[redir->count_redirects - 1],
+	O_WRONLY | O_APPEND, 0666);
+}
+
+void			ft_redirects_redirect(t_conveyor *conveyor, t_vars *vars)
+{
+	t_redir redir;
+
+	init_redir(&redir);
+	redir_redir_res(&redir, conveyor);
+	if (redir.fd > 0 && redir.fd2 > 0)
 	{
-		count_redirects++;
-	}
-	fd2 = open(mas_redirektion2[count_redirects - 1], O_WRONLY | O_APPEND, 0666);
-	if (fd > 0 && fd2 > 0)
-	{
-		pid = fork();
-		if (pid == 0)
+		redir.pid = fork();
+		if (redir.pid == 0)
 		{
-			dup2(fd, 0);
-			dup2(fd2, 1);
-			if(checking_recoded_functions(comand, vars))
-			{
-				exit (0);// забирать значение эрно из внутренних функций и передавать сюда
-			}
-			if ((status = execve(path, comand, vars->envp_copy)) == -1)
-				exit(WEXITSTATUS(status));
+			dup2(redir.fd, 0);
+			dup2(redir.fd2, 1);
+			if (checking_recoded_functions(conveyor->com_whis_flags, vars))
+				exit(0);
+			if ((redir.status = execve(conveyor->comand_path,
+			conveyor->com_whis_flags, vars->envp_copy)) == -1)
+				exit(WEXITSTATUS(redir.status));
 		}
-		else if (pid < 0)
+		else if (redir.pid < 0)
 			ft_putendl_fd("error", 2);
 		else
 		{
-			waitpid(pid, &status, WUNTRACED);
-			close(fd);
-			close(fd2);
-		}		
+			waitpid(redir.pid, &redir.status, WUNTRACED);
+			close(redir.fd);
+			close(redir.fd2);
+		}
 	}
 }

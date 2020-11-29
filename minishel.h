@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/28 19:39:41 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/29 16:01:01 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,22 @@ typedef struct s_pars{
 	int 		flag;
 }				t_pars;
 
+typedef struct s_redir{
+
+	pid_t		pid;
+	int			status;
+	int			fd;
+	int			fd2;
+	int			count_redirects;
+}				t_redir;
+
+typedef struct s_list_red{
+
+	int			count;
+	int			k;
+	char		**mas;
+}				t_list_red;
+
 void        set_g_error(int err);
 void        show_g_error();
 void        command_error(char *cmd, t_vars *vars);
@@ -180,10 +196,10 @@ void		check_redirect(char **comand_mas, t_vars *vars);
 void		quotes_res_4(t_quotes *quotes, char *line);
 void		ft_conveyor_test(char *line, char **comand_line, t_vars *vars);
 void		ft_redirects(char *path, char **comand, char **mas_redirektion, t_vars *vars);
-void		ft_redirects_revers(char *path, char **comand, char **mas_redirektion, t_vars *vars);
+void		ft_redirects_revers(t_conveyor *conveyor, t_vars *vars);
 char	    **move_arguments(char **comand_line, t_vars *vars);
 void		ft_redirects_pipe(char *path, char **comand, char **mas_redirektion, t_vars *vars);
-void		ft_redirects_redirect(char *path, char **comand, char **mas_redirektion, char **mas_redirektion2, t_vars *vars);
+void		ft_redirects_redirect(t_conveyor *conveyor, t_vars *vars);
 void		ft_signals(int signal);
 void		ft_signal(int signal);
 void		ptr_free(char **ptr);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verification_of_tokens.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 13:08:39 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/27 21:32:13 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/29 15:17:55 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,63 +91,9 @@ char **verification_of_tokens(char **comand_line, t_vars *vars)
 	}
 	if (ft_strncmp("|", comand_line[i], 2) == 0 && vars->mas_flags[i] == 0)
 	{
-		// if ((ft_strncmp(">", comand_line[i - 1], 2) == 0 || ft_strncmp(">>", comand_line[i - 1], 3) == 0 || ft_strncmp("<", comand_line[i - 1], 3) == 0) && vars->mas_flags[i - 1] == 0)
-		// {
 			free_two_dimensional_array(comand_line);
 			syntax_error("newline");
 			return NULL;
 	}
-		// }
-	// //}
-	// 	write(1, "> ", 2);
-	// 	get_next_line_two(0, &line);
-	// 	if (ft_strlen(line) != 0)
-	// 	{
-	// 		i = 0;
-	// 		// printf("%s\n", line);
-	// 		fre_ptr = line;
-	// 		line = check_space(line);
-	// 		ptr_free(&fre_ptr);
-	// 		argv = ft_pars(line, vars);
-	// 		//fre_arr = argv;
-	// 		argv = move_arguments(argv, vars);
-	// 		//free_two_dimensional_array(fre_arr);
-	// 		while(comand_line[i] != NULL)
-	// 		{
-	// 			i++;
-	// 		}			
-	// 		while (argv[j] != NULL)
-	// 		{
-	// 			j++;
-	// 		}
-	// 		new_comand_line = malloc(sizeof(char *) * (i + 2 + j));
-	// 		i = 0;
-	// 		j = 0;
-	// 		while(comand_line[i] != NULL)
-	// 		{
-	// 			new_comand_line[i] = ft_strdup(comand_line[i]);
-	// 			i++;
-	// 		}
-	// 		while(argv[j] != NULL)
-	// 		{
-	// 			new_comand_line[i] = ft_strdup(argv[j]);
-	// 			i++;
-	// 			j++;
-	// 		}
-	// 		new_comand_line[i] = NULL;
-	// 		if (ft_strncmp(new_comand_line[i - 1], "|", 2) == 0)
-	// 		{
-	// 			new_comand_line = verification_of_tokens(new_comand_line, vars);
-	// 		}
-	// 		ptr_free(&line);
-	// 		free_two_dimensional_array(argv);
-	// 		free_two_dimensional_array(comand_line);
-	// 		return (new_comand_line);
-	// 	}
-	// 	else
-	// 	{
-	// 		return comand_line;
-	// 	}
-
 	return comand_line;
 }

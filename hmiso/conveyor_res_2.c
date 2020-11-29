@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 21:03:48 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/27 21:06:52 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/29 15:49:34 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,7 @@ void	conveyor_res_6(char **comand_line, t_vars *vars, t_conveyor *conveyor)
 {
 	if (conveyor->flag == 0)
 	{
-		ft_redirects_revers(conveyor->comand_path,
-		conveyor->com_whis_flags, conveyor->mas_redirektion, vars);
+		ft_redirects_revers(conveyor, vars);
 		conveyor->flag_pipe = 1;
 	}
 	if (conveyor->flag == 1)
@@ -73,8 +72,7 @@ void	conveyor_res_7(char **comand_line, t_vars *vars, t_conveyor *conveyor)
 		}
 		conveyor->mas_redirektion2 = make_list_rederection(comand_line,
 		conveyor->i, conveyor->j, vars);
-		ft_redirects_redirect(conveyor->comand_path, conveyor->com_whis_flags,
-		conveyor->mas_redirektion, conveyor->mas_redirektion2, vars);
+		ft_redirects_redirect(conveyor, vars);
 		conveyor->flag_pipe = 0;
 		free_two_dimensional_array(conveyor->mas_redirektion2);
 	}

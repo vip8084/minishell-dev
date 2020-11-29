@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishel.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/29 18:31:37 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/29 19:31:17 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,25 @@ typedef struct s_vt_vars{
 	char		**argv;
 	char		*fre_ptr;
 }				t_vt_vars;
+typedef struct s_move{
+	
+	int			i;
+	int			poz;
+	char		*ptr;
+	char		*ptr2;
+	int			flag;
+	int			flag2;
+	int			count;
+}				t_move;
+
+typedef struct s_semik{
+	
+	int			i;
+	int			flag;
+	int			count;
+	char		**argv;
+	char		*ptr_free;
+}				t_semik;
 
 void		update_envp_res(t_upd *upd);
 void		fill_new_env(t_upd *upd, char **new_str, int *i, int *m);

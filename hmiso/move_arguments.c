@@ -6,89 +6,113 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 13:06:46 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/29 15:17:30 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/29 19:15:22 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
-char	**move_arguments(char **comand_line, t_vars *vars)
+static void		init_move(t_move *move)
 {
-	int i;
-	int poz;
-	char *ptr;
-	char *ptr2;
-	int flag;
-	int flag2=0;
+	move->ptr = NULL;
+	move->ptr2 = NULL;
+	move->flag2 = 0;
+	move->count = 0;
+	move->flag = 0;
+	move->i = 0;
+	move->poz = 0;
+}
 
-	flag = 0;
-	i = 0;
-	poz = 0;
-	int count = 0;
-	while(comand_line[i] != NULL)
-		i++;
-	while(vars->mas_flags[count] != 2)
-		count++;
-	count = count - i;
-	while (comand_line[poz] != NULL)	
+static void		move_res(char **comand_line, t_move *move, t_vars *vars)
+{
+	if ((ft_strncmp(comand_line[move->i], ">", 2) == 0
+	|| ft_strncmp(comand_line[move->i], ">>", 3) == 0 ||
+	ft_strncmp(comand_line[move->i], "<", 2) == 0)
+	&& vars->mas_flags[move->i + move->count] != 1)
 	{
-		while (comand_line[i] != NULL)
+		if ((comand_line[move->i + 2] != NULL)
+		&& (ft_strncmp(comand_line[move->i + 2], "|", 2) != 0))
 		{
-			if ((ft_strncmp(comand_line[i], ">", 2) == 0  || ft_strncmp(comand_line[i], ">>", 3) == 0 || ft_strncmp(comand_line[i], "<", 2) == 0) && vars->mas_flags[i + count] != 1)
+			if ((ft_strncmp(comand_line[move->i + 2], ">", 2) != 0
+			&& ft_strncmp(comand_line[move->i + 2], ">>", 3) != 0 &&
+			ft_strncmp(comand_line[move->i + 2], "<", 2) != 0))
 			{
-				if ((comand_line[i + 2] != NULL) && (ft_strncmp(comand_line[i + 2], "|", 2) != 0))
+				move->ptr = comand_line[move->i];
+				move->flag = vars->mas_flags[move->i + move->count];
+				comand_line[move->i] = comand_line[move->i + 2];
+				vars->mas_flags[move->i + move->count] =
+				vars->mas_flags[move->i + 2];
+				comand_line[move->i + 2] = comand_line[move->i + 1];
+				vars->mas_flags[move->i + 2] = vars->mas_flags[move->i + 1];
+				comand_line[move->i + 1] = move->ptr;
+				vars->mas_flags[move->i + 1] = move->flag;
+			}
+		}
+	}
+	move->i++;
+}
+
+static void		move_res_2(char **comand_line, t_move *move, t_vars *vars)
+{
+	move->ptr = comand_line[move->i];
+	move->flag = vars->mas_flags[move->i + move->count];
+	move->ptr2 = comand_line[move->i + 1];
+	move->flag2 = vars->mas_flags[move->i + 1];
+	comand_line[move->i] = comand_line[move->i + 2];
+	vars->mas_flags[move->i + move->count] = vars->mas_flags[move->i + 2];
+	comand_line[move->i + 1] = comand_line[move->i + 3];
+	vars->mas_flags[move->i + 1] = vars->mas_flags[move->i + 3];
+	comand_line[move->i + 2] = move->ptr;
+	vars->mas_flags[move->i + 2] = move->flag;
+	comand_line[move->i + 3] = move->ptr2;
+	vars->mas_flags[move->i + 3] = move->flag2;
+}
+
+static void		move_res_3(char **comand_line, t_move *move, t_vars *vars)
+{
+	while (comand_line[move->poz] != NULL)
+	{
+		while (comand_line[move->i] != NULL)
+		{
+			if ((ft_strncmp(comand_line[move->i], ">", 2) == 0
+			|| ft_strncmp(comand_line[move->i], ">>", 3) == 0)
+			&& vars->mas_flags[move->i + move->count] != 1)
+			{
+				if ((comand_line[move->i + 2] != NULL)
+				&& ((ft_strncmp(comand_line[move->i + 2], "|", 2) != 0)
+				&& vars->mas_flags[move->i + 2] != 1))
 				{
-					if ((ft_strncmp(comand_line[i + 2], ">", 2) != 0  && ft_strncmp(comand_line[i + 2], ">>", 3) != 0 && ft_strncmp(comand_line[i + 2], "<", 2) != 0))
-					{
-						ptr = comand_line[i]; // копируем символ редиректа в ячейку
-						flag = vars->mas_flags[i + count];
-						comand_line[i] = comand_line[i + 2]; // меняем редирект на флаг
-						vars->mas_flags[i + count] = vars->mas_flags[i + 2];
-						comand_line[i + 2] = comand_line[i + 1]; // меняем флаг на название файла
-						vars->mas_flags[i + 2] = vars->mas_flags[i + 1];
-						comand_line[i + 1] = ptr; // заменяем название файла на флаг
-						vars->mas_flags[i + 1] = flag;
-					}
+					if ((ft_strncmp(comand_line[move->i + 2], "<", 2) == 0)
+					&& vars->mas_flags[move->i + move->count] != 1)
+						move_res_2(comand_line, move, vars);
 				}
 			}
-			i++;
+			move->i++;
 		}
-		i = 0;
-		poz++;
+		move->i = 0;
+		move->poz++;
 	}
-	i = 0;
-	poz = 0;
-	while (comand_line[poz] != NULL)	
+}
+
+char			**move_arguments(char **comand_line, t_vars *vars)
+{
+	t_move move;
+
+	init_move(&move);
+	while (comand_line[move.i] != NULL)
+		move.i++;
+	while (vars->mas_flags[move.count] != 2)
+		move.count++;
+	move.count = move.count - move.i;
+	while (comand_line[move.poz] != NULL)
 	{
-		while (comand_line[i] != NULL)
-		{
-			if ((ft_strncmp(comand_line[i], ">", 2) == 0  || ft_strncmp(comand_line[i], ">>", 3) == 0) && vars->mas_flags[i + count] != 1)
-			{
-				if ((comand_line[i + 2] != NULL) && ((ft_strncmp(comand_line[i + 2], "|", 2) != 0) && vars->mas_flags[i + 2] != 1))
-				{
-					if ((ft_strncmp(comand_line[i + 2], "<", 2) == 0) && vars->mas_flags[i + count] != 1)
-					{
-						ptr = comand_line[i]; // копируем редирект
-						flag = vars->mas_flags[i + count];
-						ptr2 = comand_line[i + 1]; // копируем название файла
-						flag2 = vars->mas_flags[i + 1];
-						comand_line[i] = comand_line[i + 2]; // меняем редиректы
-						vars->mas_flags[i + count] = vars->mas_flags[i + 2];
-						comand_line[i + 1] = comand_line[i + 3]; //меняем названия файлов
-						vars->mas_flags[i + 1] = vars->mas_flags[i + 3];
-						comand_line[i + 2] = ptr;
-						vars->mas_flags[i + 2] = flag;
-						comand_line[i + 3] = ptr2;
-						vars->mas_flags[i + 3] = flag2;
-					}
-				}
-			}
-			i++;
-		}
-		i = 0;
-		poz++;
+		while (comand_line[move.i] != NULL)
+			move_res(comand_line, &move, vars);
+		move.i = 0;
+		move.poz++;
 	}
-	i = 0;
-	poz = 0;
-	return comand_line;
+	move.i = 0;
+	move.poz = 0;
+	move_res_3(comand_line, &move, vars);
+	return (comand_line);
 }

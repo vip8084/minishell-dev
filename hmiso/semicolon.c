@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 12:32:57 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/29 19:28:53 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/29 20:28:29 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,25 +47,29 @@ static void		semicolon_res(char *line, t_semik *semik)
 
 static void		semicolon_res_2(char *line, t_semik *semik)
 {
-	if ((line[semik->i] == '\'' || line[semik->i] == '"') && semik->flag == 0)
-		semik->flag = 1;
-	else if ((line[semik->i] == '\'' || line[semik->i] == '"')
-	&& semik->flag == 1)
-		semik->flag = 0;
-	if (semik->flag == 0 && line[semik->i] == ';')
+	while (line[semik->i] != '\0')
 	{
-		semik->argv[semik->count] = ft_substr(line, 0, semik->i);
-		line = &line[semik->i + 1];
-		semik->count++;
-		semik->i = 0;
-		return ;
+		if ((line[semik->i] == '\'' || line[semik->i] == '"')
+		&& semik->flag == 0)
+			semik->flag = 1;
+		else if ((line[semik->i] == '\'' || line[semik->i] == '"')
+		&& semik->flag == 1)
+			semik->flag = 0;
+		if (semik->flag == 0 && line[semik->i] == ';')
+		{
+			semik->argv[semik->count] = ft_substr(line, 0, semik->i);
+			line = &line[semik->i + 1];
+			semik->count++;
+			semik->i = 0;
+			continue ;
+		}
+		if (line[semik->i] != '\0' && line[semik->i + 1] == '\0')
+		{
+			semik->argv[semik->count] = ft_substr(line, 0, semik->i + 1);
+			semik->count++;
+		}
+		semik->i++;
 	}
-	if (line[semik->i] != '\0' && line[semik->i + 1] == '\0')
-	{
-		semik->argv[semik->count] = ft_substr(line, 0, semik->i + 1);
-		semik->count++;
-	}
-	semik->i++;
 }
 
 char			**semicolon(char *line)
@@ -78,10 +82,7 @@ char			**semicolon(char *line)
 	semik.i = 0;
 	semik.count = 0;
 	semik.flag = 0;
-	while (line[semik.i] != '\0')
-	{
-		semicolon_res_2(line, &semik);
-	}
+	semicolon_res_2(line, &semik);
 	semik.argv[semik.count] = NULL;
 	semik.count = 0;
 	return (semik.argv);

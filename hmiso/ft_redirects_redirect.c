@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 19:52:17 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/29 14:10:59 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/29 20:33:17 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,17 @@ static void		redir_redir_res(t_redir *redir, t_conveyor *conveyor)
 	O_WRONLY | O_APPEND, 0666);
 }
 
+static void		redir_redir_res_2(t_redir *redir, t_conveyor *conveyor)
+{
+	init_redir(redir);
+	redir_redir_res(redir, conveyor);
+}
+
 void			ft_redirects_redirect(t_conveyor *conveyor, t_vars *vars)
 {
 	t_redir redir;
 
-	init_redir(&redir);
-	redir_redir_res(&redir, conveyor);
+	redir_redir_res_2(&redir, conveyor);
 	if (redir.fd > 0 && redir.fd2 > 0)
 	{
 		redir.pid = fork();

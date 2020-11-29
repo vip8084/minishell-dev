@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 21:08:38 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/27 21:22:53 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/29 20:29:51 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,14 @@ void	conveyor_res_11(char **comand_line, t_vars *vars, t_conveyor *conveyor)
 		conveyor->k = 0;
 		while (comand_line[conveyor->i + 1] != NULL)
 		{
-			if (ft_strncmp(comand_line[conveyor->i], "|", 2) == 0 && vars->mas_flags[conveyor->i] == 0)
-				break;
+			if (ft_strncmp(comand_line[conveyor->i], "|", 2) == 0
+			&& vars->mas_flags[conveyor->i] == 0)
+				break ;
 			conveyor->i++;
 			conveyor->k++;
 		}
-		conveyor->mas_redirektion2 = make_list_rederection(comand_line, conveyor->i, conveyor->j, vars);
+		conveyor->mas_redirektion2 = make_list_rederection(comand_line,
+		conveyor->i, conveyor->j, vars);
 		conveyor->flag_pipe = 0;
 		free_two_dimensional_array(conveyor->mas_redirektion2);
 	}
@@ -62,7 +64,8 @@ void	conveyor_res_11(char **comand_line, t_vars *vars, t_conveyor *conveyor)
 
 void	conveyor_res_12(char **comand_line, t_vars *vars, t_conveyor *conveyor)
 {
-	conveyor->com_whis_flags = make_comand_mas_start(comand_line, conveyor->i + 1, conveyor->j);
+	conveyor->com_whis_flags =
+	make_comand_mas_start(comand_line, conveyor->i + 1, conveyor->j);
 	conveyor->comand_path = ft_join_path(vars, conveyor->com_whis_flags);
 	system_funk(conveyor->comand_path, conveyor->com_whis_flags, vars);
 	conveyor->j = 0;

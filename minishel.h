@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/29 20:13:10 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/29 20:22:04 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,20 @@ int g_signal;
 
 typedef struct s_vars{
 
-char		**envp_copy;
-int			count_envp;
-int			save_std_in;
-int			save_std_out;
-int			count_pipe;
-int			count_comand;
-int			index_pipe;
-int			count_redirect;
-int			count_call_pipe;
-int         flag_redirect;
-int         err_flag;
-int         err_flag_export;
-int         cd_flag;
-int			*mas_flags;
+	char		**envp_copy;
+	int			count_envp;
+	int			save_std_in;
+	int			save_std_out;
+	int			count_pipe;
+	int			count_comand;
+	int			index_pipe;
+	int			count_redirect;
+	int			count_call_pipe;
+	int         flag_redirect;
+	int         err_flag;
+	int         err_flag_export;
+	int         cd_flag;
+	int			*mas_flags;
 }				t_vars;
 
 typedef struct s_upd{

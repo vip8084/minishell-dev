@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.21-school.ru>         +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/14 16:47:56 by hmiso             #+#    #+#             */
-/*   Updated: 2020/06/24 15:03:42 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/29 19:06:47 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,14 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	}
 	ptr[i] = '\0';
 	return (ptr);
+}
+
+int		check_line(int i, char *line)
+{
+	if (i == 0 && ft_strlen(line) == 0)
+	{
+		write(1, "exit\n", 5);
+		return (1);
+	}
+	return (0);
 }

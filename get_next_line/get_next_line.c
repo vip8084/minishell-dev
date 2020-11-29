@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/06 22:00:24 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/23 19:42:28 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/29 19:09:16 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 #include "../minishel.h"
 
-static int		funk_for_free_dup(char **ptr, char *ptr2)
+static int		func_for_free_dup(char **ptr, char *ptr2)
 {
 	char	*ptr_for_free;
 
@@ -25,7 +25,7 @@ static int		funk_for_free_dup(char **ptr, char *ptr2)
 	return (0);
 }
 
-int		funk_for_free_join(char **ptr, char *ptr2)
+static int		func_for_free_join(char **ptr, char *ptr2)
 {
 	char	*ptr_for_free;
 
@@ -42,17 +42,17 @@ static int		gnl_static(char **ptr_static, char **line, char **ptr)
 	if ((*ptr = (ft_strchr(*ptr_static, '\n'))))
 	{
 		**ptr = '\0';
-		if (funk_for_free_join(&*line, *ptr_static) == -1)
+		if (func_for_free_join(&*line, *ptr_static) == -1)
 			return (-1);
 		(*ptr)++;
-		if (funk_for_free_dup(&*ptr_static, *ptr) == -1)
+		if (func_for_free_dup(&*ptr_static, *ptr) == -1)
 			return (-1);
 	}
 	else
 	{
-		if (funk_for_free_join(&*line, *ptr_static) == -1)
+		if (func_for_free_join(&*line, *ptr_static) == -1)
 			return (-1);
-		funk_for_free_dup(&*ptr_static, "\0");
+		func_for_free_dup(&*ptr_static, "\0");
 	}
 	return (0);
 }
@@ -66,20 +66,17 @@ static int		gnl_read(int fd, char **ptr_static, char **line, char **ptr)
 		return (-1);
 	while (!*ptr && ((i = read(fd, buf, BUFFER_SIZE)) >= 0))
 	{
-		if (i == 0 && ft_strlen(*line) == 0)
-		{
-			ft_putstr_fd("exit\n", 1);
+		if (check_line(i, *line))
 			exit(0);
-		}
 		buf[i] = '\0';
 		if ((*ptr = ft_strchr(buf, '\n')))
 		{
 			**ptr = '\0';
 			(*ptr)++;
-			if (funk_for_free_dup(&*ptr_static, *ptr) == -1)
+			if (func_for_free_dup(&*ptr_static, *ptr) == -1)
 				return (-1);
 		}
-		if (funk_for_free_join(&*line, buf) == -1)
+		if (func_for_free_join(&*line, buf) == -1)
 			return (-1);
 	}
 	free(buf);
@@ -88,7 +85,7 @@ static int		gnl_read(int fd, char **ptr_static, char **line, char **ptr)
 	return (i == 0 ? 1 : -1);
 }
 
-int		get_next_line(int fd, char **line)
+int				get_next_line(int fd, char **line)
 {
 	char		*ptr;
 	static char	*ptr_static;

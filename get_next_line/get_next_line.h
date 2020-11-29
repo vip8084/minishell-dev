@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/14 16:49:43 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/23 11:07:54 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/29 19:02:37 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,6 @@ char		*ft_strjoin(const char *str1, const char *str2);
 int			get_next_line(int fd, char **line);
 int			get_next_line_two(int fd, char **line);
 size_t		ft_strlen(const char *str);
+int			check_line(int i, char *line);
 
 #endif

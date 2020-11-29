@@ -3,50 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   minishel.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/29 19:31:17 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/29 20:39:55 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-# ifndef MINISHEL_H
+#ifndef MINISHEL_H
 # define MINISHEL_H
 
-#include <stdlib.h>
-#include <unistd.h>
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <signal.h>
-#include <stdio.h>
-#include <dirent.h>
-#include <string.h>
-#include "get_next_line/get_next_line.h"
-#include "libft/libft.h"
-#define PIPE_READ 0
-#define PIPE_WRITE 1
+# include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <signal.h>
+# include <stdio.h>
+# include <dirent.h>
+# include <string.h>
+# include <errno.h>
+
+# define BUFFER_SIZE 1000
+# define PIPE_READ 0
+# define PIPE_WRITE 1
 
 int g_error;
 int g_signal;
 
 typedef struct s_vars{
 
-char		**envp_copy;
-int			count_envp;
-int			save_std_in;
-int			save_std_out;
-int			count_pipe;
-int			count_comand;
-int			index_pipe;
-int			count_redirect;
-int			count_call_pipe;
-int         flag_redirect;
-int         err_flag;
-int         err_flag_export;
-int         cd_flag;
-int			*mas_flags;
+	char		**envp_copy;
+	int			count_envp;
+	int			save_std_in;
+	int			save_std_out;
+	int			count_pipe;
+	int			count_comand;
+	int			index_pipe;
+	int			count_redirect;
+	int			count_call_pipe;
+	int         flag_redirect;
+	int         err_flag;
+	int         err_flag_export;
+	int         cd_flag;
+	int			*mas_flags;
 }				t_vars;
 
 typedef struct s_upd{
@@ -272,4 +273,28 @@ char		**make_list_rederection_revers(char **comand_line, int i, int j, t_vars *v
 char		**make_list_rederection(char **comand_line, int i, int j, t_vars *vars);
 char		**make_comand_mas_start(char **comand_line, int i, int j);
 void		check_space_res_4(t_space *space);
+
+size_t		ft_strlen(const char *s);
+int			get_next_line(int fd, char **line);
+int			ft_atoi(const char *str);
+void		*ft_calloc(size_t nam, size_t size);
+int			ft_check_line(int i, char *line);
+int			ft_isalpha(int c);
+int			ft_isdigit(int c);
+char		*ft_itoa(int n);
+void		*ft_memset(void *b, int c, size_t len);
+void		ft_putchar_fd(char c, int fd);
+void		ft_putendl_fd(char *s, int fd);
+void		ft_putstr_fd(char *s, int fd);
+void		ft_sort_str_arr(char **arr);
+char		**ft_split(char const *s, char c);
+char		*ft_strchr(const char *s, int c);
+int			ft_strcmp(char *s1, char *s2);
+char		*ft_strdup(const char *s1);
+char		*ft_strjoin(char const *s1, char const *s2);
+size_t		ft_strlcpy(char *dst, const char *src, size_t size);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
+char		*ft_substr(char const *s, unsigned int start, size_t len);
+int			ft_tolower(int c);
+
 #endif

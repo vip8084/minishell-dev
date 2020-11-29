@@ -6,7 +6,7 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 16:42:45 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/29 15:40:31 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/29 16:08:06 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	set_sf_err(int status, int err, t_vars *vars, char **argv)
 		command_error(argv[0], vars);
 }
 
-static void set_err(int status)
+static void	set_err(int status)
 {
 	if (status == 2)
 	{
@@ -38,11 +38,22 @@ static void set_err(int status)
 	}
 }
 
-static void set_flags(t_vars *vars)
+static void	set_flags(t_vars *vars)
 {
 	vars->err_flag = 0;
 	vars->cd_flag = 0;
 	g_error = 0;
+}
+
+static void	manage_status(int status, int err, t_vars *vars, char **argv)
+{
+	if (WIFEXITED(status))
+	{
+		if (WEXITSTATUS(status))
+			set_sf_err(status, err, vars, argv);
+		else
+			set_flags(vars);
+	}
 }
 
 void		system_funk(char *path, char **argv, t_vars *vars)
@@ -55,8 +66,7 @@ void		system_funk(char *path, char **argv, t_vars *vars)
 	pid = fork();
 	if (pid == 0)
 	{
-		signal(SIGQUIT, SIG_DFL);
-		signal(SIGINT, SIG_DFL);
+		set_signals(0);
 		if ((status = execve(path, argv, vars->envp_copy)) == -1)
 			exit(errno);
 	}
@@ -64,18 +74,10 @@ void		system_funk(char *path, char **argv, t_vars *vars)
 		ft_putendl_fd("error", 2);
 	else
 	{
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGINT, SIG_IGN);
+		set_signals(1);
 		waitpid(pid, &status, WUNTRACED);
-		signal(SIGINT, &ft_signals);
-		signal(SIGQUIT, &ft_signal);
+		set_signals(2);
 		set_err(status);
-		if (WIFEXITED(status))
-		{
-			if (WEXITSTATUS(status))
-				set_sf_err(status, errno, vars, argv);
-			else
-				set_flags(vars);
-		}
+		manage_status(status, errno, vars, argv);
 	}
 }

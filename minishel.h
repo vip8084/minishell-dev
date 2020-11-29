@@ -6,10 +6,9 @@
 /*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/29 20:39:55 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/29 20:47:42 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #ifndef MINISHEL_H
 # define MINISHEL_H
@@ -32,8 +31,7 @@
 int g_error;
 int g_signal;
 
-typedef struct s_vars{
-
+typedef struct	s_vars{
 	char		**envp_copy;
 	int			count_envp;
 	int			save_std_in;
@@ -43,14 +41,14 @@ typedef struct s_vars{
 	int			index_pipe;
 	int			count_redirect;
 	int			count_call_pipe;
-	int         flag_redirect;
-	int         err_flag;
-	int         err_flag_export;
-	int         cd_flag;
+	int			flag_redirect;
+	int			err_flag;
+	int			err_flag_export;
+	int			cd_flag;
 	int			*mas_flags;
 }				t_vars;
 
-typedef struct s_upd{
+typedef struct	s_upd{
 
 	int		i;
 	int		j;
@@ -63,7 +61,7 @@ typedef struct s_upd{
 	char	**new_str;
 }				t_upd;
 
-typedef struct s_space{
+typedef struct	s_space{
 
 	int		i;
 	int		flag;
@@ -72,7 +70,7 @@ typedef struct s_space{
 	char	*line;
 }				t_space;
 
-typedef struct s_sys_funk{
+typedef struct	s_sys_funk{
 
 	DIR				*dir;
 	struct dirent	*st;
@@ -82,7 +80,7 @@ typedef struct s_sys_funk{
 	int				flag;
 }				t_sys_funk;
 
-typedef struct s_conveyor{
+typedef struct	s_conveyor{
 
 	char		**line_pipe;
 	char		*comand_path;
@@ -96,7 +94,7 @@ typedef struct s_conveyor{
 	int			flag_pipe;
 }				t_conveyor;
 
-typedef struct s_quotes{
+typedef struct	s_quotes{
 
 	int			i;
 	int			flag;
@@ -117,14 +115,14 @@ typedef struct s_envir{
 	int			k;
 }				t_envir;
 
-typedef struct s_execute{
+typedef struct	s_execute{
 
 	char		**comand_line;
 	char		*comand_path;
 	char		*ptr_fre;
 }				t_execute;
 
-typedef struct s_pars{
+typedef struct	s_pars{
 
 	int			i;
 	int			j;
@@ -145,7 +143,7 @@ typedef struct s_unset_vars{
 	int			flag;
 }				t_unset_vars;
 
-typedef struct s_redir{
+typedef struct	s_redir{
 
 	pid_t		pid;
 	int			status;

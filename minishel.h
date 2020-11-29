@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishel.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
+/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/29 17:10:28 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/29 18:31:37 by curreg           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,19 @@ typedef struct s_list_red{
 	int			k;
 	char		**mas;
 }				t_list_red;
+
+typedef struct s_vt_vars{
+
+	int			i;
+	int			j;
+	int			fd;
+	int			count;
+	char		*line;
+	char		**new_comand_line;
+	char		**fre_arr;
+	char		**argv;
+	char		*fre_ptr;
+}				t_vt_vars;
 
 void		update_envp_res(t_upd *upd);
 void		fill_new_env(t_upd *upd, char **new_str, int *i, int *m);

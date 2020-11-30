@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 17:17:01 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/30 11:32:21 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/30 12:25:35 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,15 +201,15 @@ void			command_error(char *cmd, t_vars *vars);
 void			syntax_error(char *cmd);
 void			cd_error(char *cmd, char *arg, char *err);
 int				check_valid_id(char *str);
-void			id_error(char *cmd, t_vars *vars);
+void			id_error(char *cmd);
 void			set_pwd(char *var, t_vars *vars);
 void			envp_copy(char **envp, t_vars *vars);
 void			update_envp(char **str, t_vars *vars);
 void			export_out(t_vars *vars, char **line);
 void			ft_unset(t_vars *vars, char **str);
 void			free_two_dimensional_array(char **arr);
-void			ft_echo(char **line, t_vars *vars);
-void			ft_echo_n(char **line, t_vars *vars);
+void			ft_echo(char **line);
+void			ft_echo_n(char **line);
 void			ft_env(t_vars *vars);
 int				ft_ls(char *line, t_vars *vars);
 void			ft_pars_argument(char *line, t_vars *vars);
@@ -224,7 +224,7 @@ char			*check_system_funk(t_vars *vars, char *str);
 void			ft_pipe(char *path, char **comand, t_vars *vars);
 void			check_pipe(char **comand_mas, t_vars *vars);
 int				checking_recoded_functions(char **comand_line, t_vars *vars);
-void			ft_conveyor(char *line, char **comand_line, t_vars *vars);
+void			ft_conveyor(char **comand_line, t_vars *vars);
 void			init_conveyor(t_conveyor *conveyor);
 void			conveyor_res(char **comand_line, t_vars *vars,
 t_conveyor *conveyor);
@@ -236,12 +236,11 @@ void			conveyor_res_4(char **comand_line, t_vars *vars,
 t_conveyor *conveyor);
 void			conveyor_res_5(char **comand_line, t_vars *vars,
 t_conveyor *conveyor);
-void			conveyor_res_6(char **comand_line, t_vars *vars,
+void			conveyor_res_6(t_vars *vars,
 t_conveyor *conveyor);
 void			conveyor_res_7(char **comand_line, t_vars *vars,
 t_conveyor *conveyor);
-void			conveyor_res_8(char **comand_line, t_vars *vars,
-t_conveyor *conveyor);
+void			conveyor_res_8(t_conveyor *conveyor);
 void			conveyor_res_9(char **comand_line, t_vars *vars,
 t_conveyor *conveyor);
 void			conveyor_res_10(char **comand_line, t_vars *vars,
@@ -250,8 +249,7 @@ void			conveyor_res_11(char **comand_line, t_vars *vars,
 t_conveyor *conveyor);
 void			conveyor_res_12(char **comand_line, t_vars *vars,
 t_conveyor *conveyor);
-void			conveyor_res_13(char **comand_line, t_vars *vars,
-t_conveyor *conveyor);
+void			conveyor_res_13(t_vars *vars);
 void			check_redirect(char **comand_mas, t_vars *vars);
 void			quotes_res_4(t_quotes *quotes, char *line);
 void			ft_conveyor_test(char *line, char **comand_line, t_vars *vars);
@@ -262,19 +260,19 @@ char			**move_arguments(char **comand_line, t_vars *vars);
 void			ft_redirects_pipe(char *path, char **comand,
 char **mas_redirektion, t_vars *vars);
 void			ft_redirects_redirect(t_conveyor *conveyor, t_vars *vars);
-void			ft_signals(int signal);
-void			ft_signal(int signal);
+void			ft_signals();
+void			ft_signal();
 void			ptr_free(char **ptr);
 char			**semicolon(char *line);
 char			*check_space(char *line_old);
 char			*delete_quotes(char *line);
 char			**environment_variable_substitution(char **comand_line,
 t_vars *vars);
-void			env_var_res(char **comand_line, t_vars *vars, t_envir *envir);
-void			env_var_res_2(char **comand_line, t_vars *vars, t_envir *envir);
-void			env_var_res_3(char **comand_line, t_vars *vars, t_envir *envir);
-void			env_var_res_4(char **comand_line, t_vars *vars, t_envir *envir);
-void			env_var_res_5(char **comand_line, t_vars *vars, t_envir *envir);
+void			env_var_res(char **comand_line, t_envir *envir);
+void			env_var_res_2(char **comand_line, t_envir *envir);
+void			env_var_res_3(char **comand_line, t_envir *envir);
+void			env_var_res_4(t_vars *vars, t_envir *envir);
+void			env_var_res_5(char **comand_line, t_envir *envir);
 void			env_var_res_6(char **comand_line, t_vars *vars, t_envir *envir);
 void			env_var_res_7(char **comand_line, t_vars *vars, t_envir *envir);
 char			**count_comands(char *line);

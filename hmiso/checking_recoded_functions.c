@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 17:31:40 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/29 20:36:43 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/30 12:16:08 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	checking_recoded_functions_res(char **comand_line, t_vars *vars)
 	&& (comand_line[1] != NULL)
 	&& (ft_strncmp(comand_line[1], "-n", 3)) == 0)
 	{
-		ft_echo_n(&comand_line[0], vars);
+		ft_echo_n(&comand_line[0]);
 		vars->err_flag = 0;
 		g_error = 0;
 		return (1);
@@ -45,7 +45,7 @@ static int	checking_recoded_functions_res_2(char **comand_line, t_vars *vars)
 {
 	if (ft_strncmp(comand_line[0], "echo", 5) == 0)
 	{
-		ft_echo(&comand_line[0], vars);
+		ft_echo(&comand_line[0]);
 		vars->err_flag = 0;
 		g_error = 0;
 		return (1);

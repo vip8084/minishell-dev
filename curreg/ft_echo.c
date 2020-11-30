@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 11:46:29 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/28 19:06:59 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/30 12:05:58 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
-void	ft_echo(char **line, t_vars *vars)
+void	ft_echo(char **line)
 {
 	int		i;
 	char	*path;

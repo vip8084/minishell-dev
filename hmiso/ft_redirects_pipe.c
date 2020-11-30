@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/25 19:49:25 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/28 21:29:57 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/30 12:24:13 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ char **mas_redirektion, t_vars *vars)
 	int		status;
 	int		fd;
 
+	status = 0;
 	redirects_pipe(mas_redirektion, &fd);
 	if (fd > 0)
 	{

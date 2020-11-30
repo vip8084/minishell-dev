@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   update_envp.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 13:14:43 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/29 17:01:33 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/30 12:08:23 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	part2_update_envp(t_upd *upd, t_vars *vars)
 	}
 }
 
-static void	part3_update_envp(t_upd *upd, t_vars *vars)
+static void	part3_update_envp(t_upd *upd)
 {
 	while (upd->j < upd->count)
 	{
@@ -107,7 +107,7 @@ void		update_envp(char **str, t_vars *vars)
 	upd.count = upd.i;
 	upd.i = 0;
 	part2_update_envp(&upd, vars);
-	part3_update_envp(&upd, vars);
+	part3_update_envp(&upd);
 	upd.new_envp[upd.i] = NULL;
 	free(vars->envp_copy);
 	envp_copy(upd.new_envp, vars);

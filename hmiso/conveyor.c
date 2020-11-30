@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 18:27:08 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/29 14:14:40 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/30 12:20:09 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ t_conveyor *conveyor)
 	if (conveyor->com_whis_flags[0] != NULL)
 	{
 		conveyor_res_5(comand_line, vars, conveyor);
-		conveyor_res_6(comand_line, vars, conveyor);
+		conveyor_res_6(vars, conveyor);
 		conveyor_res_7(comand_line, vars, conveyor);
-		conveyor_res_8(comand_line, vars, conveyor);
+		conveyor_res_8(conveyor);
 	}
 	else
 	{
@@ -55,7 +55,7 @@ t_conveyor *conveyor)
 		conveyor_res_12(comand_line, vars, conveyor);
 }
 
-void			ft_conveyor(char *line, char **comand_line, t_vars *vars)
+void			ft_conveyor(char **comand_line, t_vars *vars)
 {
 	t_conveyor conveyor;
 
@@ -79,5 +79,5 @@ void			ft_conveyor(char *line, char **comand_line, t_vars *vars)
 		conveyor.j++;
 		conveyor.i++;
 	}
-	conveyor_res_13(comand_line, vars, &conveyor);
+	conveyor_res_13(vars);
 }

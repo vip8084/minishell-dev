@@ -6,13 +6,13 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/28 17:22:28 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/28 17:24:34 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/30 12:22:16 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
-void		env_var_res(char **comand_line, t_vars *vars, t_envir *envir)
+void		env_var_res(char **comand_line, t_envir *envir)
 {
 	if (comand_line[envir->i][envir->j] == '"')
 	{
@@ -30,7 +30,7 @@ void		env_var_res(char **comand_line, t_vars *vars, t_envir *envir)
 	}
 }
 
-void		env_var_res_2(char **comand_line, t_vars *vars, t_envir *envir)
+void		env_var_res_2(char **comand_line, t_envir *envir)
 {
 	envir->k = envir->j;
 	while ((comand_line[envir->i][envir->j + 1] != ' ')
@@ -48,7 +48,7 @@ void		env_var_res_2(char **comand_line, t_vars *vars, t_envir *envir)
 	}
 }
 
-void		env_var_res_3(char **comand_line, t_vars *vars, t_envir *envir)
+void		env_var_res_3(char **comand_line, t_envir *envir)
 {
 	envir->ptr = ft_substr(comand_line[envir->i], 0, envir->k);
 	envir->env_var = ft_substr(comand_line[envir->i],
@@ -57,7 +57,7 @@ void		env_var_res_3(char **comand_line, t_vars *vars, t_envir *envir)
 	envir->ptr_for_free = envir->ptr;
 }
 
-void		env_var_res_4(char **comand_line, t_vars *vars, t_envir *envir)
+void		env_var_res_4(t_vars *vars, t_envir *envir)
 {
 	if (ft_strncmp(envir->env_var, "?", 2) == 0)
 	{
@@ -73,7 +73,7 @@ void		env_var_res_4(char **comand_line, t_vars *vars, t_envir *envir)
 	}
 }
 
-void		env_var_res_5(char **comand_line, t_vars *vars, t_envir *envir)
+void		env_var_res_5(char **comand_line, t_envir *envir)
 {
 	ptr_free(&envir->ptr_for_free);
 	envir->ptr_for_free = envir->ptr;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_out.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 12:52:35 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/28 19:02:15 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/30 12:04:27 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void		export_out(t_vars *vars, char **line)
 
 	i = 1;
 	count = 0;
+	argv = NULL;
 	ft_sort_str_arr(vars->envp_copy);
 	if (line[i] != NULL && ft_strcmp(line[i], ""))
 	{
@@ -78,7 +79,7 @@ void		export_out(t_vars *vars, char **line)
 		argv = &line[i];
 		if (!check_valid_id(line[i]))
 		{
-			id_error(line[i], vars);
+			id_error(line[i]);
 			vars->err_flag_export = 1;
 			return ;
 		}

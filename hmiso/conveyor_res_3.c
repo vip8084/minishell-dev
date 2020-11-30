@@ -6,7 +6,7 @@
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 21:08:38 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/29 20:29:51 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/30 12:19:12 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	conveyor_res_12(char **comand_line, t_vars *vars, t_conveyor *conveyor)
 	ptr_free(&conveyor->comand_path);
 }
 
-void	conveyor_res_13(char **comand_line, t_vars *vars, t_conveyor *conveyor)
+void	conveyor_res_13(t_vars *vars)
 {
 	vars->count_pipe = 0;
 	vars->count_redirect = 0;

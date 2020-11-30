@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   system_funk.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 16:42:45 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/29 16:08:06 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/30 12:07:32 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static void	manage_status(int status, int err, t_vars *vars, char **argv)
 
 void		system_funk(char *path, char **argv, t_vars *vars)
 {
-	int		count;
 	int		status;
 	pid_t	pid;
 

@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishlell.c                                       :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/31 10:42:03 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/29 19:47:25 by hmiso            ###   ########.fr       */
+/*   Updated: 2020/11/30 12:27:37 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishel.h"
 
-void			ft_signals(int signal)
+void			ft_signals()
 {
 	write(1, "\b\b  \b\b", 6);
 	write(1, "\n", 1);
 	ft_putstr_fd("minishell>", 1);
 }
 
-void			ft_signal(int signal)
+void			ft_signal()
 {
 	write(1, "\b\b  \b\b", 6);
 }
@@ -71,6 +71,8 @@ int				main(int argc, char **argv, char **envp)
 	t_vars		vars;
 	char		*old_pwd[2];
 
+	argc = 0;
+	argv = NULL;
 	init_vars(&vars);
 	old_pwd[0] = "OLDPWD";
 	old_pwd[1] = NULL;

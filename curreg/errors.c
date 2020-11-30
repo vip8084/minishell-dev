@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/07 17:51:37 by curreg            #+#    #+#             */
-/*   Updated: 2020/11/28 17:25:17 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/30 12:01:59 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishel.h"
 
-void	id_error(char *cmd, t_vars *vars)
+void	id_error(char *cmd)
 {
 	ft_putstr_fd("minishell>export: `", 1);
 	ft_putstr_fd(cmd, 1);

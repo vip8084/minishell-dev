@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 13:02:21 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/28 21:52:56 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/30 12:07:07 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	aux_ft_unset(t_vars *vars, char **str, t_unset_vars *uv)
 	uv->count = 0;
 }
 
-static void	aux_ft_unset2(t_vars *vars, char **str, t_unset_vars *uv)
+static void	aux_ft_unset2(t_vars *vars, t_unset_vars *uv)
 {
 	uv->env_new = malloc(sizeof(char**) * (uv->count_env));
 	while (uv->i < uv->count_env)
@@ -78,7 +78,7 @@ void		ft_unset(t_vars *vars, char **str)
 	uv.i = 0;
 	if (uv.flag > 0)
 	{
-		aux_ft_unset2(vars, str, &uv);
+		aux_ft_unset2(vars, &uv);
 		free(vars->envp_copy);
 		envp_copy(uv.env_new, vars);
 		free_two_dimensional_array(uv.env_new);

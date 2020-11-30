@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: curreg <curreg@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hmiso <hmiso@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/02 11:07:05 by hmiso             #+#    #+#             */
-/*   Updated: 2020/11/28 19:04:44 by curreg           ###   ########.fr       */
+/*   Updated: 2020/11/30 12:05:45 by hmiso            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void		ft_cd(char **comand_line, t_vars *vars)
 {
-	int		status;
 	char	*path;
 
 	path = NULL;
